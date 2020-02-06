@@ -105,7 +105,7 @@ export class MapComponent implements OnInit {
   ngOnInit() {
     this.options = {
       zoom: 7,
-      center: latLng(-5, -56)
+      center: latLng(-5.3, -50.8)
     };
     this.checkAuth();
 

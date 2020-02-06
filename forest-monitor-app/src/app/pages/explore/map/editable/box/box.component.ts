@@ -182,7 +182,7 @@ export class EditBoxFormComponent implements OnInit {
 
     public async getAuthorizeToken() {
         try {
-            const response = await this.as.token(`${window['__env'].appName}:manage:post`);
+            const response = await this.as.token(`${window['__env'].appName}:manage:POST`);
             if (response) {
               this.token = response.access_token;
             }
