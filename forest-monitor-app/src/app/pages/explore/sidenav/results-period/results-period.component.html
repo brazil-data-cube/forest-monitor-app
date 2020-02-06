@@ -1,0 +1,46 @@
+<div *ngIf="features.length" class="results">
+    <div class="results-title">
+        <p>
+            <mat-icon>search</mat-icon>
+            <b>Results:</b> {{ features.length }}
+        </p>
+    </div>
+
+    <div class="results-items">
+        <pagination-controls
+            (pageChange)="page = $event"
+            responsive="true"
+            class="results-pagination"
+            previousLabel=""
+            nextLabel="">
+        </pagination-controls>
+
+        <div *ngFor="let feature of features | paginate: { itemsPerPage: perPage, currentPage: page }"
+            [ngClass]="feature.enabled===true?'item actived':'item'">
+            <div class="box">
+                <img *ngIf="!isPlanetMosaic(feature)" [src]="getThumbnail(feature)" />
+                <div class="description">
+                    <h1>{{ getFeatureName(feature) }}</h1>
+                    <p>{{ formatDate(feature.properties.datetime || feature.properties.acquired) }}</p>
+                </div>
+            </div>
+
+            <mat-checkbox
+                [(ngModel)]="feature.editable"
+                (change)="changeImgEdit($event, feature)"
+                *ngIf="feature.enabled && !isPlanet(feature)">
+            </mat-checkbox>
+
+            <button mat-icon-button aria-label="Gear"
+                *ngIf="feature.enabled && !isPlanet(feature)"
+                (click)="openStyleBox($event, feature)">
+                <mat-icon>settings_applications</mat-icon>
+            </button>
+
+            <mat-slide-toggle
+                [(ngModel)]="feature.enabled"
+                (change)="enableFeature($event, feature)">
+            </mat-slide-toggle>
+        </div>
+    </div>
+</div>

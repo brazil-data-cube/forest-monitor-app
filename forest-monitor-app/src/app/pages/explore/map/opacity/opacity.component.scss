@@ -1,0 +1,24 @@
+.opacity-btn {
+    position: absolute;
+    top: 130px;
+    right: 10px;
+    border: 2px solid rgba(#000, 0.2);
+    border-radius: 2.5px;
+    z-index: 999;
+
+    .icon {
+        width: 44px;
+        height: 44px;
+        background: #FFF;
+        border-radius: 2.5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        &:hover {
+            background: rgba(#FFF, 0.9);
+        }
+    }
+
+}

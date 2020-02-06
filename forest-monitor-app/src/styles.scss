@@ -1,0 +1,138 @@
+@import '~leaflet/dist/leaflet.css';
+@import '~leaflet-draw/dist/leaflet.draw.css';
+
+// DEFAULT
+body {
+    padding: 0;
+    margin: 0;
+}
+
+// ANGULAR MATERIAL - THEMES
+@import 'assets/styles/bdc-theme.scss';
+@include mat-core();
+@include angular-material-theme($bdc_theme);
+
+.app_snack-bar-success {
+    background: rgba(#339966, 0.9);
+    color: #ffffff;
+}
+.app_snack-bar-error {
+    background: rgba(#ff4d4d, 0.9);
+    color: #ffffff;
+}
+.app_snack-bar-warning {
+    background: rgba(#ffcc00, 0.9);
+    color: #333333;
+}
+
+// LEAFLET PLUGINS
+.leaflet-control-container .leaflet-control-coordinates .uiHidden {
+    display: none !important;
+}
+.leaflet-control-container .leaflet-control-coordinates .label {
+    border-radius: 5px;
+    background: rgba(#FFF, 0.5);
+    margin: 0px;
+
+    .labelFirst {
+        padding: 20px 7.5px;
+    }
+}
+.geocoder-control-input.geocoder-control-loading{
+    background-color: #FFF;
+    background-image: url("esri-leaflet-geocoder/dist/img/loading@2x.gif");
+}
+.leaflet-draw-toolbar {
+    margin-top: 50px;
+}
+.leaflet-draw-toolbar-top {
+    margin-top: -2px;
+}
+
+
+// MATERIAL DESIGN
+.mat-drawer-content {
+    background: #EEE;
+}
+
+.mat-drawer-side {
+    border-right: none;
+    box-shadow: 3px 0px 6px rgba(#000, 0.2);
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked {
+    color: var(--mainBgPrimary) !important;
+
+    .mat-radio-inner-circle {
+        background-color: var(--mainBgPrimary) !important;
+    }
+
+    .mat-radio-outer-circle {
+        border-color: var(--mainBgPrimary) !important;
+    }
+}
+
+.mat-slider-horizontal {
+    min-width: 190px !important;
+    margin-top: 10px !important;
+}
+
+.mat-form-field {
+    margin-bottom: 10px !important;
+    padding: 0 !important;
+    width: 100%;
+}
+
+.mat-expansion-panel {
+    background: #FFF !important;
+}
+
+.mat-accordion .mat-expansion-panel:first-of-type {
+    border-top-right-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: #f9f9f9 !important;
+    border-bottom: 2px solid var(--mainBgPrimary) !important;
+}
+
+.mat-expansion-panel-header-description, .mat-expansion-indicator::after {
+    color: #fff !important;
+}
+
+button.mat-primary {
+    color: #FFF !important;
+    font-weight: 600 !important;
+
+    &:disabled {
+        background: #CCC !important;
+        box-shadow: none;
+        cursor: not-allowed;
+    }
+}
+
+// style view infos layers
+table.view_info-table {
+    caption {
+        display: block;
+        font-weight: 600;
+        padding: 5px 0;
+        font-size: 1.2em;
+        text-align: left;
+    }
+
+    td {
+        border: 1px solid #999;
+        padding: 5px;
+    }
+}
+
+.cdk-drag-handle {
+    cursor: grab;
+}
+
+.leaflet-editing-icon {
+    width: 10px !important;
+    height: 10px !important;
+}

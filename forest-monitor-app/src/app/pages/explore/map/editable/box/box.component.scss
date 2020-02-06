@@ -1,0 +1,48 @@
+.box-edit-form {
+    position: absolute;
+    right: 0;
+    top: 230px;
+    border-top: 2px solid #CCC;
+    border-left: 2px solid #CCC;
+    border-bottom: 2px solid #CCC;
+    width: 300px;
+    bottom: 0;
+    z-index: 1000;
+    background: #FFF;
+    border-radius: 5px 0 0 5px;
+    padding: 10px;
+    max-height: 250px;
+    overflow: auto;
+
+    h1 {
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 5px 0 15px 5px;
+    }
+
+    .inline-block {
+        display: flex;
+        margin-bottom: -20px;
+        
+        .mat-form-field {
+            width: 49%;
+
+            &:last-child {
+                margin-left: 2%;
+            }
+        }
+    }
+
+    .box-button {
+        display: flex;
+        justify-content: flex-end;
+        
+        button {
+            display: flex;
+            align-items: center;
+
+            &:last-child {
+                margin-left: 10px;
+            }
+        }
+    }
+}

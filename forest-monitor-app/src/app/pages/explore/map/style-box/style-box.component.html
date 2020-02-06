@@ -1,0 +1,78 @@
+<div class="style-box" *ngIf="showStyleBox" cdkDrag>
+
+    <div class="content">
+        <header cdkDragHandle>
+            <h1>{{ getFeatureName() }}</h1>
+        </header>
+        
+        <button class="btn-close" mat-icon-button (click)="closeBox()">
+            <mat-icon>close</mat-icon>
+        </button>
+        
+        <div class="container_bands">
+            <div class="box-by-band" style="border-color: red;">
+                <span class="band-title" style="color: red;">RED</span>
+                <mat-select [(value)]="style.red.band">
+                    <mat-option *ngFor="let band of bandsAvailable" [value]="band">{{ band }}</mat-option>
+                </mat-select>
+                <div class="percentage">
+                    <input type="number" min="0" max="100" placeholder="0" [(ngModel)]="style.red.min">
+                    <input type="number" min="0" max="100" placeholder="100" [(ngModel)]="style.red.max">
+                </div>
+            </div>
+    
+            <div class="box-by-band" style="border-color: green;">
+                <span class="band-title" style="color: green;">GREEN</span>
+                <mat-select [(value)]="style.green.band">
+                    <mat-option *ngFor="let band of bandsAvailable" [value]="band">{{ band }}</mat-option>
+                </mat-select>
+                <div class="percentage">
+                    <input type="number" min="0" max="100" placeholder="0" [(ngModel)]="style.green.min">
+                    <input type="number" min="0" max="100" placeholder="100" [(ngModel)]="style.green.max">
+                </div>
+            </div>
+    
+            <div class="box-by-band" style="border-color: blue;">
+                <span class="band-title" style="color: blue;">BLUE</span>
+                <mat-select [(value)]="style.blue.band">
+                    <mat-option *ngFor="let band of bandsAvailable" [value]="band">{{ band }}</mat-option>
+                </mat-select>
+                <div class="percentage">
+                    <input type="number" min="0" max="100" placeholder="0" [(ngModel)]="style.blue.min">
+                    <input type="number" min="0" max="100" placeholder="100" [(ngModel)]="style.blue.max">
+                </div>
+            </div>
+        </div>
+
+        <div class="container_styles">
+            <div class="box-style">
+                <p>Gamma:</p>
+                    <input type="text" placeholder="1" [(ngModel)]="style.gamma">
+                </div>
+            <div class="box-style">
+                <p>Saturation:</p>
+                <input type="text" placeholder="1" [(ngModel)]="style.saturation">
+            </div>
+            <div class="box-style">
+                <p>Sigmoidal:</p>
+                <input type="text" placeholder="10 0.35" [(ngModel)]="style.sigmoidal">
+            </div>
+        </div>
+
+        <div class="box-btns">
+            <button 
+                mat-stroked-button
+                color="accent"
+                (click)="sendStyle()"
+                >APPLY
+            </button>
+    
+            <button 
+                mat-stroked-button
+                style="color: blue; font-size: 1em;"
+                (click)="reset()"
+                >RESET VALUES
+            </button>
+        </div>        
+    </div>
+</div>

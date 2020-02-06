@@ -1,0 +1,12 @@
+<div class="btn-del" (click)="toggleBoxActions()" *ngIf="authorized && featureLayer">
+    <mat-icon>delete_sweep</mat-icon>
+</div>
+
+<div class="actions" *ngIf="showActions">
+    <button (click)="del()">
+        <strong>DELETE</strong>
+    </button>
+    <button (click)="toggleBoxActions()">
+        Cancel
+    </button>
+</div>

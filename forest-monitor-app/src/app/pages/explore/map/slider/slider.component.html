@@ -1,0 +1,8 @@
+<div class="container-slider" *ngIf="steps.length">
+    <ng5-slider
+        [(value)]="value"
+        [(highValue)]="highValue"
+        [options]="options"
+        (userChangeEnd)="changeValue(null, null)">
+    </ng5-slider>
+</div>

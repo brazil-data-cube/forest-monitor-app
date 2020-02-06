@@ -1,0 +1,139 @@
+<div class="container-search">
+
+    <form [formGroup]="formSearch" (ngSubmit)="search()">
+        <div class="box-satellite">
+            <mat-checkbox
+                [(ngModel)]="satellites.sentinel"
+                name="sentinel"
+                formControlName="sentinel">Sentinel</mat-checkbox>
+            <mat-checkbox
+                [(ngModel)]="satellites.landsat"
+                name="landsat"
+                formControlName="landsat">Landsat</mat-checkbox>
+
+            <mat-checkbox
+                [(ngModel)]="satellites.cbers"
+                name="cbers"
+                formControlName="cbers">Cbers</mat-checkbox>
+            <mat-checkbox
+                [(ngModel)]="satellites.planet"
+                name="planet"
+                formControlName="planet">Planet</mat-checkbox>
+        </div>
+
+        <div class="search__region-box">
+            <div class="box-coordinates">
+                <mat-form-field appearance="outline"
+                    style="margin-bottom: -15px !important"
+                    class="field-top-bottom">
+                    <mat-label>North</mat-label>
+                    <input matInput
+                        type="number"
+                        name="north"
+                        placeholder="N"
+                        [(ngModel)]="searchObj.bbox.north"
+                        formControlName="north"
+                        required />
+                </mat-form-field>
+
+                <div style="display: flex; width: 95%">
+                    <mat-form-field appearance="outline">
+                        <mat-label>West</mat-label>
+                        <input matInput
+                            type="number"
+                            name="west"
+                            placeholder="W"
+                            [(ngModel)]="searchObj.bbox.west"
+                            formControlName="west"
+                            required />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>East</mat-label>
+                        <input matInput
+                            type="number"
+                            name="east"
+                            placeholder="E"
+                            [(ngModel)]="searchObj.bbox.east"
+                            formControlName="east"
+                            required />
+                    </mat-form-field>
+                </div>
+
+                <mat-form-field appearance="outline"
+                    style="margin-top: -25px !important"
+                    class="field-top-bottom">
+                    <mat-label>South</mat-label>
+                    <input matInput
+                        type="number"
+                        name="south"
+                        placeholder="S"
+                        [(ngModel)]="searchObj.bbox.south"
+                        formControlName="south"
+                        required />
+                </mat-form-field>
+            </div>
+
+            <div class="region__btn-functions">
+                <button type="button"
+                    mat-stroked-button
+                    class="preview_box"
+                    *ngIf="bboxNotEmpty()">
+                    <mat-icon (click)="previewBbox(searchObj.bbox)" class="preview">visibility</mat-icon>
+                    |
+                    <mat-icon (click)="removeLayerBbox()">clear</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <!-- CLOUD COVER -->
+        <div style="display: flex;">
+            <mat-form-field appearance="fill">
+                <mat-label>Cloud Cover (max)</mat-label>
+                <input type="number"
+                    min="1"
+                    max="100"
+                    matInput
+                    name="cloud"
+                    formControlName="cloudCover"
+                    [(ngModel)]="searchObj.cloudCover">
+                <span matSuffix>%</span>
+            </mat-form-field>
+        </div>
+
+        <div style="display: flex;">
+            <mat-form-field appearance="fill" style="width: 48%">
+                <mat-label>Start Date</mat-label>
+                <input matInput
+                    [matDatepicker]="start_date"
+                    [min]="rangeTemporal[0]"
+                    [max]="rangeTemporal[1]"
+                    placeholder="Start Date"
+                    name="start_date"
+                    formControlName="start_date"
+                    required
+                    [(ngModel)]="searchObj.start_date">
+                <mat-datepicker-toggle matSuffix [for]="start_date"></mat-datepicker-toggle>
+                <mat-datepicker #start_date></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" style="width: 48%; margin-left: 4%;">
+                <mat-label>Last Date</mat-label>
+                <input matInput
+                    [matDatepicker]="last_date"
+                    [min]="rangeTemporal[0]"
+                    [max]="rangeTemporal[1]"
+                    placeholder="Last Date"
+                    name="last_date"
+                    formControlName="last_date"
+                    required
+                    [(ngModel)]="searchObj.last_date">
+                <mat-datepicker-toggle matSuffix [for]="last_date"></mat-datepicker-toggle>
+                <mat-datepicker #last_date></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <button type="submit" mat-raised-button color="primary" class="btn-filter">
+            FILTER
+        </button>
+    </form>
+</div>

@@ -1,0 +1,23 @@
+.container-slider {
+    z-index: 999;
+    position: absolute;
+    padding: 5px 15px;
+    bottom: 65px;
+    left: 5%;
+    right: 5%;
+    background: rgba(#FFF, 1);
+    border-radius: 5px;
+}
+
+::ng-deep {
+    .ng5-slider-active:after {
+        background-color: #FFF !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .container-slider {
+        left: 2%;
+        right: 2%;
+    }
+}
