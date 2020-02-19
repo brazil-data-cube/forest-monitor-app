@@ -104,8 +104,8 @@ export class MapComponent implements OnInit {
    */
   ngOnInit() {
     this.options = {
-      zoom: 7,
-      center: latLng(-5.3, -50.8)
+      zoom: 6,
+      center: latLng(-6.18, -58)
     };
     this.checkAuth();
 
@@ -281,6 +281,12 @@ export class MapComponent implements OnInit {
     });
   }
 
+  public setScaleControl() {
+    L.control.scale({
+      imperial: false
+    }).addTo(this.map);
+  }
+
   /**
    * set Coordinates options in the map
    */
@@ -335,6 +341,7 @@ export class MapComponent implements OnInit {
     this.map = map;
     this.setGeocoderControl();
     this.setCoordinatesControl();
+    this.setScaleControl();
   }
 
   public async checkAuth() {
