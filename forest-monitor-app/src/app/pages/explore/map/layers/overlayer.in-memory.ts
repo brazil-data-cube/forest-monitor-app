@@ -13,6 +13,14 @@ export const Overlayers: BdcOverlayer[] = [
         style: 'area_test'
     },
     {
+        id: 'areas_ibama_cell25km',
+        enabled: true,
+        name: 'Celulas',
+        layer: null,
+        filter: false,
+        style: 'area_test'
+    },
+    {
         id: 'mascara_prodes',
         enabled: true,
         name: 'Mascara',
