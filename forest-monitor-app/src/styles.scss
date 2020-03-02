@@ -49,6 +49,10 @@ body {
     margin-top: -2px;
 }
 
+.leaflet-control-scale-line {
+    background: #FFF !important;
+    margin-left: 5px;
+}
 
 // MATERIAL DESIGN
 .mat-drawer-content {
@@ -133,9 +137,8 @@ table.view_info-table {
 }
 
 .leaflet-editing-icon {
-    width: 7px !important;
-    height: 7px !important;
-    opacity: 70%;
+    width: 5px !important;
+    height: 5px !important;
 }
 
 .leaflet-mouse-marker{
