@@ -133,6 +133,16 @@ table.view_info-table {
 }
 
 .leaflet-editing-icon {
-    width: 10px !important;
-    height: 10px !important;
+    width: 7px !important;
+    height: 7px !important;
+    opacity: 70%;
+}
+
+.leaflet-mouse-marker{
+    background-color:#fff;
+    cursor:default;
+}
+
+.leaflet-popup-pane{
+        left: 250px;
 }
