@@ -140,3 +140,12 @@ table.view_info-table {
     width: 5px !important;
     height: 5px !important;
 }
+
+.leaflet-mouse-marker{
+    background-color:#fff;
+    cursor:default;
+}
+
+.leaflet-popup-pane{
+        left: 250px;
+}
