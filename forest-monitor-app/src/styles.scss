@@ -147,5 +147,10 @@ table.view_info-table {
 }
 
 .leaflet-popup-pane{
-        left: 250px;
+  left: 250px;
 }
+
+.leaflet-draw-tooltip {
+  display: none;
+}
+
