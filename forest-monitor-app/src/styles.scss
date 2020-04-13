@@ -200,6 +200,17 @@ table.view_info-table {
    background: transparent !important;
  }
 
- .leaflet-interactive {
-   stroke-width: 1;
- }
+ /* barra superior */
+.tol_container[_ngcontent-lcn-c6] {
+background: #176dc2 !important;
+}
+.mat-toolbar {
+color: #fff !important;
+}
+.mat-toolbar-row a {
+color: #fff !important;
+}
+
+.leaflet-interactive {
+  stroke-width: 1;
+}
