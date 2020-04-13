@@ -158,7 +158,7 @@ table.view_info-table {
 .leaflet-popup-tip-container {
     display: none !important;
  }
- 
+
  /*barra de rolagem na popup*/
  .leaflet-popup-content {
      max-height: 450px !important;
@@ -200,16 +200,17 @@ table.view_info-table {
    background: transparent !important;
  }
 
- /** barra superior **/
+ /* barra superior */
 .tol_container[_ngcontent-lcn-c6] {
 background: #176dc2 !important;
 }
 .mat-toolbar {
 color: #fff !important;
 }
-
 .mat-toolbar-row a {
 color: #fff !important;
 }
 
-
+.leaflet-interactive {
+  stroke-width: 1;
+}
