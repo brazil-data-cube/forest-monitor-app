@@ -15,7 +15,7 @@ export const Overlayers: BdcOverlayer[] = [
     {
       id: 'mascara_prodes',
       enabled: true,
-      name: 'Mascara',
+      name: 'Mascara_Prodes',
       layer: null,
       filter: false,
       style: 'mascara_desmatamento'
