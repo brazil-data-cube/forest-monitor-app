@@ -64,7 +64,7 @@ export const BaseLayers: BdcLayer[] = [
          format: 'image/png',
          transparent: true,
          className: `MOSAICO_landsat`,
-         time:'2017-01-01T00:00:00.000Z'       
+         time:'2017-01-01T00:00:00.000Z'
      } as any)
    },
    {
@@ -76,7 +76,7 @@ export const BaseLayers: BdcLayer[] = [
          format: 'image/png',
          transparent: true,
          className: `MOSAICO_landsat`,
-         time:'2018-01-01T00:00:00.000Z'       
+         time:'2018-01-01T00:00:00.000Z'
      } as any)
    },
    {
@@ -88,14 +88,8 @@ export const BaseLayers: BdcLayer[] = [
          format: 'image/png',
          transparent: true,
          className: `MOSAICO_landsat`,
-         time:'2019-01-01T00:00:00.000Z'       
+         time:'2019-01-01T00:00:00.000Z'
      } as any)
-   },
-   {
-      id: '',
-      enabled: false,
-      name: 'Blank',
-      layer: tileLayer('', {})
    }
 ];
 function newFunction(): any {
