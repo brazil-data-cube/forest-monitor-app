@@ -164,7 +164,10 @@ table.view_info-table {
      max-height: 450px !important;
      overflow-x: auto !important;
      overflow-y: auto !important;
+     white-space: nowrap;
  }
+
+
  /** Estilo barra de rolagem **/
  ::-webkit-scrollbar {
    width: 5px !important;
@@ -201,16 +204,24 @@ table.view_info-table {
  }
 
  /* barra superior */
-.tol_container[_ngcontent-lcn-c6] {
-background: #176dc2 !important;
+.tol_container {
+background: #ffffff !important;
 }
 .mat-toolbar {
-color: #fff !important;
+color: #000000 !important;
 }
 .mat-toolbar-row a {
-color: #fff !important;
+color: #000000 !important;
 }
 
 .leaflet-interactive {
   stroke-width: 1;
+}
+
+._ngcontent-cde-c3 {
+  height: 15px;
+}
+
+.leaflet-popup {
+    width: 273px !important;
 }
