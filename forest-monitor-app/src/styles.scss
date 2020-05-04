@@ -161,12 +161,11 @@ table.view_info-table {
 
  /*barra de rolagem na popup*/
  .leaflet-popup-content {
-     max-height: 450px !important;
+     max-height: 350px !important;
      overflow-x: auto !important;
      overflow-y: auto !important;
      white-space: nowrap;
  }
-
 
  /** Estilo barra de rolagem **/
  ::-webkit-scrollbar {
