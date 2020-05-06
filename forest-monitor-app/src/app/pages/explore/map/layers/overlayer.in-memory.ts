@@ -30,11 +30,20 @@ export const Overlayers: BdcOverlayer[] = [
     },
 
     {
-        id: 'deter',
+        id: 'deter_d',
         enabled: true,
-        name: 'DETER - 2020',
+        name: 'DETER_D - 2020',
         layer: null,
         filter: false,
         style: 'class_deter'
+    },
+
+    {
+      id: 'deter_m',
+      enabled: true,
+      name: 'DETER_M - 2020',
+      layer: null,
+      filter: false,
+      style: 'class_deter'
     }
 ];

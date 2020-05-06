@@ -207,12 +207,14 @@ export class MapComponent implements OnInit {
 
       try {
         //get infos Feature by layer (deter, mascara, prodes 18/19)
-        const response = await this.ls.getInfoByWMS(
-          'deter', this.map.getBounds().toBBoxString(), point.x, point.y, size.y, size.x);
-        if (response.features.length > 0) {
-          if (response.features[0].properties.source === "M") {
-            // add polygon 
-            const polygonLayer = new L.GeoJSON(response.features[0] as any, {
+        const responseM = await this.ls.getInfoByWMS(
+          'deter_m', this.map.getBounds().toBBoxString(), point.x, point.y, size.y, size.x);
+        const responseD = await this.ls.getInfoByWMS(
+          'deter_d', this.map.getBounds().toBBoxString(), point.x, point.y, size.y, size.x);
+        if (responseM.features.length > 0) {
+          if (responseM.features[0].properties.source === "M") {
+            // add polygon
+            const polygonLayer = new L.GeoJSON(responseM.features[0] as any, {
               attribution: 'feature_selected'
             }).setStyle({
               weight: 3,
@@ -220,18 +222,37 @@ export class MapComponent implements OnInit {
               fillOpacity: 0
             });
             this.map.addLayer(polygonLayer);
-            if (response.features[0].properties) {
-              this.store.dispatch(setSelectedFeatureRemove({ payload: response.features[0].properties.id }));
+            if (responseM.features[0].properties) {
+              this.store.dispatch(setSelectedFeatureRemove({ payload: responseM.features[0].properties.id }));
             }
           }
-          this.displayPopup('deter', response.features[0].properties, latlng);
+          this.displayPopup('Deter M', responseM.features[0].properties, latlng);
 
-        } else {
-          const response = await this.ls.getInfoByWMS(
+        }
+        else if (responseD.features.length > 0) {
+          if (responseD.features[0].properties.source === "D") {
+            // add polygon
+            const polygonLayer = new L.GeoJSON(responseD.features[0] as any, {
+              attribution: 'feature_selected'
+            }).setStyle({
+              weight: 3,
+              color: '#006666',
+              fillOpacity: 0
+            });
+            this.map.addLayer(polygonLayer);
+            if (responseD.features[0].properties) {
+              this.store.dispatch(setSelectedFeatureRemove({ payload: responseD.features[0].properties.id }));
+            }
+          }
+          this.displayPopup('Deter D', responseD.features[0].properties, latlng);
+
+        }
+        else {
+          const responseMask = await this.ls.getInfoByWMS(
               'mascara_prodes', this.map.getBounds().toBBoxString(), point.x, point.y, size.y, size.x);
 
-          if (response.features.length > 0) {
-            this.displayPopup('mascara_prodes', response.features[0].properties, latlng);
+          if (responseMask.features.length > 0) {
+            this.displayPopup('mascara_prodes', responseMask.features[0].properties, latlng);
 
           } else {
             throw '';

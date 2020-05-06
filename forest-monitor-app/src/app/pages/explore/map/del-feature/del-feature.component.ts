@@ -13,7 +13,7 @@ import * as L from 'leaflet';
     styleUrls: ['./del-feature.component.scss']
 })
 export class DelFeatureComponent implements OnInit {
-    
+
     public featureLayer = null;
     public showActions = false;
     public showBoxForm = false;
@@ -53,11 +53,11 @@ export class DelFeatureComponent implements OnInit {
         try {
             let response = await this.ms.del(this.featureLayer, this.token);
 
-            this.store.dispatch(removeLayers(['overlayers_deter']));            
+            this.store.dispatch(removeLayers(['overlayers_deter']));
 
             setTimeout( _ => {
                 const layer = L.tileLayer.wms(`${this.urlGeoserver}/forest-monitor/wms`, {
-                    layers: `forest-monitor:deter`,
+                    layers: `forest-monitor:deter_m`,
                     format: 'image/png',
                     styles: `forest-monitor:class_deter`,
                     transparent: true,
@@ -100,9 +100,9 @@ export class DelFeatureComponent implements OnInit {
           const response = await this.as.token(`${window['__env'].appName}:manage:DELETE`);
           this.token = response.access_token;
           this.authorized = true;
-    
+
         } catch(err) {
           this.authorized = false;
         }
       }
-}   
+}

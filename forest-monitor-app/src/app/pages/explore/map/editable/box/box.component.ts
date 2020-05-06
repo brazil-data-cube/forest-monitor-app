@@ -44,7 +44,7 @@ export class EditBoxFormComponent implements OnInit {
 
     /** base url of geoserver */
     private urlGeoserver = window['__env'].urlGeoserver;
-    
+
     private token = '';
 
     constructor(
@@ -58,7 +58,7 @@ export class EditBoxFormComponent implements OnInit {
                 const features = Object.values(res.featuresPeriod).slice(0, (Object.values(res.featuresPeriod).length - 1)) as object[];
                 this.scenes = features.filter( feat => feat['enabled'] ).map( feat => feat['id'] );
                 this.features = features.filter( feat => feat['enabled'] );
-                
+
                 this.satsens = [];
                 this.features.forEach( feat => {
                     if (feat['id'].indexOf('CBERS') >= 0 && feat['id'].indexOf('MUX') >= 0) {
@@ -76,13 +76,13 @@ export class EditBoxFormComponent implements OnInit {
                 })
               }
           });
-    
+
           this.formEdit = this.fb.group({
             viewDate: ['', [Validators.required]],
             class: ['', [Validators.required]]
           });
         }
-    
+
     ngOnInit(): void {
         this.getAuthorizeToken();
         this.classes = DETERclasses;
@@ -115,7 +115,7 @@ export class EditBoxFormComponent implements OnInit {
                         panelClass: 'app_snack-bar-warning'
                     });
 
-                } else {                    
+                } else {
                     const polygonEdited = turf.multiPolygon(this.drawnItems.toGeoJSON()['features'].map( f => f.geometry.coordinates ));
                     const polygonScene = this.getCoordinates(feature[0]);
                     const intersection = intersect(polygonEdited, polygonScene);
@@ -137,7 +137,7 @@ export class EditBoxFormComponent implements OnInit {
                         geom: { "type": "FeatureCollection", "features": [intersection] }
                     }
                     const response = await this.ms.add(objToSend, this.token);
-        
+
                     this.snackBar.open('Polygon added!', '', {
                         duration: 3000,
                         verticalPosition: 'top',
@@ -160,7 +160,7 @@ export class EditBoxFormComponent implements OnInit {
 
         setTimeout( _ => {
             const layer = L.tileLayer.wms(`${this.urlGeoserver}/forest-monitor/wms`, {
-                layers: `forest-monitor:deter`,
+                layers: `forest-monitor:deter_m`,
                 format: 'image/png',
                 styles: `forest-monitor:class_deter`,
                 transparent: true,
@@ -188,4 +188,4 @@ export class EditBoxFormComponent implements OnInit {
             }
           } catch (err) {}
     }
-}   
+}
