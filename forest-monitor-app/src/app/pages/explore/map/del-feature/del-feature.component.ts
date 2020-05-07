@@ -57,7 +57,7 @@ export class DelFeatureComponent implements OnInit {
 
             setTimeout( _ => {
                 const layer = L.tileLayer.wms(`${this.urlGeoserver}/forest-monitor/wms`, {
-                    layers: `forest-monitor:deter_m`,
+                    layers: `forest-monitor:deter`,
                     format: 'image/png',
                     styles: `forest-monitor:class_deter`,
                     transparent: true,
