@@ -29,7 +29,7 @@ func main() {
 	file_url := "/usr/src/app/dist/portal/"
 
 	// open and recreate file with env variables
-	data, err := ioutil.ReadFile(file_url+"env.txt")
+	data, err := ioutil.ReadFile(file_url + "env.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -37,7 +37,7 @@ func main() {
 	new_content := strings.ReplaceAll(string(data), "URL_GEOSERVER", "'"+os.Getenv("URL_GEOSERVER")+"'")
 	new_content = strings.ReplaceAll(new_content, "APP_NAME", "'"+os.Getenv("APP_NAME")+"'")
 	new_content = strings.ReplaceAll(new_content, "URL_FOREST_API", "'"+os.Getenv("URL_FOREST_API")+"'")
-	new_content = strings.ReplaceAll(new_content, "URL_BDC_CACHE", "'"+os.Getenv("URL_BDC_CACHE")+"'")
+	new_content = strings.ReplaceAll(new_content, "WORKSPACE_GEOSERVER", "'"+os.Getenv("WORKSPACE_GEOSERVER")+"'")
 	new_content = strings.ReplaceAll(new_content, "URL_LAMBDA_CBERS", "'"+os.Getenv("URL_LAMBDA_CBERS")+"'")
 	new_content = strings.ReplaceAll(new_content, "URL_LAMBDA_LANDSAT", "'"+os.Getenv("URL_LAMBDA_LANDSAT")+"'")
 	new_content = strings.ReplaceAll(new_content, "URL_LAMBDA_SENTINEL", "'"+os.Getenv("URL_LAMBDA_SENTINEL")+"'")

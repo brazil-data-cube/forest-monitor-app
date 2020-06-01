@@ -44,6 +44,7 @@ export class EditBoxFormComponent implements OnInit {
 
     /** base url of geoserver */
     private urlGeoserver = window['__env'].urlGeoserver;
+    private workspaceGeoserver = window['__env'].workspaceGeoserver;
 
     private token = '';
 
@@ -159,10 +160,10 @@ export class EditBoxFormComponent implements OnInit {
         this.store.dispatch(removeLayers(['drawPolygons', 'overlayers_deter']));
 
         setTimeout( _ => {
-            const layer = L.tileLayer.wms(`${this.urlGeoserver}/forest-monitor/wms`, {
-                layers: `forest-monitor:deter`,
+            const layer = L.tileLayer.wms(`${this.urlGeoserver}/${this.workspaceGeoserver}/wms`, {
+                layers: `${this.workspaceGeoserver}:deter`,
                 format: 'image/png',
-                styles: `forest-monitor:class_deter`,
+                styles: `${this.workspaceGeoserver}:class_deter`,
                 transparent: true,
                 className: `overlayers_deter`,
                 env: `opacity:${this.opacity.toString()}`

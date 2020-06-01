@@ -24,6 +24,7 @@ export class OpacityBoxComponent implements OnInit {
 
     /** base url of geoserver */
     private urlGeoserver = window['__env'].urlGeoserver;
+    private workspaceGeoserver = window['__env'].workspaceGeoserver;
     
     constructor(private ls: LayerService,
         private store: Store<ExploreState>) {}
@@ -52,10 +53,10 @@ export class OpacityBoxComponent implements OnInit {
 
         setTimeout( _ => {
             this.ls.getOverlayers().forEach( (l: BdcOverlayer) => {
-                const layer = L.tileLayer.wms(`${this.urlGeoserver}/forest-monitor/wms`, {
-                    layers: `forest-monitor:${l.id}`,
+                const layer = L.tileLayer.wms(`${this.urlGeoserver}/${this.workspaceGeoserver}/wms`, {
+                    layers: `${this.workspaceGeoserver}:${l.id}`,
                     format: 'image/png',
-                    styles: `forest-monitor:${l.style}`,
+                    styles: `${this.workspaceGeoserver}:${l.style}`,
                     transparent: true,
                     className: `overlayers_${l.id}`,
                     env: `opacity:${(this.layers[l.name]['opacity']/10).toString()}`
