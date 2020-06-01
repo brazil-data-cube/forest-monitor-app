@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --base-href /forest-monitor/",
+    "start": "ng serve",
     "build": "ng build",
     "lint": "ng lint",
     "doc": "npx compodoc -p tsconfig.app.json"

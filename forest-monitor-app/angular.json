@@ -16,7 +16,6 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          "baseHref": "/forest-monitor/",
           "options": {
             "outputPath": "../deploy/dist/portal",
             "index": "src/index.html",
@@ -47,7 +46,6 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "baseHref": "/forest-monitor/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,

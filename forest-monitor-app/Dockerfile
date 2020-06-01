@@ -17,4 +17,4 @@ RUN npm install
 RUN npm install -g @angular/cli@8.3.3
 
 # add app
-CMD [ "npm", "run", "build", "--", "--prod", "--base-href", "/forest-monitor/" ]
+CMD [ "npm", "run", "build", "--", "--prod" ]
