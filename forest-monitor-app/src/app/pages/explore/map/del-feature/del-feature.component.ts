@@ -22,6 +22,7 @@ export class DelFeatureComponent implements OnInit {
 
     /** base url of geoserver */
     private urlGeoserver = window['__env'].urlGeoserver;
+    private workspaceGeoserver = window['__env'].workspaceGeoserver;
 
     constructor(
         private as: AuthService,
@@ -56,10 +57,10 @@ export class DelFeatureComponent implements OnInit {
             this.store.dispatch(removeLayers(['overlayers_deter']));
 
             setTimeout( _ => {
-                const layer = L.tileLayer.wms(`${this.urlGeoserver}/forest-monitor/wms`, {
-                    layers: `forest-monitor:deter`,
+                const layer = L.tileLayer.wms(`${this.urlGeoserver}/${this.workspaceGeoserver}/wms`, {
+                    layers: `${this.workspaceGeoserver}:deter`,
                     format: 'image/png',
-                    styles: `forest-monitor:class_deter`,
+                    styles: `${this.workspaceGeoserver}:class_deter`,
                     transparent: true,
                     className: `overlayers_deter`,
                     env: `opacity:1.0`

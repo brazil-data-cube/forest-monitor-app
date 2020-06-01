@@ -16,6 +16,7 @@ export class LayerService {
 
     /** base url of STAC */
     private urlGeoserver = window['__env'].urlGeoserver;
+    private workspaceGeoserver = window['__env'].workspaceGeoserver;
 
     /**
      * get base layers of the map
@@ -35,9 +36,9 @@ export class LayerService {
      * get info feature WMS
      */
     public async getInfoByWMS(layer, bbox, x, y, height, width): Promise<any> {
-        const basePath = '/forest-monitor/wms?REQUEST=GetFeatureInfo&SERVICE=WMS&SRS=EPSG:4326&VERSION=1.1.1';
+        const basePath = `/${this.workspaceGeoserver}/wms?REQUEST=GetFeatureInfo&SERVICE=WMS&SRS=EPSG:4326&VERSION=1.1.1`;
         let urlSuffix = `${basePath}&BBOX=${bbox}&HEIGHT=${height}&WIDTH=${width}`;
-        urlSuffix += `&LAYERS=forest-monitor:${layer}&QUERY_LAYERS=forest-monitor:${layer}&INFO_FORMAT=application/json&X=${x}&Y=${y}`;
+        urlSuffix += `&LAYERS=${this.workspaceGeoserver}:${layer}&QUERY_LAYERS=${this.workspaceGeoserver}:${layer}&INFO_FORMAT=application/json&X=${x}&Y=${y}`;
 
         const response = await this.http.get(`${this.urlGeoserver}${urlSuffix}`).toPromise();
         return response;
