@@ -1,10 +1,11 @@
 .opacity-box {
     position: absolute;
     z-index: 999;
-    top: 130px;
+    top: 75px;
     border-radius: 5px;
-    right: 10px;
-    width: 200px;
+    right: 65px;
+    width: 160px;
+
     background: #FFF;
     border: 2px solid rgba(#000, 0.2);
 
@@ -25,22 +26,23 @@
             padding: 0 15px;
             margin: -10px 0 0 0;
             font-family: Arial, Helvetica, sans-serif;
-            font-size: 1.1em;
+            font-size: 0.9em;
         }
 
         .content_layer {
-            padding: 5px;
+            padding: 2px;
             border: 3px solid #CCC;
-            margin: 15px 5px;
+            margin: 10px 5px;
 
             p {
                 margin: -15px 0 0 0;
                 padding: 0;
                 background: #FFF;
+                font-size: 0.9em!important;
             }
 
             .mat-slider-horizontal {
-                min-width: 170px !important;
+                min-width: 140px !important;
                 margin: 0 !important;
                 height: 36px !important;
             }
@@ -49,6 +51,7 @@
         button {
             display: block;
             margin: 10px auto;
+            font-weight: bold;
         }
     }
 }
