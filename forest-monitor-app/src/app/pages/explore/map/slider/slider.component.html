@@ -1,8 +1,10 @@
-<div class="container-slider" *ngIf="steps.length">
+<div class="container-slider"  *ngIf="steps.length" cdkDrag>
+    
     <ng5-slider
         [(value)]="value"
         [(highValue)]="highValue"
         [options]="options"
         (userChangeEnd)="changeValue(null, null)">
     </ng5-slider>
+  
 </div>

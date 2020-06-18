@@ -115,6 +115,19 @@ button.mat-primary {
         cursor: not-allowed;
     }
 }
+.ng5-slider-pointer {
+    visibility: hidden !important;
+    width: 12px!important;
+    height:12px!important;
+    top: -15px!important;
+    background-color: #0DB9EF!important;
+    z-index: auto!important;
+    border-radius: 16px!important;
+}
+
+.ng5-slider .ng5-slider-tick {
+    margin-left: 1px !important;
+}
 
 // style view infos layers
 table.view_info-table {
