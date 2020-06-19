@@ -1,0 +1,19 @@
+version: '2'
+services:
+  forest-monitor-frontend:
+    image: forestmonitor/forest-monitor-frontend:v1.1.0
+    hostname: "forest-monitor-frontend"
+    environment:   
+      - "URL_GEOSERVER=http://brazildatacube.dpi.inpe.br/forest-monitor/geoserver"
+      - "URL_FOREST_API=http://brazildatacube.dpi.inpe.br/forest-monitor/api"
+      - "URL_BDC_CACHE=http://brazildatacube.dpi.inpe.br/forest-monitor/bdc-cache/tms"
+      - "URL_SLIDER_GROUP_DAYS=1"
+      - "APP_NAME=forest_monitor"
+      - "URL_LAMBDA_CBERS=https://dektfzn49e.execute-api.us-east-1.amazonaws.com/production/tiles"
+      - "URL_LAMBDA_LANDSAT=https://jnj5vx5tvi.execute-api.us-west-2.amazonaws.com/production/tiles"
+      - "URL_LAMBDA_SENTINEL=https://n79mab8azi.execute-api.eu-central-1.amazonaws.com/production/s2/tiles"
+      - "AWS_TOKEN=fm21920EdsBDC"
+      - "URL_OAUTH=http://oauth.dpi.inpe.br/api/oauth"
+      - "URL_OAUTH_APP=http://oauth.dpi.inpe.br"
+      - "API_KEY=08c4d049131640b4bd35ee793e226322"
+    restart: always
