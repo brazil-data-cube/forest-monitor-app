@@ -29,7 +29,7 @@ export class LayerService {
      * get grids of the BDC project
      */
     public getOverlayers(): BdcOverlayer[] {
-        return Overlayers;
+        return window['__env'].geoserverLayers;
     }
 
     /**
