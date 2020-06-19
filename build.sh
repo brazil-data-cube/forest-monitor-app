@@ -1,25 +1,11 @@
 #!/bin/bash
 
-##### BUILD
+echo ""
+echo "---=== Building APP Image ===--- "
+echo ""
 
-echo
-echo "BUILD STARTED"
-echo
+VERSION=$(cat forest-monitor-app/package.json | grep -oP '(?<="version": ")[^"]*')
 
-cd forest-monitor-app
-docker build -t image-to-build-forest-monitor-app . --no-cache
+docker build -t forestmonitor/forest-monitor-frontend:v$VERSION .
 
-docker run --name forest-monitor-app-node-build -v $PWD/../deploy/dist:/deploy/dist image-to-build-forest-monitor-app
-docker rm forest-monitor-app-node-build
-docker rmi image-to-build-forest-monitor-app
-
-cd ../deploy
-echo
-echo "NEW TAG:"
-read IMAGE_TAG
-IMAGE_BASE="registry.dpi.inpe.br/brazildatacube/forest-monitor-app"
-IMAGE_FULL="${IMAGE_BASE}:${IMAGE_TAG}"
-
-docker build -t ${IMAGE_FULL} .
-sudo rm -r dist
-docker push ${IMAGE_FULL}
+docker push forestmonitor/forest-monitor-frontend:v$VERSION
