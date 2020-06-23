@@ -3,6 +3,8 @@ services:
   forest-monitor-frontend:
     image: forestmonitor/forest-monitor-frontend:v1.1.0
     hostname: "forest-monitor-frontend"
+    ports:
+      - "4200:4200"
     environment:   
       - "URL_GEOSERVER=http://brazildatacube.dpi.inpe.br/forest-monitor/geoserver"
       - "URL_FOREST_API=http://brazildatacube.dpi.inpe.br/forest-monitor/api"
@@ -16,4 +18,5 @@ services:
       - "URL_OAUTH=http://oauth.dpi.inpe.br/api/oauth"
       - "URL_OAUTH_APP=http://oauth.dpi.inpe.br"
       - "API_KEY=08c4d049131640b4bd35ee793e226322"
+      - "GEOSERVER_LAYERS=TESTE"
     restart: always

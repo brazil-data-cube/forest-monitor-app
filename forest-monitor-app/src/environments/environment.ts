@@ -3,5 +3,5 @@
  */
 export const environment = {
   /** environment */
-  production: false
+  production: true
 };

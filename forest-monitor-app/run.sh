@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cd forest-monitor-app
-
 echo ""
 echo "---=== Starting APP Configuration ===--- "
 echo ""
@@ -131,4 +129,6 @@ echo ""
 echo "---=== Runing APP ===--- "
 echo ""
 
-npm start 
+#npm start 
+
+ng serve --base-href /forest-monitor-ibama/ --prod --host 0.0.0.0 --disableHostCheck
