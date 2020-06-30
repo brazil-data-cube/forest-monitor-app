@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -xv
 
 echo ""
 echo "---=== Starting APP Configuration ===--- "
@@ -75,6 +75,12 @@ if [ -z "$API_KEY" ]; then
 fi
 
 
+if [ -z "$BASE_PATH" ]; then
+    HAS_ERROR=1
+    echo "Missing environment variable: BASE_PATH"
+fi
+
+
 if [ $HAS_ERROR = 1 ]; then
     echo ""
     echo "---=== Stoping due to missing variables ===--- "
@@ -91,6 +97,7 @@ echo "" > src/assets/env.js
 echo "(function (window) {" >> src/assets/env.js
 echo "   window.__env = window.__env || {};" >> src/assets/env.js
 echo "   window.__env.appName = '$APP_NAME';" >> src/assets/env.js
+echo "   window.__env.basePath = '$BASE_PATH';" >> src/assets/env.js
 echo "   window.__env.urlGeoserver = '$URL_GEOSERVER';" >> src/assets/env.js
 echo "   window.__env.workspaceGeoserver = '$WORKSPACE_GEOSERVER';" >> src/assets/env.js
 echo "   window.__env.urlForestAPI = '$URL_FOREST_API';" >> src/assets/env.js
@@ -116,6 +123,7 @@ echo "URL_FOREST_API: $URL_FOREST_API"
 echo "URL_BDC_CACHE: $URL_BDC_CACHE"
 echo "URL_SLIDER_GROUP_DAYS: $URL_SLIDER_GROUP_DAYS"
 echo "APP_NAME: $APP_NAME"
+echo "BASE_PATH: $BASE_PATH"
 echo "URL_LAMBDA_CBERS: $URL_LAMBDA_CBERS"
 echo "URL_LAMBDA_LANDSAT: $URL_LAMBDA_LANDSAT"
 echo "URL_LAMBDA_SENTINEL: $URL_LAMBDA_SENTINEL"
@@ -124,11 +132,10 @@ echo "URL_OAUTH: $URL_OAUTH"
 echo "URL_OAUTH_APP: $URL_OAUTH_APP"
 echo "API_KEY: $API_KEY"
 echo "GEOSERVER_LAYERS: $GEOSERVER_LAYERS"
+echo "BASE_PATH: $BASE_PATH"
 
 echo ""
 echo "---=== Runing APP ===--- "
 echo ""
 
-#npm start 
-
-ng serve --base-href /forest-monitor-ibama/ --prod --host 0.0.0.0 --disableHostCheck
+npm start -- --deployUrl /$BASE_PATH/ --base-href /$BASE_PATH/

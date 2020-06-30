@@ -17,7 +17,7 @@ import { APP_BASE_HREF } from '@angular/common';
  * Initial Module of Application (SPA)
  */
 @NgModule({
-  providers: [{provide: APP_BASE_HREF, useValue: '/'}],
+  providers: [],
   declarations: [
     AppComponent
   ],
