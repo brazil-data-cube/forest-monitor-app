@@ -135,6 +135,7 @@ export class EditBoxFormComponent implements OnInit {
                         uf: this.obj['uf'] || null,
                         image_date: formatDateUSA(new Date(feature[0]['properties']['datetime'])),
                         scene_id: feature[0]['id'],
+                        project: `${window['__env'].appName}`,
                         geom: { "type": "FeatureCollection", "features": [intersection] }
                     }
                     const response = await this.ms.add(objToSend, this.token);
