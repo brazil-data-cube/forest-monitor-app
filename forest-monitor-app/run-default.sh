@@ -1,4 +1,5 @@
 URL_GEOSERVER="http://brazildatacube.dpi.inpe.br/forest-monitor/geoserver" \
+BASE_PATH="forest-monitor" \
 WORKSPACE_GEOSERVER="forest-monitor" \
 URL_FOREST_API="http://brazildatacube.dpi.inpe.br/forest-monitor/api" \
 URL_BDC_CACHE="http://brazildatacube.dpi.inpe.br/forest-monitor/bdc-cache/tms" \
