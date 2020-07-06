@@ -1,4 +1,4 @@
-#!/bin/bash -xv
+#!/bin/bash 
 
 echo ""
 echo "---=== Starting APP Configuration ===--- "

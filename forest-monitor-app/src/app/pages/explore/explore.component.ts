@@ -10,6 +10,7 @@ import { MatSidenav } from '@angular/material';
 import { Store, select } from '@ngrx/store';
 import { AuthState } from '../auth/auth.state';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 /**
  * Explore Component
@@ -35,12 +36,19 @@ export class ExploreComponent implements OnInit, AfterViewInit {
   /** select data of the store application */
   constructor(
     private store: Store<AuthState>,
+    private as: AuthService,
     public router: Router) {
     this.store.pipe(select('auth')).subscribe(res => {
       if (!res.userId || !res.token) {
         this.router.navigate(['/auth/login']);
       }
+      else
+      {
+        this.checkAuth();
+      }
     });
+
+    
   }
 
   /**
@@ -76,6 +84,19 @@ export class ExploreComponent implements OnInit, AfterViewInit {
   @HostListener('window:resize', ['$event'])
   onResize(_: any) {
     this.innerHeight = window.innerHeight - this.toolbarHeight;
+  }
+
+  	/**
+	 * 	Check if auth token is still valid
+	 */
+	public async checkAuth() {
+    try {
+      const response = await this.as.token(`${window['__env'].appName}:manage:POST`);
+    } catch(err) 
+    {
+      this.as.logout(this.router);
+      this.router.navigate(['/auth/login']);
+    }
   }
 
 }
