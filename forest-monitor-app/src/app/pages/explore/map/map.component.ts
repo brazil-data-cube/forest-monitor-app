@@ -14,6 +14,7 @@ import { Store, select } from '@ngrx/store';
 import { ExploreState } from '../explore.state';
 import { setPositionMap, setBbox, removeLayers, setLayers, removeGroupLayer, setSelectedFeatureRemove } from '../explore.action';
 import { AuthService } from '../../auth/auth.service';
+import { Router } from '@angular/router';
 
 /**
  * Map component
@@ -39,6 +40,7 @@ export class MapComponent implements OnInit {
   public layersControl: any;
   public drawControl: Control;
   public drawnItems: L.FeatureGroup;
+  
 
   public authPOST = false;
 
@@ -107,7 +109,6 @@ export class MapComponent implements OnInit {
       zoom: 6,
       center: latLng(-6.18, -58)
     };
-    this.checkAuth();
 
     setTimeout(() => {
       this.setControlLayers();
@@ -363,15 +364,5 @@ export class MapComponent implements OnInit {
     this.setGeocoderControl();
     this.setCoordinatesControl();
     this.setScaleControl();
-  }
-
-  public async checkAuth() {
-    try {
-      const response = await this.as.token(`${window['__env'].appName}:manage:POST`);
-      this.authPOST = true;
-
-    } catch(err) {
-      this.authPOST = false;
-    }
   }
 }

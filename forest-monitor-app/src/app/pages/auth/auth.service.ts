@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 /**
  * Service to authentication
@@ -25,5 +26,12 @@ export class AuthService {
             }
         }).toPromise();
         return response;
+    }
+
+    public logout(router: Router)
+    {
+        localStorage.removeItem('user');
+        let basePath = "/"+`${window['__env'].basePath}`;
+        document.location.href = basePath;
     }
 }
