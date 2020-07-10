@@ -28,4 +28,6 @@ export interface BdcOverlayer {
     filter: boolean;
     /** apply filter to diff colors/styles */
     style: string;
+    /** Is this the destination layer of the api (edition purpose) */
+    destinationLayer: boolean;
 }

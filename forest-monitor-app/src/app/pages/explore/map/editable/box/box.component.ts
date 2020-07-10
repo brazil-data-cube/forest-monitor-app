@@ -14,6 +14,8 @@ import { DETERclasses, getPathRow, getSensor, getSatellite } from 'src/app/share
 import intersect from '@turf/intersect';
 import * as turf from "@turf/helpers";
 import { Editable } from './box.interface';
+import { LayerService } from '../../layers/layer.service';
+import { BdcLayer, BdcOverlayer } from '../../layers/layer.interface';
 
 
 @Component({
@@ -53,6 +55,7 @@ export class EditBoxFormComponent implements OnInit {
         private as: AuthService,
         private store: Store<ExploreState>,
         private ms: MonitorService,
+        private ls: LayerService,
         private fb: FormBuilder) {
           this.store.pipe(select('explore')).subscribe(res => {
               if(res.featuresPeriod) {
@@ -158,20 +161,31 @@ export class EditBoxFormComponent implements OnInit {
     }
 
     private clear() {
-        this.store.dispatch(removeLayers(['drawPolygons', 'overlayers_deter']));
 
-        setTimeout( _ => {
-            const layer = L.tileLayer.wms(`${this.urlGeoserver}/${this.workspaceGeoserver}/wms`, {
-                layers: `${this.workspaceGeoserver}:deter`,
-                format: 'image/png',
-                styles: `${this.workspaceGeoserver}:class_deter`,
-                transparent: true,
-                className: `overlayers_deter`,
-                env: `opacity:${this.opacity.toString()}`
-            } as any).setZIndex(9999);
-            this.store.dispatch(setLayers([layerGroup([layer])]));
-        });
-        this.closeBox();
+        var destinationLayer = this.ls.getDestinationOverlayer();
+
+        if(destinationLayer!=null)
+        {
+            var className= `overlayers_${destinationLayer.id}`;
+            var layerName= `${this.workspaceGeoserver}:${destinationLayer.id}`;
+            var layerStyle=`${this.workspaceGeoserver}:${destinationLayer.style}`;
+            this.store.dispatch(removeLayers(['drawPolygons', className]));
+        
+            setTimeout( _ => {
+                const layer = L.tileLayer.wms(`${this.urlGeoserver}/${this.workspaceGeoserver}/wms`, {
+                    layers: layerName,
+                    format: 'image/png',
+                    styles: layerStyle,
+                    transparent: true,
+                    className: className,
+                    env: `opacity:${this.opacity.toString()}`
+                } as any).setZIndex(9999);
+                this.store.dispatch(setLayers([layerGroup([layer])]));
+            });
+            this.closeBox();
+        }
+
+        
     }
 
     public getCoordinates(feature) {

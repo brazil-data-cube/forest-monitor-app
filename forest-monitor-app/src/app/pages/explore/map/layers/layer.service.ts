@@ -44,4 +44,41 @@ export class LayerService {
         return response;
     }
 
+    /**
+     * Get Overlayer by id
+     */
+    public getOverlayerById(layerId) : BdcOverlayer {
+        var layer = null;
+
+        for (var i = 0, len = this.getOverlayers().length; i < len; i++) 
+        {
+            if(this.getOverlayers()[i].id==layerId)
+            {
+                layer = this.getOverlayers()[i];
+                break;
+            }
+        }
+        
+        return layer;
+    }
+
+    
+    /**
+     * Get destination overlayer
+     */
+    public getDestinationOverlayer() : BdcOverlayer {
+        var layer = null;
+
+        for (var i = 0, len = this.getOverlayers().length; i < len; i++) 
+        {
+            if(this.getOverlayers()[i].destinationLayer==true)
+            {
+                layer = this.getOverlayers()[i];
+                break;
+            }
+        }
+        
+        return layer;
+    }
+
 }
