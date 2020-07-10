@@ -19,7 +19,8 @@ GEOSERVER_LAYERS="
         name: 'Area Teste',
         layer: null,
         filter: false,
-        style: 'area_test'
+        style: 'area_test',
+        destinationLayer: false
     },
     {
       id: 'mascara_prodes',
@@ -27,7 +28,8 @@ GEOSERVER_LAYERS="
       name: 'Mascara_Prodes',
       layer: null,
       filter: false,
-      style: 'mascara_desmatamento'
+      style: 'mascara_desmatamento',
+      destinationLayer: false
     },
     {
         id: 'areas_ibama_cell25km',
@@ -35,7 +37,8 @@ GEOSERVER_LAYERS="
         name: 'Celulas',
         layer: null,
         filter: false,
-        style: 'area_test'
+        style: 'area_test',
+        destinationLayer: false
     },
     {
         id: 'mascara_deter',
@@ -43,7 +46,8 @@ GEOSERVER_LAYERS="
         name: 'MASCARA_DETER - 2020',
         layer: null,
         filter: false,
-        style: 'class_deter'
+        style: 'class_deter',
+        destinationLayer: false
     },
     {
       id: 'deter',
@@ -51,7 +55,8 @@ GEOSERVER_LAYERS="
       name: 'DETER - 2020',
       layer: null,
       filter: false,
-      style: 'class_deter'
+      style: 'class_deter',
+      destinationLayer: true
     }
 ]
 " \
