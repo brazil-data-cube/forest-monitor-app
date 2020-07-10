@@ -1,9 +1,11 @@
+
 import { Component, OnInit, Input } from '@angular/core';
 
 import * as L from 'leaflet';
 import 'leaflet.fullscreen/Control.FullScreen.js';
 import 'src/assets/plugins/Leaflet.Coordinates/Leaflet.Coordinates-0.1.5.min.js';
 import 'esri-leaflet/dist/esri-leaflet.js';
+import 'leaflet-control-geocoder/dist/Control.Geocoder.js';
 import * as LE from 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.js';
 
 import { latLng, MapOptions, Layer, Map as MapLeaflet,
@@ -307,18 +309,36 @@ export class MapComponent implements OnInit {
       imperial: false
     }).addTo(this.map);
   }
-
+   /**
+   * buscar  área por lat e lon
+   */
+  private setCoordinatesLatLng(){  
+    
+     (L.Control  as any).geocoder({     
+        position: 'topleft',
+        expand: 'click',
+        placeholder:'Ex: -7.59122,-59.34494',
+        defaultMarkGeocode: false
+      }).on('markgeocode', e => {         
+        this.map.setView(e.geocode.center,10);
+       }).addTo(this.map);
+      
+   }
+   
   /**
    * set Coordinates options in the map
    */
   private setCoordinatesControl() {
+       
     (L.control as any).coordinates({
+      
       position: 'bottomleft',
       decimals: 5,
       decimalSepergoogle_hybridator: '.',
       labelTemplateLat: 'Lat: {y}',
       labelTemplateLng: '| Lng: {x}',
       enableUserInput: false,
+      centerUserCoordinates: false,
       useDMS: false,
       useLatLngOrder: true,
     }).addTo(this.map);
@@ -363,6 +383,7 @@ export class MapComponent implements OnInit {
     this.setGeocoderControl();
     this.setCoordinatesControl();
     this.setScaleControl();
+    this.setCoordinatesLatLng();
   }
 
   public async checkAuth() {

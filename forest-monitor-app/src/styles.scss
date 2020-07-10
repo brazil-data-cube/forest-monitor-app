@@ -1,5 +1,6 @@
 @import '~leaflet/dist/leaflet.css';
 @import '~leaflet-draw/dist/leaflet.draw.css';
+@import '~leaflet-control-geocoder/dist/Control.Geocoder.css';
 
 // DEFAULT
 body {
@@ -42,6 +43,28 @@ body {
     background-color: #FFF;
     background-image: url("esri-leaflet-geocoder/dist/img/loading@2x.gif");
 }
+.geocoder-control-input { 
+    visibility: hidden; //buscar  área por nome (escondida)
+}
+
+//buscar  área por lat e lon
+.leaflet-control-geocoder .leaflet-bar .leaflet-control {
+   
+    position: topright!important;
+    left: 50px!important;
+    right: 50px!important;
+
+}
+.leaflet-touch .leaflet-control-geocoder{
+    position: relative;
+    top: -25px;
+      
+}//
+.leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-rectangle {
+    position: relative;
+    top: -23px;
+} 
+
 .leaflet-draw-toolbar {
     margin-top: 50px;
 }
@@ -114,6 +137,21 @@ button.mat-primary {
         box-shadow: none;
         cursor: not-allowed;
     }
+}
+
+//caixa temporal
+.ng5-slider-pointer {
+    visibility: hidden !important;
+    width: 12px!important;
+    height:12px!important;
+    top: -15px!important;
+    background-color: #0DB9EF!important;
+    z-index: auto!important;
+    border-radius: 16px!important;
+}
+
+.ng5-slider .ng5-slider-tick {
+    margin-left: 1px !important;
 }
 
 // style view infos layers
