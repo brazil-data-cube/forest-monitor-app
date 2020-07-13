@@ -35,7 +35,7 @@
     "geocoder": "^0.2.3",
     "hammerjs": "2.0.8",
     "leaflet": "1.5.1",
-    "@types/leaflet-control-geocoder": "^1.13.0",
+    "leaflet-control-geocoder": "^1.13.0",
     "leaflet-draw": "1.0.0",
     "leaflet-locationpicker": "^0.3.2",
     "leaflet.fullscreen": "^1.5.1",
