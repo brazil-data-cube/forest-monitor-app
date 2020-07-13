@@ -34,4 +34,17 @@ export class AuthService {
         let basePath = "/"+`${window['__env'].basePath}`;
         document.location.href = basePath;
     }
+
+    	/**
+	 * 	Check if auth token is still valid
+	 */
+	public async checkAuthPost() {
+        try {
+          const response = await this.token(`${window['__env'].appName}:manage:POST`);
+        } catch(err) 
+        {
+            return false;
+        }
+        return true;
+    }
 }

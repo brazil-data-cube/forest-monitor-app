@@ -43,9 +43,6 @@ export class MapComponent implements OnInit {
   public drawControl: Control;
   public drawnItems: L.FeatureGroup;
   
-
-  public authPOST = false;
-
   /** bounding box of Map */
   private bbox = null;
 
@@ -145,7 +142,7 @@ export class MapComponent implements OnInit {
         }
       }
     }
-    if (this.authPOST) {
+    if (this.as.checkAuthPost()) {
       config['edit'] = { featureGroup: drawnItems };
     }
 
