@@ -1,7 +1,9 @@
-URL_GEOSERVER="http://brazildatacube.dpi.inpe.br/forest-monitor/geoserver" \
+#!/bin/bash
+
+URL_GEOSERVER="http://localhost:8001/geoserver" \
 BASE_PATH="forest-monitor" \
 WORKSPACE_GEOSERVER="forest-monitor" \
-URL_FOREST_API="http://brazildatacube.dpi.inpe.br/forest-monitor/api" \
+URL_FOREST_API="http://0.0.0.0:5001/api" \
 URL_BDC_CACHE="http://brazildatacube.dpi.inpe.br/forest-monitor/bdc-cache/tms" \
 URL_SLIDER_GROUP_DAYS="1" \
 APP_NAME="forest-monitor-local" \
@@ -29,7 +31,7 @@ GEOSERVER_LAYERS="
       layer: null,
       filter: false,
       style: 'mascara_desmatamento',
-      destinationLayer: false
+        destinationLayer: false
     },
     {
         id: 'areas_ibama_cell25km',
@@ -40,6 +42,7 @@ GEOSERVER_LAYERS="
         style: 'area_test',
         destinationLayer: false
     },
+
     {
         id: 'mascara_deter',
         enabled: true,
@@ -49,6 +52,7 @@ GEOSERVER_LAYERS="
         style: 'class_deter',
         destinationLayer: false
     },
+
     {
       id: 'deter',
       enabled: true,
