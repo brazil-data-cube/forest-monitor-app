@@ -205,59 +205,36 @@ export class MapComponent implements OnInit {
       const point = this.map.latLngToContainerPoint(latlng);
       const size = this.map.getSize();
 
+      
       try {
-        //get infos Feature by layer (deter, mascara, prodes 18/19)
-        const responseM = await this.ls.getInfoByWMS(
-          'deter', this.map.getBounds().toBBoxString(), point.x, point.y, size.y, size.x);
-        const responseD = await this.ls.getInfoByWMS(
-          'mascara_deter', this.map.getBounds().toBBoxString(), point.x, point.y, size.y, size.x);
-        if (responseM.features.length > 0) {
-          if (responseM.features[0].properties.source === "M") {
-            // add polygon
-            const polygonLayer = new L.GeoJSON(responseM.features[0] as any, {
-              attribution: 'feature_selected'
-            }).setStyle({
-              weight: 3,
-              color: '#006666',
-              fillOpacity: 0
-            });
-            this.map.addLayer(polygonLayer);
-            if (responseM.features[0].properties) {
-              this.store.dispatch(setSelectedFeatureRemove({ payload: responseM.features[0].properties.id }));
+        var overlayers = this.ls.getOverlayers();
+        //get infos Feature by layer (From all Layers)
+        for (let i = overlayers.length-1; i >= 0; i--) {
+          let layer = overlayers[i];
+          const response = await this.ls.getInfoByWMS(
+            layer.id, this.map.getBounds().toBBoxString(), point.x, point.y, size.y, size.x);
+          
+            if (response.features.length > 0) {
+  
+              // add polygon
+              const polygonLayer = new L.GeoJSON(response.features[0] as any, {
+                attribution: 'feature_selected'
+              }).setStyle({
+                weight: 3,
+                color: '#006666',
+                fillOpacity: 0
+              });
+              this.map.addLayer(polygonLayer);
+              if (response.features[0].properties) {
+                this.store.dispatch(setSelectedFeatureRemove({ payload: response.features[0].properties.id }));
+              }
+              
+              this.displayPopup(layer.name, response.features[0].properties, latlng);
+              break;
             }
-          }
-          this.displayPopup('Deter', responseM.features[0].properties, latlng);
-
+  
         }
-        else if (responseD.features.length > 0) {
-          if (responseD.features[0].properties.source === "D") {
-            // add polygon
-            const polygonLayer = new L.GeoJSON(responseD.features[0] as any, {
-              attribution: 'feature_selected'
-            }).setStyle({
-              weight: 3,
-              color: '#006666',
-              fillOpacity: 0
-            });
-            this.map.addLayer(polygonLayer);
-            if (responseD.features[0].properties) {
-              this.store.dispatch(setSelectedFeatureRemove({ payload: responseD.features[0].properties.id }));
-            }
-          }
-          this.displayPopup('Mascara_Deter', responseD.features[0].properties, latlng);
-
-        }
-        else {
-          const responseMask = await this.ls.getInfoByWMS(
-              'mascara_prodes', this.map.getBounds().toBBoxString(), point.x, point.y, size.y, size.x);
-
-          if (responseMask.features.length > 0) {
-            this.displayPopup('mascara_prodes', responseMask.features[0].properties, latlng);
-
-          } else {
-            throw '';
-          }
-        }
+       
       } catch(err) {
         this.map.closePopup();
         return;
