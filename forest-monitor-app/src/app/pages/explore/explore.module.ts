@@ -22,6 +22,10 @@ import {
   MatBottomSheetModule,
   MatCheckboxModule,
   MatMenuModule,
+  MatDialogModule,
+  MatDialogConfig,
+  MatFormFieldModule,
+  MatAccordion,
 } from '@angular/material';
 import { ChartsModule } from 'ng2-charts';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -42,6 +46,8 @@ import { EditableComponent } from './map/editable/editable.component';
 import { EditBoxFormComponent } from './map/editable/box/box.component';
 import { DelFeatureComponent } from './map/del-feature/del-feature.component';
 import { StyleBoxComponent } from './map/style-box/style-box.component';
+import { FeatureInfoComponent } from './map/feature-info/feature-info.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 /**
@@ -62,7 +68,8 @@ import { StyleBoxComponent } from './map/style-box/style-box.component';
     EditBoxFormComponent,
     DelFeatureComponent,
     StyleBoxComponent,
-    SliderComponent
+    SliderComponent,
+    FeatureInfoComponent
   ],
   exports: [
     RouterModule
@@ -80,7 +87,6 @@ import { StyleBoxComponent } from './map/style-box/style-box.component';
     MatExpansionModule,
     MatRadioModule,
     MatBottomSheetModule,
-    MatInputModule,
     FormsModule,
     ReactiveFormsModule,
     MatDatepickerModule,
@@ -94,8 +100,15 @@ import { StyleBoxComponent } from './map/style-box/style-box.component';
     NgxPaginationModule,
     ChartsModule,
     DragDropModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
     LeafletModule.forRoot(),
     LeafletDrawModule.forRoot()
+  ],
+  entryComponents: [
+    FeatureInfoComponent
   ]
 })
 export class ExploreModule { }

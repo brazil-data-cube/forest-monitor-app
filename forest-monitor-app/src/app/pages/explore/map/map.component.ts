@@ -1,5 +1,5 @@
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
 
 import * as L from 'leaflet';
 import 'leaflet.fullscreen/Control.FullScreen.js';
@@ -10,13 +10,15 @@ import * as LE from 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.js';
 
 import { latLng, MapOptions, Layer, Map as MapLeaflet,
   LatLngBoundsExpression, Control, Draw, rectangle } from 'leaflet';
-import { BdcLayer } from './layers/layer.interface';
+import { BdcLayer, BdcOverlayer } from './layers/layer.interface';
 import { LayerService } from './layers/layer.service';
 import { Store, select } from '@ngrx/store';
 import { ExploreState } from '../explore.state';
 import { setPositionMap, setBbox, removeLayers, setLayers, removeGroupLayer, setSelectedFeatureRemove } from '../explore.action';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
+import { FeatureInfoComponent } from './feature-info/feature-info.component';
+import { MatDialog } from '@angular/material';
 
 /**
  * Map component
@@ -34,6 +36,7 @@ export class MapComponent implements OnInit {
   /** props with height of the map */
   @Input() height: number;
 
+
   /** pointer to reference map */
   public map: MapLeaflet;
   /** object with map settings */
@@ -42,14 +45,20 @@ export class MapComponent implements OnInit {
   public layersControl: any;
   public drawControl: Control;
   public drawnItems: L.FeatureGroup;
+
+  public featureInfoDialog: any;
+  
   
   /** bounding box of Map */
   private bbox = null;
-
+  
   /** start Layer and Seatch Services */
   constructor(
+    
     private ls: LayerService,
     private as: AuthService,
+    private dialog: MatDialog,
+    private cdRef: ChangeDetectorRef,
     private store: Store<ExploreState>) {
       this.store.pipe(select('explore')).subscribe(res => {
         // add layers
@@ -193,59 +202,25 @@ export class MapComponent implements OnInit {
   private setViewInfo() {
     // add  to delete feature
     this.map.on('contextmenu', async evt => {
-      // remove last feature polygon
-      this.store.dispatch(removeGroupLayer({
-        key: 'attribution',
-        prefix: 'feature_selected'
-      }));
-      this.store.dispatch(setSelectedFeatureRemove({ payload: null }));
 
-      // get infos point
-      const latlng = evt['latlng'];
-      const point = this.map.latLngToContainerPoint(latlng);
-      const size = this.map.getSize();
+      this.featureInfoDialog = this.dialog.open(FeatureInfoComponent, {
+      width: '550px',
+      height: '550px',  
+      hasBackdrop: false,
+      data: { 
+        latlong: evt['latlng'],
+        screenPosition: evt['containerPoint'],
+        map: this.map
+    }
+    });
 
-      
-      try {
-        var overlayers = this.ls.getOverlayers();
-        //get infos Feature by layer (From all Layers)
-        for (let i = overlayers.length-1; i >= 0; i--) {
-          let layer = overlayers[i];
-          const response = await this.ls.getInfoByWMS(
-            layer.id, this.map.getBounds().toBBoxString(), point.x, point.y, size.y, size.x);
-          
-            if (response.features.length > 0) {
-  
-              // add polygon
-              const polygonLayer = new L.GeoJSON(response.features[0] as any, {
-                attribution: 'feature_selected'
-              }).setStyle({
-                weight: 3,
-                color: '#006666',
-                fillOpacity: 0
-              });
-              this.map.addLayer(polygonLayer);
-              if (response.features[0].properties) {
-                this.store.dispatch(setSelectedFeatureRemove({ payload: response.features[0].properties.id }));
-              }
-              
-              this.displayPopup(layer.name, response.features[0].properties, latlng);
-              break;
-            }
-  
-        }
-       
-      } catch(err) {
-        this.map.closePopup();
-        return;
-      }
     });
   }
 
   /**
    * open popup with infos feature
    */
-  public displayPopup(title, contentJSON, latlng) {
+ /* public displayPopup(title, contentJSON, latlng) {
     let content = '<table class="view_info-table">';
     content += `<caption>${title}</caption>`;
     Object.keys(contentJSON).forEach(key => {
@@ -260,7 +235,8 @@ export class MapComponent implements OnInit {
       .setContent(content)
       .openOn(this.map);
   }
-
+*/
+  
   /**
    * set the visible layers in the layer component of the map
    */
