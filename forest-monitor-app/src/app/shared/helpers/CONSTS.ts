@@ -97,3 +97,4 @@ export const bandsBySensor = {
     'CBERS4MUX': ['5', '6', '7', '8'],
     'CBERS4AWFI': ['13', '14', '15', '16']
 }
+export const destinationLayerIdField = "id";

@@ -5,6 +5,8 @@ import { latLng, MapOptions, Layer, Map as MapLeaflet,
 
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { FocusMonitor } from '@angular/cdk/a11y';
+import { destinationLayerIdField } from 'src/app/shared/helpers/CONSTS';
+import { DelFeatureComponent } from '../del-feature/del-feature.component';
 
 @Component({
   selector: 'app-feature-info',
@@ -27,6 +29,7 @@ export class FeatureInfoComponent implements OnInit
    private dialogRef: MatDialogRef<FeatureInfoComponent>,
    private cdRef: ChangeDetectorRef,
     private ls: LayerService,
+    private dialog: MatDialog,
     private focusMonitor: FocusMonitor)
   {
     this.latlong=data.latlong;
@@ -57,6 +60,7 @@ export class FeatureInfoComponent implements OnInit
            if (response.features.length > 0) {
              console.log()
              
+             let featureId = null;
              let keys = Object.keys(response.features[0].properties);
              let properties = [];
              keys.forEach(key => {
@@ -64,17 +68,24 @@ export class FeatureInfoComponent implements OnInit
               {
                 name: key,
                 value: response.features[0].properties[key]
+               
               }
               properties.push(property);
-             });
-             
+
+              if(key==destinationLayerIdField)
+              {
+                featureId=response.features[0].properties[key];
+              }
+              
+             });             
 
              let data = 
              {
               layerId: layer.id,
               layerName: layer.name,
               isDestinationLayer: layer.destinationLayer,
-              featureProperties: properties
+              featureProperties: properties,
+              featureId: featureId
              }
              this.layersData.push(data);
              
@@ -87,7 +98,23 @@ export class FeatureInfoComponent implements OnInit
        return;
     }
   }
-
+  showDeleteFeature(featureId: any)
+  {
+    let delFeature = this.dialog.open(DelFeatureComponent,
+      {
+        width: '400px',
+        height: '200px',
+        data: { 
+          featureId: featureId
+        }
+      });
+      delFeature.afterClosed().subscribe(result => {
+        if(result==true)
+        {
+          this.close();
+        }
+      });
+  } 
   close()
   {
   

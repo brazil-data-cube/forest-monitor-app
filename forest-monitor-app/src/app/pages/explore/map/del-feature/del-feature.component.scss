@@ -1,56 +1,78 @@
-.btn-del {
-    position: absolute;
-    border: 2px solid rgba(#000, 0.2);
-    left: 10px;
-    top: 350px;
-    z-index: 9999;
-    border-radius: 2.5px;
-    cursor: pointer;
+.del-feature-info-div {
 
-    .mat-icon {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 30px;
-        height: 30px;
-        background: #FFF;
-        border-radius: 2.5px;
+    .dialog-header {
+        .btn-close {
+            top: -10px;
+            right: -5px;
 
-        &:hover {
-            background: #EEE;
+            .mat-icon {
+                background: #FFF;
+                border: 1px solid #CCC;
+                margin-top: -10px;
+            }
         }
+
+        header {
+            padding: 0 15px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 0.9em;
+        }
+
+        .dialog-content {
+            padding: 2px;
+            border: 0px solid #CCC;
+            margin: 10px 5px;
+
+            p {
+                margin: -15px 0 0 0;
+                padding: 0;
+                background: #FFF;
+                font-size: 0.9em!important;
+            }
+
+            .mat-slider-horizontal {
+                min-width: 140px !important;
+                margin: 0 !important;
+                height: 36px !important;
+            }
+        }
+
+        button {
+            display: block;
+            font-weight: bold;
+            width: 100%;
+            text-align: left;
+        }
+
+     
     }
 }
+.layer-header-row
+{
+    border-bottom: 1px solid grey;
+}
+.del-feature-info-close-button
+{
+    text-align: right !important;
+    height: 24px  !important;
+    width: 24px  !important;
+    line-height: 30px !important;
+}
+.del-feature-info-close-button div
+{
+    height: 24px  !important;
+    width: 24px  !important;
+    margin-top: -10px !important;
 
-.actions {
-    z-index: 9999;
-    position: absolute;
-    left: 32px;
-    margin-left: -2px;
-    top: 0px;
-    display: flex;
-    align-items: center;
-    background: #919187;
-    border-radius: 0 5px 5px 0;
-    height: 30px;
-    margin-top: 0px;
+}
+.mat-button-focus-overlay { 
+    background-color: transparent!important; 
+}
 
-    button {
-        background: none;
-        border: none;
-        border-right: 1px solid #CCC;
-        color: #FFF;
-        height: 100%;
-        padding: 0px 10px;
-        cursor: pointer;
-
-        &:last-child {
-            border-right: none;
-            border-radius: 0 5px 5px 0;
-        }
-
-        &:hover, .active {
-            background: #666;
-        }
-    }
+button:focus {
+    outline: none !important;
+    border: 0px !important;
+    background: none !important; 
+    border-radius: 0%;
+    line-height: 40px;
 }

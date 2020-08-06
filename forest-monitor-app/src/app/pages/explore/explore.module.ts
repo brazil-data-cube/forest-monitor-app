@@ -109,7 +109,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LeafletDrawModule.forRoot()
   ],
   entryComponents: [
-    FeatureInfoComponent
+    FeatureInfoComponent,
+    DelFeatureComponent
   ]
 })
 export class ExploreModule { }
