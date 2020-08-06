@@ -90,3 +90,29 @@
     text-decoration: none;
 
 }
+
+.feature-info-close-button
+{
+    text-align: right !important;
+    height: 24px  !important;
+    width: 24px  !important;
+    line-height: 30px !important;
+}
+.feature-info-close-button div
+{
+    height: 24px  !important;
+    width: 24px  !important;
+    margin-top: -10px !important;
+
+}
+.mat-button-focus-overlay { 
+    background-color: transparent!important; 
+}
+
+button:focus {
+    outline: none !important;
+    border: 0px !important;
+    background: none !important; 
+    border-radius: 0%;
+    line-height: 40px;
+}

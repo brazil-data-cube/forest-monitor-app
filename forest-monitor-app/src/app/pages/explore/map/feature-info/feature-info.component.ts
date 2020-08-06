@@ -4,6 +4,7 @@ import { latLng, MapOptions, Layer, Map as MapLeaflet,
   LatLngBoundsExpression, Control, Draw, rectangle, LatLngLiteral } from 'leaflet';
 
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { FocusMonitor } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-feature-info',
@@ -16,7 +17,7 @@ export class FeatureInfoComponent implements OnInit
   private latlong: any;
   private screenPosition: any; 
   public layersData: any;
-    
+  
   /** pointer to reference map */
   private map: MapLeaflet;
 
@@ -25,7 +26,8 @@ export class FeatureInfoComponent implements OnInit
    @Inject(MAT_DIALOG_DATA) public data: any,
    private dialogRef: MatDialogRef<FeatureInfoComponent>,
    private cdRef: ChangeDetectorRef,
-    private ls: LayerService)
+    private ls: LayerService,
+    private focusMonitor: FocusMonitor)
   {
     this.latlong=data.latlong;
     this.screenPosition=data.screenPosition;
@@ -88,8 +90,8 @@ export class FeatureInfoComponent implements OnInit
 
   close()
   {
+  
     this.dialogRef.close();
-    this.cdRef.detectChanges();
   }
 
 }

@@ -72,7 +72,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FeatureInfoComponent
   ],
   exports: [
-    RouterModule
+    RouterModule,
+    FeatureInfoComponent
   ],
   imports: [
     RouterModule,

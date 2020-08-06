@@ -1,5 +1,5 @@
 
-import { Component, OnInit, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ChangeDetectorRef, NgZone } from '@angular/core';
 
 import * as L from 'leaflet';
 import 'leaflet.fullscreen/Control.FullScreen.js';
@@ -18,7 +18,7 @@ import { setPositionMap, setBbox, removeLayers, setLayers, removeGroupLayer, set
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
 import { FeatureInfoComponent } from './feature-info/feature-info.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 /**
  * Map component
@@ -46,7 +46,7 @@ export class MapComponent implements OnInit {
   public drawControl: Control;
   public drawnItems: L.FeatureGroup;
 
-  public featureInfoDialog: any;
+  public featureInfoDialog: MatDialogRef<FeatureInfoComponent>;
   
   
   /** bounding box of Map */
@@ -59,7 +59,8 @@ export class MapComponent implements OnInit {
     private as: AuthService,
     private dialog: MatDialog,
     private cdRef: ChangeDetectorRef,
-    private store: Store<ExploreState>) {
+    private store: Store<ExploreState>,
+    private ngZone: NgZone) {
       this.store.pipe(select('explore')).subscribe(res => {
         // add layers
         if (Object.values(res.layers).length > 1) {
@@ -200,42 +201,31 @@ export class MapComponent implements OnInit {
    * active view/remove feature
    */
   private setViewInfo() {
-    // add  to delete feature
+    // Add context menu event
     this.map.on('contextmenu', async evt => {
 
-      this.featureInfoDialog = this.dialog.open(FeatureInfoComponent, {
-      width: '550px',
-      height: '550px',  
-      hasBackdrop: false,
-      data: { 
-        latlong: evt['latlng'],
-        screenPosition: evt['containerPoint'],
-        map: this.map
-    }
+
+      //Opening dialog with get feature info from layers
+      this.ngZone.run(() => {
+        this.featureInfoDialog = this.dialog.open(FeatureInfoComponent, {
+          width: '550px',
+          height: '550px',  
+          hasBackdrop: false,
+          disableClose: false,
+          closeOnNavigation: true,
+          data: { 
+            latlong: evt['latlng'],
+            screenPosition: evt['containerPoint'],
+            map: this.map
+          }
+         });
+      });
+     
     });
 
-    });
   }
 
-  /**
-   * open popup with infos feature
-   */
- /* public displayPopup(title, contentJSON, latlng) {
-    let content = '<table class="view_info-table">';
-    content += `<caption>${title}</caption>`;
-    Object.keys(contentJSON).forEach(key => {
-      if (key !== 'bbox') {
-        content += `<tr><td><b>${key}</b></td><td>${contentJSON[key]}</td></tr>`;
-      }
-    });
-    content += '</table>';
-
-    L.popup({ maxWidth: 800})
-      .setLatLng(latlng)
-      .setContent(content)
-      .openOn(this.map);
-  }
-*/
+ 
   
   /**
    * set the visible layers in the layer component of the map
