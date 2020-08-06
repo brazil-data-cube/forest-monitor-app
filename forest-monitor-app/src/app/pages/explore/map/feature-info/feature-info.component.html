@@ -16,11 +16,14 @@
   
       </header>
 
+      <div *ngIf="layersData.length==0" >
+        <br><br>
+        No features were found...
+        <br><br>
+      </div>
   
-  
-      <div class="feature-content">
-  
-  
+      <div class="feature-content" *ngIf="layersData.length>0">
+   
         <div id="accordion">
           <div class="card" *ngFor="let layerData of layersData; let i = index;">
             <div class="card-header" id="heading{{i}}">
