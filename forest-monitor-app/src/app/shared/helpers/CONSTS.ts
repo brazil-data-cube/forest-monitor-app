@@ -98,3 +98,9 @@ export const bandsBySensor = {
     'CBERS4AWFI': ['13', '14', '15', '16']
 }
 export const destinationLayerIdField = "id";
+
+export function getLocalStorageAuthKey()
+{
+  let applicationName = window['__env'].appName;
+  return `user-${applicationName}`;
+}
