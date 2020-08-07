@@ -6,7 +6,6 @@ import { EditableComponent } from './pages/explore/map/editable/editable.compone
 
 const routes: Routes = [
   { path: 'explore', component: ExploreComponent },
-  { path: 'explore/update/:id', component: EditableComponent },
   { path: 'auth', loadChildren: './pages/auth/auth.module#AuthModule'},
   { path: '*', redirectTo: 'auth/login', pathMatch: 'full' },
   { path: '**', redirectTo: 'explore', pathMatch: 'full' }

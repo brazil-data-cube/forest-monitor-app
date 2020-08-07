@@ -28,14 +28,15 @@ export class EditableComponent implements OnInit {
 
     constructor(private as: AuthService, 
         private monitorService: MonitorService,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute) 
+    {
        
     }
 
     ngOnInit() {
         this.checkAuth();
-        const id = this.route.snapshot.paramMap.get('id');
-        this.monitorService.readById(id, this.token);
+       // const id = this.route.snapshot.paramMap.get('id');
+       // this.monitorService.readById(id, this.token);
     }
 
     public toggleBoxActions() {
@@ -103,7 +104,6 @@ export class EditableComponent implements OnInit {
     
         } catch(err) {
           this.authorized = false;
-          console.log('entrrou aquiiiii');
         }
       }
       

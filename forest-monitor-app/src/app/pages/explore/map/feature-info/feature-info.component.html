@@ -38,7 +38,7 @@
                   <div class="col-md-3">
                     <div *ngIf="layerData.isDestinationLayer" class="row">
                       <div class="col-md-4">
-                        <div id="editFeatureButton"></div>
+                        <div id="editFeatureButton" (click)="showEditFeature(layerData.featureId)"></div>
                       </div>
                       <div class="col-md-4">
                         <div id="deleteFeatureButton" (click)="showDeleteFeature(layerData.featureId)"></div>

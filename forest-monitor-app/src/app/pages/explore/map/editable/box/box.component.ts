@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Output, OnInit, Input } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit, Input, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatSnackBar, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { MatSnackBar, DateAdapter, MAT_DATE_FORMATS, MAT_DIALOG_DATA } from '@angular/material';
 import { ExploreState } from '../../../explore.state';
 import { Store, select } from '@ngrx/store';
 import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/shared/helpers/date.adapter';
@@ -48,6 +48,8 @@ export class EditBoxFormComponent implements OnInit {
     private urlGeoserver = window['__env'].urlGeoserver;
     private workspaceGeoserver = window['__env'].workspaceGeoserver;
 
+    private featureId = null;
+
     private token = '';
 
     constructor(
@@ -55,7 +57,9 @@ export class EditBoxFormComponent implements OnInit {
         private as: AuthService,
         private store: Store<ExploreState>,
         private ms: MonitorService,
+        private monitorService: MonitorService,
         private ls: LayerService,
+        @Inject(MAT_DIALOG_DATA) public data: any,
         private fb: FormBuilder) {
           this.store.pipe(select('explore')).subscribe(res => {
               if(res.featuresPeriod) {
@@ -85,6 +89,12 @@ export class EditBoxFormComponent implements OnInit {
             viewDate: ['', [Validators.required]],
             class: ['', [Validators.required]]
           });
+
+          //If data isn't null, it's an update
+          if(data!=null)
+          {
+            this.featureId = data.featureId; 
+          }
         }
 
     ngOnInit(): void {
@@ -204,5 +214,10 @@ export class EditBoxFormComponent implements OnInit {
               this.token = response.access_token;
             }
           } catch (err) {}
+    }
+
+    public async getCurrentFeature()
+    {
+        this.monitorService.readById(this.featureId, this.token);
     }
 }

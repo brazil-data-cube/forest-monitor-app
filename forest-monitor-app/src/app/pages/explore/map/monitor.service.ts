@@ -48,7 +48,7 @@ export class MonitorService {
     
     }    
 
-    public async   readById( id:string,  token: string): Promise<any> {
+    public async readById( id:string,  token: string): Promise<any> {
         
         const urlSuffix = `/monitor/${id}`;
         const response = await this.http.get(`${this.urlForestAPI}${urlSuffix}`, {

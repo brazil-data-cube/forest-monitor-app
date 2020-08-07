@@ -7,6 +7,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dial
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { destinationLayerIdField } from 'src/app/shared/helpers/CONSTS';
 import { DelFeatureComponent } from '../del-feature/del-feature.component';
+import { EditBoxFormComponent } from '../editable/box/box.component';
 
 @Component({
   selector: 'app-feature-info',
@@ -109,6 +110,23 @@ export class FeatureInfoComponent implements OnInit
         }
       });
       delFeature.afterClosed().subscribe(result => {
+        if(result==true)
+        {
+          this.close();
+        }
+      });
+  }
+  showEditFeature(featureId: any)
+  {
+    let editFeature = this.dialog.open(EditBoxFormComponent,
+      {
+        width: '400px',
+        height: '200px',
+        data: { 
+          featureId: featureId
+        }
+      });
+      editFeature.afterClosed().subscribe(result => {
         if(result==true)
         {
           this.close();
