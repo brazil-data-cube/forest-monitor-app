@@ -43,13 +43,13 @@ body {
     background-color: #FFF;
     background-image: url("esri-leaflet-geocoder/dist/img/loading@2x.gif");
 }
-.geocoder-control-input { 
+.geocoder-control-input {
     visibility: hidden; //buscar  área por nome (escondida)
 }
 
 //buscar  área por lat e lon
 .leaflet-control-geocoder .leaflet-bar .leaflet-control {
-   
+
     position: topright!important;
     left: 50px!important;
     right: 50px!important;
@@ -58,12 +58,12 @@ body {
 .leaflet-touch .leaflet-control-geocoder{
     position: relative;
     top: -25px;
-      
+
 }//
 .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-draw-rectangle {
     position: relative;
     top: -23px;
-} 
+}
 
 .leaflet-draw-toolbar {
     margin-top: 50px;
@@ -190,6 +190,7 @@ table.view_info-table {
 .leaflet-editing-icon {
     width: 5px !important;
     height: 5px !important;
+    display: none;
 }
 
 .leaflet-mouse-marker{
@@ -264,8 +265,9 @@ color: #fff !important;
 color: #fff !important;
 }
 
+//Tamanho das linhas entre os vertices
 .leaflet-interactive {
-  stroke-width: 1;
+  stroke-width: 3;
 }
 
 ._ngcontent-cde-c3 {
