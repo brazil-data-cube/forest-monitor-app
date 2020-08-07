@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-<<<<<<< HEAD
-=======
 import { getLocalStorageAuthKey } from '../../shared/helpers/CONSTS';
-
->>>>>>> d8ba84412f0ff72a48c6953c88f135296b4c6023
 
 /**
  * Service to authentication
@@ -36,11 +32,8 @@ export class AuthService {
 
     public logout(router: Router)
     {
-<<<<<<< HEAD
-        localStorage.removeItem('user');
-=======
+
         localStorage.removeItem(getLocalStorageAuthKey());
->>>>>>> d8ba84412f0ff72a48c6953c88f135296b4c6023
         let basePath = "/"+`${window['__env'].basePath}`;
         document.location.href = basePath;
     }
@@ -50,20 +43,14 @@ export class AuthService {
 	 */
 	public async checkAuthPost() {
         try {
-<<<<<<< HEAD
-          const response = await this.token(`${window['__env'].appName}:manage:POST`);
-=======
+
           const response = await this.token(`${this.applicationName}:manage:POST`);
->>>>>>> d8ba84412f0ff72a48c6953c88f135296b4c6023
+
         } catch(err) 
         {
             return false;
         }
         return true;
     }
-<<<<<<< HEAD
-=======
 
-    
->>>>>>> d8ba84412f0ff72a48c6953c88f135296b4c6023
 }
