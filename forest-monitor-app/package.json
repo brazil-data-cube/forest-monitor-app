@@ -1,6 +1,10 @@
 {
   "name": "forest-monitor-app",
+<<<<<<< HEAD
   "version": "1.1.1",
+=======
+  "version": "1.1.2",
+>>>>>>> d8ba84412f0ff72a48c6953c88f135296b4c6023
   "scripts": {
     "ng": "ng",
     "start": "ng serve --prod --host 0.0.0.0 --disableHostCheck --port 4200",

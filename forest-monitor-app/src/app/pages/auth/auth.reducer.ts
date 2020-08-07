@@ -3,11 +3,12 @@ import {
   Login, Logout
 } from './auth.action';
 import { AuthState } from './auth.state';
+import { getLocalStorageAuthKey } from '../../shared/helpers/CONSTS';
 
 /** initial values to Auth State */
 const initialState: AuthState = {
-  userId: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user'))['userId'] : '',
-  token: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user'))['token'] : ''
+  userId: localStorage.getItem(getLocalStorageAuthKey()) ? JSON.parse(localStorage.getItem(getLocalStorageAuthKey()))['userId'] : '',
+  token: localStorage.getItem(getLocalStorageAuthKey()) ? JSON.parse(localStorage.getItem(getLocalStorageAuthKey()))['token'] : ''
 };
 
 /**
@@ -16,11 +17,11 @@ const initialState: AuthState = {
  */
 const reducerAuth = createReducer(initialState,
   on(Login, (state, payload) => {
-    localStorage.setItem('user', JSON.stringify(payload));
+    localStorage.setItem(getLocalStorageAuthKey(), JSON.stringify(payload));
     return { ...state, userId: payload['userId'].toString(), token: payload['token'].toString() };
   }),
   on(Logout, (state) => {
-    localStorage.removeItem('user');
+    localStorage.removeItem(getLocalStorageAuthKey());
     return { ...state, userId: '', token: '' };
   })
 );
@@ -28,3 +29,4 @@ const reducerAuth = createReducer(initialState,
 export function reducer(state: AuthState | undefined, action: Action) {
   return reducerAuth(state, action);
 }
+

@@ -86,6 +86,10 @@ body {
     border-right: none;
     box-shadow: 3px 0px 6px rgba(#000, 0.2);
 }
+.mat-drawer {
+    overflow-y: hidden !important;
+}
+
 
 .mat-radio-button.mat-accent.mat-radio-checked {
     color: var(--mainBgPrimary) !important;
@@ -274,4 +278,24 @@ color: #fff !important;
 
 .leaflet-popup {
     width: 273px !important;
+}
+.h1, h1 {
+    font-size: 1.17em !important;
+    font-weight: bold;
+}
+.h5, h5 {
+    font-size: 1.17em;
+    font-weight: bold;
+}
+
+.mat-dialog-container
+{
+    border-top: 2px solid #CCC;
+    border-left: 2px solid #CCC;
+    border-bottom: 2px solid #CCC;
+}
+
+label
+{
+    margin-bottom: 0px !important;
 }

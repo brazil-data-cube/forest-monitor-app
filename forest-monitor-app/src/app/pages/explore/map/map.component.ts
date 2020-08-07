@@ -1,5 +1,5 @@
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ChangeDetectorRef, NgZone } from '@angular/core';
 
 import * as L from 'leaflet';
 import 'leaflet.fullscreen/Control.FullScreen.js';
@@ -10,13 +10,18 @@ import * as LE from 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.js';
 
 import { latLng, MapOptions, Layer, Map as MapLeaflet,
   LatLngBoundsExpression, Control, Draw, rectangle } from 'leaflet';
-import { BdcLayer } from './layers/layer.interface';
+import { BdcLayer, BdcOverlayer } from './layers/layer.interface';
 import { LayerService } from './layers/layer.service';
 import { Store, select } from '@ngrx/store';
 import { ExploreState } from '../explore.state';
 import { setPositionMap, setBbox, removeLayers, setLayers, removeGroupLayer, setSelectedFeatureRemove } from '../explore.action';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
+<<<<<<< HEAD
+=======
+import { FeatureInfoComponent } from './feature-info/feature-info.component';
+import { MatDialog, MatDialogRef } from '@angular/material';
+>>>>>>> d8ba84412f0ff72a48c6953c88f135296b4c6023
 
 /**
  * Map component
@@ -34,6 +39,7 @@ export class MapComponent implements OnInit {
   /** props with height of the map */
   @Input() height: number;
 
+
   /** pointer to reference map */
   public map: MapLeaflet;
   /** object with map settings */
@@ -42,15 +48,25 @@ export class MapComponent implements OnInit {
   public layersControl: any;
   public drawControl: Control;
   public drawnItems: L.FeatureGroup;
+<<<<<<< HEAD
+=======
+
+  public featureInfoDialog: MatDialogRef<FeatureInfoComponent>;
+  
+>>>>>>> d8ba84412f0ff72a48c6953c88f135296b4c6023
   
   /** bounding box of Map */
   private bbox = null;
-
+  
   /** start Layer and Seatch Services */
   constructor(
+    
     private ls: LayerService,
     private as: AuthService,
-    private store: Store<ExploreState>) {
+    private dialog: MatDialog,
+    private cdRef: ChangeDetectorRef,
+    private store: Store<ExploreState>,
+    private ngZone: NgZone) {
       this.store.pipe(select('explore')).subscribe(res => {
         // add layers
         if (Object.values(res.layers).length > 1) {
@@ -191,8 +207,9 @@ export class MapComponent implements OnInit {
    * active view/remove feature
    */
   private setViewInfo() {
-    // add  to delete feature
+    // Add context menu event
     this.map.on('contextmenu', async evt => {
+<<<<<<< HEAD
       // remove last feature polygon
       this.store.dispatch(removeGroupLayer({
         key: 'attribution',
@@ -252,15 +269,32 @@ export class MapComponent implements OnInit {
       if (key !== 'bbox') {
         content += `<tr><td><b>${key}</b></td><td>${contentJSON[key]}</td></tr>`;
       }
-    });
-    content += '</table>';
+=======
 
-    L.popup({ maxWidth: 800})
-      .setLatLng(latlng)
-      .setContent(content)
-      .openOn(this.map);
+
+      //Opening dialog with get feature info from layers
+      this.ngZone.run(() => {
+        this.featureInfoDialog = this.dialog.open(FeatureInfoComponent, {
+          width: '550px',
+          height: '550px',  
+          hasBackdrop: false,
+          disableClose: false,
+          closeOnNavigation: true,
+          data: { 
+            latlong: evt['latlng'],
+            screenPosition: evt['containerPoint'],
+            map: this.map
+          }
+         });
+      });
+     
+>>>>>>> d8ba84412f0ff72a48c6953c88f135296b4c6023
+    });
+
   }
 
+ 
+  
   /**
    * set the visible layers in the layer component of the map
    */
