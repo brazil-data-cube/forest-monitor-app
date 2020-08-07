@@ -1,0 +1,75 @@
+  <div class="feature-info-div">
+
+    <div class="layer-content">
+
+      <header mat-dialog-title cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
+        <div class="row layer-header-row">
+          <div class="col-md-11">
+            <h5 class="modal-title" id="exampleModalLabel">Feature Info</h5>
+          </div>
+          <div class="col-md-1">
+            <button class="btn-close feature-info-close-button" mat-icon-button (click)="close()" id="closeButton">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+      </header>
+
+      <div *ngIf="layersData.length==0" >
+        <br><br>
+        No features were found...
+        <br><br>
+      </div>
+
+      <div class="feature-content" *ngIf="layersData.length>0">
+
+        <div id="accordion">
+          <div class="card" *ngFor="let layerData of layersData; let i = index;">
+            <div class="card-header" id="heading{{i}}">
+              <h5 class="mb-0">
+                <div class="row ">
+                  <div class="col-md-9">
+                    <button class="btn btn-link" data-toggle="collapse" attr.data-target="#collapse{{i}}"
+                      attr.aria-expanded="{{ i==0 ? 'true' : 'false'}}" attr.aria-controls="collapse{{i}}">
+                      {{ layerData.layerName }}
+                    </button>
+                  </div>
+                  <div class="col-md-3">
+                    <div *ngIf="layerData.isDestinationLayer" class="row">
+                      <div class="col-md-4">
+                        <div id="editFeatureButton"></div>
+                      </div>
+                      <div class="col-md-4">
+                        <div id="deleteFeatureButton" (click)="showDeleteFeature(layerData.featureId)"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </h5>
+            </div>
+
+            <div id="collapse{{i}}" class="collapse {{ i==0 ? 'show' : ''}}" attr.aria-labelledby="heading{{i}}"
+              attr.data-parent="#accordion">
+              <div class="card-body">
+                <table class="mat-elevation-z8 table">
+                  <tr>
+                    <th scope="col" scope="row"> Property </th>
+                    <th scope="col"> Value </th>
+                  </tr>
+                  <tr *ngFor="let featureProperty of layerData.featureProperties">
+
+                    <td scope="row"> {{featureProperty.name}} </td>
+                    <td> {{featureProperty.value}} </td>
+                  </tr>
+
+
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+

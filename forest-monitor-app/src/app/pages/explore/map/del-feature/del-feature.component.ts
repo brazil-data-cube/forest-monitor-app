@@ -1,11 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Inject } from '@angular/core';
 import { AuthService } from 'src/app/pages/auth/auth.service';
 import { removeGroupLayer, removeLayers, setSelectedFeatureRemove, setLayers } from '../../explore.action';
 import { Store, select } from '@ngrx/store';
 import { ExploreState } from '../../explore.state';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MonitorService } from '../monitor.service';
 import * as L from 'leaflet';
+import { FeatureInfoComponent } from '../feature-info/feature-info.component';
 
 @Component({
     selector: 'app-map-del-feature',
@@ -14,11 +15,9 @@ import * as L from 'leaflet';
 })
 export class DelFeatureComponent implements OnInit {
 
-    public featureLayer = null;
-    public showActions = false;
-    public showBoxForm = false;
+    public featureId = null;
     public authorized = false;
-    private token = null;
+    private token = null; 
 
     /** base url of geoserver */
     private urlGeoserver = window['__env'].urlGeoserver;
@@ -29,30 +28,24 @@ export class DelFeatureComponent implements OnInit {
         private snackBar: MatSnackBar,
         private ms: MonitorService,
         private store: Store<ExploreState>,
-        private ref: ChangeDetectorRef) {
+        private ref: ChangeDetectorRef,
+        private dialogRef: MatDialogRef<DelFeatureComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any) 
+    {
+        if(data.featureId)
+        {
+            this.checkAuth(); 
+            this.featureId=data.featureId;
+        }
     }
 
     ngOnInit() {
-        this.checkAuth();
-        this.store.pipe(select('explore')).subscribe(res => {
-            if (res.selectedFeatureRemove) {
-                this.featureLayer = res.selectedFeatureRemove;
-                this.ref.detectChanges();
-            } else {
-                this.featureLayer = null;
-                this.ref.detectChanges();
-            }
-        });
-    }
-
-    public toggleBoxActions() {
-        this.showActions = !this.showActions;
-        this.ref.detectChanges();
+        
     }
 
     public async del() {
         try {
-            let response = await this.ms.del(this.featureLayer, this.token);
+            let response = await this.ms.del(this.featureId, this.token);
 
             this.store.dispatch(removeLayers(['overlayers_deter']));
 
@@ -81,7 +74,9 @@ export class DelFeatureComponent implements OnInit {
                 this.store.dispatch(setSelectedFeatureRemove({ payload: null }));
 
                 setTimeout( _ => {
-                    this.toggleBoxActions();
+                    
+                  this.dialogRef.close(true);
+                  
                 });
             });
 
@@ -105,5 +100,10 @@ export class DelFeatureComponent implements OnInit {
         } catch(err) {
           this.authorized = false;
         }
+      }
+
+      public close()
+      {
+        this.dialogRef.close(false);
       }
 }

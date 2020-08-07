@@ -1,7 +1,11 @@
+import { ActivatedRoute } from '@angular/router';
+import { MonitorService } from './../monitor.service';
 import { Component, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { Map as MapLeaflet } from 'leaflet';
 import { AuthService } from 'src/app/pages/auth/auth.service';
+import { resolveSanitizationFn } from '@angular/compiler/src/render3/view/template';
+
 
 @Component({
     selector: 'app-map-editable',
@@ -16,13 +20,22 @@ export class EditableComponent implements OnInit {
 
     public showActions = false;
     public addPolygon = null;
+    public updPolygon = null;
     public showBoxForm = false;
     public authorized = false;
+    private token = '';
+   
 
-    constructor(private as: AuthService) {}
+    constructor(private as: AuthService, 
+        private monitorService: MonitorService,
+        private route: ActivatedRoute) {
+       
+    }
 
     ngOnInit() {
         this.checkAuth();
+        const id = this.route.snapshot.paramMap.get('id');
+        this.monitorService.readById(id, this.token);
     }
 
     public toggleBoxActions() {
@@ -35,7 +48,25 @@ export class EditableComponent implements OnInit {
 
     public add() {
         this.addPolygon.enable();
+        
     }
+
+    public update(){
+        let id = Object;
+       // this.monitorService.showMessage('Operação executada com sucesso')
+       this.monitorService.update(id,this.token)
+    }
+    
+
+    
+    public read(){
+        let id  = Object;           
+                             
+        ///const res = this.monitorService.readById(id,this.token);
+       /// return res;
+        
+    }
+
 
     public enableEditing() {
         if (!this.addPolygon) {
@@ -51,6 +82,7 @@ export class EditableComponent implements OnInit {
             this.toggleBoxActions();
         }
     }
+    
 
     public finish() {
         if (this.addPolygon) {
@@ -64,9 +96,16 @@ export class EditableComponent implements OnInit {
         try {
           const response = await this.as.token(`${window['__env'].appName}:manage:POST`);
           this.authorized = true;
+
+          if (response) {
+            this.token = response.access_token;
+          }
     
         } catch(err) {
           this.authorized = false;
+          console.log('entrrou aquiiiii');
         }
       }
+      
+     
 }   

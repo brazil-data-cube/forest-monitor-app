@@ -170,9 +170,10 @@ export class EditBoxFormComponent implements OnInit {
             var layerName= `${this.workspaceGeoserver}:${destinationLayer.id}`;
             var layerStyle=`${this.workspaceGeoserver}:${destinationLayer.style}`;
             this.store.dispatch(removeLayers(['drawPolygons', className]));
-        
+
             setTimeout( _ => {
-                const layer = L.tileLayer.wms(`${this.urlGeoserver}/${this.workspaceGeoserver}/wms`, {
+                const layer = L.tileLayer.wms(`${this.urlGeoserver}/${this.workspaceGeoserver}/wms?{randint}`, {
+                    randint: (Math.floor( Math.random() * 200000 ) + 1),
                     layers: layerName,
                     format: 'image/png',
                     styles: layerStyle,
@@ -185,7 +186,7 @@ export class EditBoxFormComponent implements OnInit {
             this.closeBox();
         }
 
-        
+
     }
 
     public getCoordinates(feature) {

@@ -1,5 +1,5 @@
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ChangeDetectorRef, NgZone } from '@angular/core';
 
 import * as L from 'leaflet';
 import 'leaflet.fullscreen/Control.FullScreen.js';
@@ -10,13 +10,16 @@ import * as LE from 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.js';
 
 import { latLng, MapOptions, Layer, Map as MapLeaflet,
   LatLngBoundsExpression, Control, Draw, rectangle } from 'leaflet';
-import { BdcLayer } from './layers/layer.interface';
+import { BdcLayer, BdcOverlayer } from './layers/layer.interface';
 import { LayerService } from './layers/layer.service';
 import { Store, select } from '@ngrx/store';
 import { ExploreState } from '../explore.state';
 import { setPositionMap, setBbox, removeLayers, setLayers, removeGroupLayer, setSelectedFeatureRemove } from '../explore.action';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
+import { FeatureInfoComponent } from './feature-info/feature-info.component';
+import { MatDialog, MatDialogRef } from '@angular/material';
+
 
 /**
  * Map component
@@ -34,6 +37,7 @@ export class MapComponent implements OnInit {
   /** props with height of the map */
   @Input() height: number;
 
+
   /** pointer to reference map */
   public map: MapLeaflet;
   /** object with map settings */
@@ -42,15 +46,20 @@ export class MapComponent implements OnInit {
   public layersControl: any;
   public drawControl: Control;
   public drawnItems: L.FeatureGroup;
-  
+  public featureInfoDialog: MatDialogRef<FeatureInfoComponent>;
+
   /** bounding box of Map */
   private bbox = null;
 
   /** start Layer and Seatch Services */
   constructor(
+
     private ls: LayerService,
     private as: AuthService,
-    private store: Store<ExploreState>) {
+    private dialog: MatDialog,
+    private cdRef: ChangeDetectorRef,
+    private store: Store<ExploreState>,
+    private ngZone: NgZone) {
       this.store.pipe(select('explore')).subscribe(res => {
         // add layers
         if (Object.values(res.layers).length > 1) {
@@ -191,98 +200,31 @@ export class MapComponent implements OnInit {
    * active view/remove feature
    */
   private setViewInfo() {
-    // add  to delete feature
+    // Add context menu event
     this.map.on('contextmenu', async evt => {
-      // remove last feature polygon
-      this.store.dispatch(removeGroupLayer({
-        key: 'attribution',
-        prefix: 'feature_selected'
-      }));
-      this.store.dispatch(setSelectedFeatureRemove({ payload: null }));
 
-      // get infos point
-      const latlng = evt['latlng'];
-      const point = this.map.latLngToContainerPoint(latlng);
-      const size = this.map.getSize();
-
-      try {
-        //get infos Feature by layer (deter, mascara, prodes 18/19)
-        const responseM = await this.ls.getInfoByWMS(
-          'deter', this.map.getBounds().toBBoxString(), point.x, point.y, size.y, size.x);
-        const responseD = await this.ls.getInfoByWMS(
-          'mascara_deter', this.map.getBounds().toBBoxString(), point.x, point.y, size.y, size.x);
-        if (responseM.features.length > 0) {
-          if (responseM.features[0].properties.source === "M") {
-            // add polygon
-            const polygonLayer = new L.GeoJSON(responseM.features[0] as any, {
-              attribution: 'feature_selected'
-            }).setStyle({
-              weight: 3,
-              color: '#006666',
-              fillOpacity: 0
-            });
-            this.map.addLayer(polygonLayer);
-            if (responseM.features[0].properties) {
-              this.store.dispatch(setSelectedFeatureRemove({ payload: responseM.features[0].properties.id }));
-            }
+      //Opening dialog with get feature info from layers
+      this.ngZone.run(() => {
+        this.featureInfoDialog = this.dialog.open(FeatureInfoComponent, {
+          width: '550px',
+          height: '550px',
+          hasBackdrop: false,
+          disableClose: false,
+          closeOnNavigation: true,
+          data: {
+            latlong: evt['latlng'],
+            screenPosition: evt['containerPoint'],
+            map: this.map
           }
-          this.displayPopup('Deter', responseM.features[0].properties, latlng);
+         });
+      });
 
-        }
-        else if (responseD.features.length > 0) {
-          if (responseD.features[0].properties.source === "D") {
-            // add polygon
-            const polygonLayer = new L.GeoJSON(responseD.features[0] as any, {
-              attribution: 'feature_selected'
-            }).setStyle({
-              weight: 3,
-              color: '#006666',
-              fillOpacity: 0
-            });
-            this.map.addLayer(polygonLayer);
-            if (responseD.features[0].properties) {
-              this.store.dispatch(setSelectedFeatureRemove({ payload: responseD.features[0].properties.id }));
-            }
-          }
-          this.displayPopup('Mascara_Deter', responseD.features[0].properties, latlng);
 
-        }
-        else {
-          const responseMask = await this.ls.getInfoByWMS(
-              'mascara_prodes', this.map.getBounds().toBBoxString(), point.x, point.y, size.y, size.x);
-
-          if (responseMask.features.length > 0) {
-            this.displayPopup('mascara_prodes', responseMask.features[0].properties, latlng);
-
-          } else {
-            throw '';
-          }
-        }
-      } catch(err) {
-        this.map.closePopup();
-        return;
-      }
     });
+
   }
 
-  /**
-   * open popup with infos feature
-   */
-  public displayPopup(title, contentJSON, latlng) {
-    let content = '<table class="view_info-table">';
-    content += `<caption>${title}</caption>`;
-    Object.keys(contentJSON).forEach(key => {
-      if (key !== 'bbox') {
-        content += `<tr><td><b>${key}</b></td><td>${contentJSON[key]}</td></tr>`;
-      }
-    });
-    content += '</table>';
 
-    L.popup({ maxWidth: 800})
-      .setLatLng(latlng)
-      .setContent(content)
-      .openOn(this.map);
-  }
 
   /**
    * set the visible layers in the layer component of the map
@@ -310,26 +252,26 @@ export class MapComponent implements OnInit {
    /**
    * buscar  área por lat e lon
    */
-  private setCoordinatesLatLng(){  
-    
-     (L.Control  as any).geocoder({     
+  private setCoordinatesLatLng(){
+
+     (L.Control  as any).geocoder({
         position: 'topleft',
         expand: 'click',
         placeholder:'Ex: -7.59122,-59.34494',
         defaultMarkGeocode: false
-      }).on('markgeocode', e => {         
+      }).on('markgeocode', e => {
         this.map.setView(e.geocode.center,10);
        }).addTo(this.map);
-      
+
    }
-   
+
   /**
    * set Coordinates options in the map
    */
   private setCoordinatesControl() {
-       
+
     (L.control as any).coordinates({
-      
+
       position: 'bottomleft',
       decimals: 5,
       decimalSepergoogle_hybridator: '.',
