@@ -1,0 +1,39 @@
+.sidenav {
+    display: flex;
+    height: 100%;
+    background: #FFF;
+    overflow: auto;
+
+    .container-sidenav {
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
+        width: 399px;
+    }
+
+    /* SCROLL */
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: var(--mainBgPrimary);
+    }
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: rgba(#000, 0.2);
+        border-radius: 5px;
+    }
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: rgba(#000, 0.2);
+    }
+}
+
+@media (max-width: 1024px) {
+    .sidenav  {
+        .container-sidenav {
+            width: 330px;
+        }
+    }
+}

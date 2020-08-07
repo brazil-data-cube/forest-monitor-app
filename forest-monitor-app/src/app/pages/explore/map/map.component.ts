@@ -17,8 +17,11 @@ import { ExploreState } from '../explore.state';
 import { setPositionMap, setBbox, removeLayers, setLayers, removeGroupLayer, setSelectedFeatureRemove } from '../explore.action';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
+<<<<<<< HEAD
+=======
 import { FeatureInfoComponent } from './feature-info/feature-info.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
+>>>>>>> d8ba84412f0ff72a48c6953c88f135296b4c6023
 
 /**
  * Map component
@@ -45,9 +48,12 @@ export class MapComponent implements OnInit {
   public layersControl: any;
   public drawControl: Control;
   public drawnItems: L.FeatureGroup;
+<<<<<<< HEAD
+=======
 
   public featureInfoDialog: MatDialogRef<FeatureInfoComponent>;
   
+>>>>>>> d8ba84412f0ff72a48c6953c88f135296b4c6023
   
   /** bounding box of Map */
   private bbox = null;
@@ -203,6 +209,67 @@ export class MapComponent implements OnInit {
   private setViewInfo() {
     // Add context menu event
     this.map.on('contextmenu', async evt => {
+<<<<<<< HEAD
+      // remove last feature polygon
+      this.store.dispatch(removeGroupLayer({
+        key: 'attribution',
+        prefix: 'feature_selected'
+      }));
+      this.store.dispatch(setSelectedFeatureRemove({ payload: null }));
+
+      // get infos point
+      const latlng = evt['latlng'];
+      const point = this.map.latLngToContainerPoint(latlng);
+      const size = this.map.getSize();
+
+      
+      try {
+        var overlayers = this.ls.getOverlayers();
+        //get infos Feature by layer (From all Layers)
+        for (let i = overlayers.length-1; i >= 0; i--) {
+          let layer = overlayers[i];
+          const response = await this.ls.getInfoByWMS(
+            layer.id, this.map.getBounds().toBBoxString(), point.x, point.y, size.y, size.x);
+          
+            if (response.features.length > 0) {
+  
+              // add polygon
+              const polygonLayer = new L.GeoJSON(response.features[0] as any, {
+                attribution: 'feature_selected'
+              }).setStyle({
+                weight: 3,
+                color: '#006666',
+                fillOpacity: 0
+              });
+              this.map.addLayer(polygonLayer);
+              if (response.features[0].properties) {
+                this.store.dispatch(setSelectedFeatureRemove({ payload: response.features[0].properties.id }));
+              }
+              
+              this.displayPopup(layer.name, response.features[0].properties, latlng);
+              break;
+            }
+  
+        }
+       
+      } catch(err) {
+        this.map.closePopup();
+        return;
+      }
+    });
+  }
+
+  /**
+   * open popup with infos feature
+   */
+  public displayPopup(title, contentJSON, latlng) {
+    let content = '<table class="view_info-table">';
+    content += `<caption>${title}</caption>`;
+    Object.keys(contentJSON).forEach(key => {
+      if (key !== 'bbox') {
+        content += `<tr><td><b>${key}</b></td><td>${contentJSON[key]}</td></tr>`;
+      }
+=======
 
 
       //Opening dialog with get feature info from layers
@@ -221,6 +288,7 @@ export class MapComponent implements OnInit {
          });
       });
      
+>>>>>>> d8ba84412f0ff72a48c6953c88f135296b4c6023
     });
 
   }

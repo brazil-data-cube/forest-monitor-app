@@ -2,10 +2,19 @@
     <mat-icon>add</mat-icon>
 </div>
 
+
 <div class="actions" *ngIf="showActions">
     <button (click)="add()">
         Add
     </button>
+    <button [routerLink]="['/updated/']"  (click)="update()">
+        Update
+    </button>
+    <button (click)="read()" >
+        VVER
+    </button>
+
+    
     <button (click)="finish()">
         Finish
     </button>
@@ -16,3 +25,6 @@
     (toggleToEmit)="closeBoxEdit()"
     *ngIf="showBoxForm">
 </app-edit-boxform>
+
+
+    
