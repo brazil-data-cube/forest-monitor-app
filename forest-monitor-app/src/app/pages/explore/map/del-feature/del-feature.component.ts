@@ -50,7 +50,8 @@ export class DelFeatureComponent implements OnInit {
             this.store.dispatch(removeLayers(['overlayers_deter']));
 
             setTimeout( _ => {
-                const layer = L.tileLayer.wms(`${this.urlGeoserver}/${this.workspaceGeoserver}/wms`, {
+                const layer = L.tileLayer.wms(`${this.urlGeoserver}/${this.workspaceGeoserver}/wms?{randint}`, {
+                    randint: (Math.floor( Math.random() * 200000 ) + 1),
                     layers: `${this.workspaceGeoserver}:deter`,
                     format: 'image/png',
                     styles: `${this.workspaceGeoserver}:class_deter`,
@@ -60,7 +61,7 @@ export class DelFeatureComponent implements OnInit {
                 } as any).setZIndex(9999);
                 this.store.dispatch(setLayers([L.layerGroup([layer])]));
 
-                this.snackBar.open('Polygon deleted!', '', {
+                this.snackBar.open('Feature deleted!', '', {
                     duration: 3000,
                     verticalPosition: 'top',
                     horizontalPosition: 'center',
@@ -81,7 +82,7 @@ export class DelFeatureComponent implements OnInit {
             });
 
         } catch(err) {
-            this.snackBar.open('Error in deleted polygon!', '', {
+            this.snackBar.open('Error deleting Feature!', '', {
                 duration: 3000,
                 verticalPosition: 'top',
                 horizontalPosition: 'center',
