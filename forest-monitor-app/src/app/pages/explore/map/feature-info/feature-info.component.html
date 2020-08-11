@@ -1,7 +1,7 @@
   <div class="feature-info-div">
 
     <div class="layer-content">
-      
+
       <header mat-dialog-title cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
         <div class="row layer-header-row">
           <div class="col-md-11">
@@ -13,7 +13,7 @@
             </button>
           </div>
         </div>
-  
+
       </header>
 
       <div *ngIf="layersData.length==0" >
@@ -21,9 +21,9 @@
         No features were found...
         <br><br>
       </div>
-  
+
       <div class="feature-content" *ngIf="layersData.length>0">
-   
+
         <div id="accordion">
           <div class="card" *ngFor="let layerData of layersData; let i = index;">
             <div class="card-header" id="heading{{i}}">
@@ -48,7 +48,7 @@
                 </div>
               </h5>
             </div>
-  
+
             <div id="collapse{{i}}" class="collapse {{ i==0 ? 'show' : ''}}" attr.aria-labelledby="heading{{i}}"
               attr.data-parent="#accordion">
               <div class="card-body">
@@ -58,12 +58,12 @@
                     <th scope="col"> Value </th>
                   </tr>
                   <tr *ngFor="let featureProperty of layerData.featureProperties">
-  
+
                     <td scope="row"> {{featureProperty.name}} </td>
                     <td> {{featureProperty.value}} </td>
                   </tr>
-  
-  
+
+
                 </table>
               </div>
             </div>

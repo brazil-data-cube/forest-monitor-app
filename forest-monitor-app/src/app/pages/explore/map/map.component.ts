@@ -47,13 +47,13 @@ export class MapComponent implements OnInit {
   public drawControl: Control;
   public drawnItems: L.FeatureGroup;
   public featureInfoDialog: MatDialogRef<FeatureInfoComponent>;
-  
+
   /** bounding box of Map */
   private bbox = null;
-  
+
   /** start Layer and Seatch Services */
   constructor(
-    
+
     private ls: LayerService,
     private as: AuthService,
     private dialog: MatDialog,
@@ -207,25 +207,25 @@ export class MapComponent implements OnInit {
       this.ngZone.run(() => {
         this.featureInfoDialog = this.dialog.open(FeatureInfoComponent, {
           width: '550px',
-          height: '550px',  
+          height: '550px',
           hasBackdrop: false,
           disableClose: false,
           closeOnNavigation: true,
-          data: { 
+          data: {
             latlong: evt['latlng'],
             screenPosition: evt['containerPoint'],
             map: this.map
           }
          });
       });
-     
+
 
     });
 
   }
 
- 
-  
+
+
   /**
    * set the visible layers in the layer component of the map
    */
@@ -252,26 +252,26 @@ export class MapComponent implements OnInit {
    /**
    * buscar  área por lat e lon
    */
-  private setCoordinatesLatLng(){  
-    
-     (L.Control  as any).geocoder({     
+  private setCoordinatesLatLng(){
+
+     (L.Control  as any).geocoder({
         position: 'topleft',
         expand: 'click',
         placeholder:'Ex: -7.59122,-59.34494',
         defaultMarkGeocode: false
-      }).on('markgeocode', e => {         
+      }).on('markgeocode', e => {
         this.map.setView(e.geocode.center,10);
        }).addTo(this.map);
-      
+
    }
-   
+
   /**
    * set Coordinates options in the map
    */
   private setCoordinatesControl() {
-       
+
     (L.control as any).coordinates({
-      
+
       position: 'bottomleft',
       decimals: 5,
       decimalSepergoogle_hybridator: '.',

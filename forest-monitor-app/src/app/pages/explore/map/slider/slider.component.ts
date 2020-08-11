@@ -63,9 +63,9 @@ export class SliderComponent {
 
         // insert first step/period
         this.steps.unshift(new Date(res.rangeTemporal['0']));
-        // remove last period of sllider    
+        // remove last period
         this.steps.pop();
-        
+        this.steps.pop();
 
         // update infos to display
         this.value = this.value ? this.value : this.steps[0];
@@ -76,13 +76,11 @@ export class SliderComponent {
           floor: this.steps[0].getTime(),
           ceil: this.steps[this.steps.length-1].getTime(),
           stepsArray: this.steps.map((date: Date) => {
-
             return { value: date.getTime() };
           }),
           translate: (value: number, _: LabelType): string => {
             return `${this.formatDate(value)}`
-          },
-         
+          }
         };
 
         setTimeout( _ => {
