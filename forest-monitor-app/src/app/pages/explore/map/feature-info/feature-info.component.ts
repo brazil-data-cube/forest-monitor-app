@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, NgModule, Inject, Optional, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, NgModule, Inject, Optional, ChangeDetectorRef, NgZone } from '@angular/core';
 import { LayerService } from '../layers/layer.service';
 import { latLng, MapOptions, Layer, Map as MapLeaflet,
   LatLngBoundsExpression, Control, Draw, rectangle, LatLngLiteral } from 'leaflet';
@@ -31,7 +31,8 @@ export class FeatureInfoComponent implements OnInit
    private cdRef: ChangeDetectorRef,
     private ls: LayerService,
     private dialog: MatDialog,
-    private focusMonitor: FocusMonitor)
+    private focusMonitor: FocusMonitor,
+    private ngZone: NgZone)
   {
     this.latlong=data.latlong;
     this.screenPosition=data.screenPosition;
@@ -120,8 +121,8 @@ export class FeatureInfoComponent implements OnInit
   {
     let editFeature = this.dialog.open(EditBoxFormComponent,
       {
-        width: '400px',
-        height: '200px',
+        width: '360px',
+        height: '320px',
         data: { 
           featureId: featureId
         }
@@ -129,7 +130,7 @@ export class FeatureInfoComponent implements OnInit
       editFeature.afterClosed().subscribe(result => {
         if(result==true)
         {
-          this.close();
+          this.close()
         }
       });
   } 

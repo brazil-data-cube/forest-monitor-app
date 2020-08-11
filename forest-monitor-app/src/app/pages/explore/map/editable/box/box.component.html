@@ -1,5 +1,5 @@
-<div class="box-edit-form" cdkDrag>
-    <header cdkDragHandle>
+<div class="box-edit-form">
+    <header mat-dialog-title cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
         <h1>Add new Feature</h1>
     </header>
 
@@ -33,7 +33,7 @@
         </div>
 
         <div class="box-button">
-            <button mat-stroked-button type="button" (click)="closeBox()">
+            <button mat-stroked-button type="button" (click)="close(false)">
                 <mat-icon>close</mat-icon>
                 Close
             </button>

@@ -1,17 +1,15 @@
 .box-edit-form {
     position: absolute;
-    right: 0;
-    top: 230px;
     border-top: 2px solid #CCC;
     border-left: 2px solid #CCC;
     border-bottom: 2px solid #CCC;
+    border-right: 2px solid #CCC;
     width: 300px;
-    bottom: 0;
     z-index: 1000;
     background: #FFF;
-    border-radius: 5px 0 0 5px;
+    border-radius: 5px 5px 5px 5px;
     padding: 10px;
-    max-height: 250px;
+    max-height: 300px;
     overflow: auto;
 
     h1 {

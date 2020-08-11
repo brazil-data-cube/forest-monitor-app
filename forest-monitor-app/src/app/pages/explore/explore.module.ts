@@ -110,7 +110,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   entryComponents: [
     FeatureInfoComponent,
-    DelFeatureComponent
+    DelFeatureComponent,
+    EditBoxFormComponent
   ]
 })
 export class ExploreModule { }

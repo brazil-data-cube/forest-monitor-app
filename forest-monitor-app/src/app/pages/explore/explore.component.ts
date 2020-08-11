@@ -38,6 +38,7 @@ export class ExploreComponent implements OnInit, AfterViewInit {
     private store: Store<AuthState>,
     private as: AuthService,
     public router: Router) {
+
     this.store.pipe(select('auth')).subscribe(res => {
       if (!res.userId || !res.token) {
         this.router.navigate(['/auth/login']);

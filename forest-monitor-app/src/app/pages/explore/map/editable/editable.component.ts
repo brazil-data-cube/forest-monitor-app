@@ -5,6 +5,8 @@ import * as L from 'leaflet';
 import { Map as MapLeaflet } from 'leaflet';
 import { AuthService } from 'src/app/pages/auth/auth.service';
 import { resolveSanitizationFn } from '@angular/compiler/src/render3/view/template';
+import { MatDialog } from '@angular/material';
+import { EditBoxFormComponent } from './box/box.component';
 
 
 @Component({
@@ -28,7 +30,8 @@ export class EditableComponent implements OnInit {
 
     constructor(private as: AuthService, 
         private monitorService: MonitorService,
-        private route: ActivatedRoute) 
+        private route: ActivatedRoute,
+        private dialog: MatDialog) 
     {
        
     }
@@ -52,23 +55,6 @@ export class EditableComponent implements OnInit {
         
     }
 
-    public update(){
-        let id = Object;
-       // this.monitorService.showMessage('Operação executada com sucesso')
-       this.monitorService.update(id,this.token)
-    }
-    
-
-    
-    public read(){
-        let id  = Object;           
-                             
-        ///const res = this.monitorService.readById(id,this.token);
-       /// return res;
-        
-    }
-
-
     public enableEditing() {
         if (!this.addPolygon) {
             this.addPolygon = new L.Draw.Polygon(this.map, this.drawControl.options.polygon);
@@ -90,7 +76,19 @@ export class EditableComponent implements OnInit {
             this.addPolygon.disable();
         }
         this.toggleBoxActions();
-        this.showBoxForm = true;
+        this.showEditFeature();
+    }
+
+    public showEditFeature()
+    {
+        let editFeature = this.dialog.open(EditBoxFormComponent,
+            {
+              width: '360px',
+              height: '320px',
+              data: { 
+                drawnItems: this.drawnItems
+              }
+            });
     }
 
     public async checkAuth() {

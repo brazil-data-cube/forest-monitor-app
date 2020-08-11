@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output, OnInit, Input, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatSnackBar, DateAdapter, MAT_DATE_FORMATS, MAT_DIALOG_DATA } from '@angular/material';
+import { MatSnackBar, DateAdapter, MAT_DATE_FORMATS, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ExploreState } from '../../../explore.state';
 import { Store, select } from '@ngrx/store';
 import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/shared/helpers/date.adapter';
@@ -50,6 +50,8 @@ export class EditBoxFormComponent implements OnInit {
 
     private featureId = null;
 
+    private feature = null;
+
     private token = '';
 
     constructor(
@@ -59,8 +61,11 @@ export class EditBoxFormComponent implements OnInit {
         private ms: MonitorService,
         private monitorService: MonitorService,
         private ls: LayerService,
+        private dialogRef: MatDialogRef<EditBoxFormComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
         private fb: FormBuilder) {
+            
+
           this.store.pipe(select('explore')).subscribe(res => {
               if(res.featuresPeriod) {
                 const features = Object.values(res.featuresPeriod).slice(0, (Object.values(res.featuresPeriod).length - 1)) as object[];
@@ -90,10 +95,22 @@ export class EditBoxFormComponent implements OnInit {
             class: ['', [Validators.required]]
           });
 
-          //If data isn't null, it's an update
+          
           if(data!=null)
           {
-            this.featureId = data.featureId; 
+            if(data.drawnItems)
+            {
+                //If drawnItems isn't null, it's an insert
+                this.drawnItems = data.drawnItems;    
+            }
+            else
+            {
+                //If featureId isn't null, it's an update
+                this.featureId = data.featureId; 
+
+                this.loadCurrentFeature();
+    
+            }
           }
         }
 
@@ -110,11 +127,9 @@ export class EditBoxFormComponent implements OnInit {
         }
     }
 
-    /**
-     * emit event to close box edit form
-     */
-    public closeBox() {
-        this.toggleToEmit.emit();
+    close(sucess:boolean)
+    {
+      this.dialogRef.close(sucess);
     }
 
     public async submit() {
@@ -130,30 +145,59 @@ export class EditBoxFormComponent implements OnInit {
                     });
 
                 } else {
-                    const polygonEdited = turf.multiPolygon(this.drawnItems.toGeoJSON()['features'].map( f => f.geometry.coordinates ));
-                    const polygonScene = this.getCoordinates(feature[0]);
-                    const intersection = intersect(polygonEdited, polygonScene);
 
-                    const objToSend = {
-                        view_date: formatDateUSA(this.obj['viewDate']),
-                        classname: this.obj['class'],
-                        quadrant: this.obj['quadrant'] || null,
-                        path_row: getPathRow(feature[0]),
-                        satellite: getSatellite(feature[0]),
-                        sensor: getSensor(feature[0]),
-                        areauckm: this.obj['areauckm'] || null,
-                        uc: this.obj['uc'] || null,
-                        areamunkm: this.obj['areamunkm'] || null,
-                        municipali: this.obj['city'] || null,
-                        uf: this.obj['uf'] || null,
-                        image_date: formatDateUSA(new Date(feature[0]['properties']['datetime'])),
-                        scene_id: feature[0]['id'],
-                        project: `${window['__env'].appName}`,
-                        geom: { "type": "FeatureCollection", "features": [intersection] }
+                    if(this.featureId==null)
+                    {
+                        //Inserting new feature
+                        const polygonEdited = turf.multiPolygon(this.drawnItems.toGeoJSON()['features'].map( f => f.geometry.coordinates ));
+                        const polygonScene = this.getCoordinates(feature[0]);
+                        const intersection = intersect(polygonEdited, polygonScene);
+    
+                        const objToSend = {
+                            view_date: formatDateUSA(this.obj['viewDate']),
+                            classname: this.obj['class'],
+                            quadrant: this.obj['quadrant'] || null,
+                            path_row: getPathRow(feature[0]),
+                            satellite: getSatellite(feature[0]),
+                            sensor: getSensor(feature[0]),
+                            areauckm: this.obj['areauckm'] || null,
+                            uc: this.obj['uc'] || null,
+                            areamunkm: this.obj['areamunkm'] || null,
+                            municipali: this.obj['city'] || null,
+                            uf: this.obj['uf'] || null,
+                            image_date: formatDateUSA(new Date(feature[0]['properties']['datetime'])),
+                            scene_id: feature[0]['id'],
+                            project: `${window['__env'].appName}`,
+                            geom: { "type": "FeatureCollection", "features": [intersection] }
+                        }
+
+                        const response = await this.ms.add(objToSend, this.token);
                     }
-                    const response = await this.ms.add(objToSend, this.token);
+                    else
+                    {
+                        //Editing new feature
+                        const objToSend = {
+                            view_date: formatDateUSA(this.obj['viewDate']),
+                            classname: this.obj['class'],
+                            quadrant: this.obj['quadrant'] || null,
+                            path_row: getPathRow(feature[0]),
+                            satellite: getSatellite(feature[0]),
+                            sensor: getSensor(feature[0]),
+                            areauckm: this.obj['areauckm'] || null,
+                            uc: this.obj['uc'] || null,
+                            areamunkm: this.obj['areamunkm'] || null,
+                            municipali: this.obj['city'] || null,
+                            uf: this.obj['uf'] || null,
+                            image_date: formatDateUSA(new Date(feature[0]['properties']['datetime'])),
+                            scene_id: feature[0]['id'],
+                            project: `${window['__env'].appName}`                            
+                        }
 
-                    this.snackBar.open('Polygon added!', '', {
+                        const response = await this.ms.update(this.featureId, objToSend, this.token);
+                    }
+
+                    
+                    this.snackBar.open('Feature added!', '', {
                         duration: 3000,
                         verticalPosition: 'top',
                         panelClass: 'app_snack-bar-success'
@@ -162,7 +206,7 @@ export class EditBoxFormComponent implements OnInit {
                 }
             }
         } catch(err) {
-            this.snackBar.open('Error in added polygon!', '', {
+            this.snackBar.open('Error inserting Feature!', '', {
                 duration: 3000,
                 verticalPosition: 'top',
                 panelClass: 'app_snack-bar-error'
@@ -193,7 +237,7 @@ export class EditBoxFormComponent implements OnInit {
                 } as any).setZIndex(9999);
                 this.store.dispatch(setLayers([layerGroup([layer])]));
             });
-            this.closeBox();
+            this.close(true);
         }
 
         
@@ -207,7 +251,7 @@ export class EditBoxFormComponent implements OnInit {
         }
     }
 
-    public async getAuthorizeToken() {
+    public async getAuthorizeToken()  {
         try {
             const response = await this.as.token(`${window['__env'].appName}:manage:POST`);
             if (response) {
@@ -216,8 +260,35 @@ export class EditBoxFormComponent implements OnInit {
           } catch (err) {}
     }
 
-    public async getCurrentFeature()
+    public async loadCurrentFeature()
     {
-        this.monitorService.readById(this.featureId, this.token);
+        try 
+        {
+            this.as.token(`${window['__env'].appName}:manage:POST`).then(response => {
+                this.token = response.access_token;
+                this.monitorService.readById(this.featureId, this.token).then(featureResponse => {
+                    this.feature = JSON.parse(featureResponse);
+                    if(this.feature)
+                    {
+                        this.obj = {
+                            viewDate: new Date(),
+                            class: this.feature.classname
+                        }
+                        this.formEdit = this.fb.group({
+                            viewDate: [formatDateUSA(new Date()), [Validators.required]], 
+                            class: [this.feature.classname, [Validators.required]]
+                          });
+                    }
+                    
+                });
+                
+            })
+
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
     }
+
 }

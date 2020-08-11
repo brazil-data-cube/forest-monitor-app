@@ -23,7 +23,7 @@ export class MonitorService {
 
     }
     public async add(data: object, token: string): Promise<any> {
-        const urlSuffix = `/monitor/`;
+        const urlSuffix = `/monitor/add`;
         const response = await this.http.post(`${this.urlForestAPI}${urlSuffix}`, data, {
            
             headers: {
@@ -35,7 +35,7 @@ export class MonitorService {
     }
 
     public async del(id: object, token: string): Promise<any> {
-        const urlSuffix = `/monitor/${id}`;
+        const urlSuffix = `/monitor/delete/${id}`;
         console.log(urlSuffix);
         
         const response = await this.http.delete(`${this.urlForestAPI}${urlSuffix}`, {
@@ -50,7 +50,7 @@ export class MonitorService {
 
     public async readById( id:string,  token: string): Promise<any> {
         
-        const urlSuffix = `/monitor/${id}`;
+        const urlSuffix = `/monitor/get/${id}`;
         const response = await this.http.get(`${this.urlForestAPI}${urlSuffix}`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -58,10 +58,10 @@ export class MonitorService {
             }).toPromise();
         return response;
     }
-    public async update(id: object, token: string): Promise<any> {
+    public async update(id: string, data:object, token: string): Promise<any> {
         
-        const urlSuffix = `/monitor/${id}`;
-        const response = await this.http.put(`${this.urlForestAPI}${urlSuffix}`, {
+        const urlSuffix = `/monitor/update/${id}`;
+        const response = await this.http.post(`${this.urlForestAPI}${urlSuffix}`, data, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

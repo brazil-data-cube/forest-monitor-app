@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: 'explore', component: ExploreComponent },
   { path: 'auth', loadChildren: './pages/auth/auth.module#AuthModule'},
   { path: '*', redirectTo: 'auth/login', pathMatch: 'full' },
-  { path: '**', redirectTo: 'explore', pathMatch: 'full' }
+  { path: '**', redirectTo: 'auth/login', pathMatch: 'full' }
 ];
 
 /**
