@@ -54,6 +54,8 @@ export class EditBoxFormComponent implements OnInit {
 
     private token = '';
 
+    public headerTitle = '';
+
     constructor(
         private snackBar: MatSnackBar,
         private as: AuthService,
@@ -101,13 +103,14 @@ export class EditBoxFormComponent implements OnInit {
             if(data.drawnItems)
             {
                 //If drawnItems isn't null, it's an insert
-                this.drawnItems = data.drawnItems;    
+                this.drawnItems = data.drawnItems;
+                this.headerTitle = 'Add new Feature';
             }
             else
             {
                 //If featureId isn't null, it's an update
                 this.featureId = data.featureId; 
-
+                this.headerTitle = 'Edit Feature';
                 this.loadCurrentFeature();
     
             }
