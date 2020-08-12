@@ -19,6 +19,7 @@ This software needs some environment variables set to run correctly.
 
 ### Application Startup variables
 
+```
 URL_GEOSERVER - URL to geoserver
 BASE_PATH - Web path inside the container server
 WORKSPACE_GEOSERVER - Geoserver Workspace to get layer and styles
@@ -34,10 +35,11 @@ URL_OAUTH - URL to oauth api
 URL_OAUTH_APP - URL to oauth APP
 API_KEY - Planet API Key
 GEOSERVER_LAYERS - GeoServer Layers on JSON Format.
+```
 
 ### GeoServer Layer JSON Format
-
-"[ {
+```
+[ {
         id: 'layer1',
         enabled: true,
         name: 'Layer 1',
@@ -53,7 +55,8 @@ GEOSERVER_LAYERS - GeoServer Layers on JSON Format.
         filter: false,
         style: 'layer2_style'
     }
-]"
+]
+```
 
 ### Startup Script
 
