@@ -45,10 +45,7 @@ export const BaseLayers: BdcLayer[] = [
       name: 'OSM',
       layer: tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-         subdomains: ['a','b','c']
-        
-        
-
+         ///subdomains: ['a','b','c']
       }),
    },
    {

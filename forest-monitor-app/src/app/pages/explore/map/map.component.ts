@@ -67,7 +67,7 @@ export class MapComponent implements OnInit {
           lyrs.forEach( l => {
             if (l['options'].className) {
               if (l['options'].className.indexOf(`qls_`) >= 0) {
-                (l as L.TileLayer).setZIndex(9000);
+                (l as L.TileLayer).setZIndex(3);
               }
             }
             this.map.addLayer(l);
