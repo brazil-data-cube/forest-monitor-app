@@ -7,6 +7,8 @@ import { MatSnackBar, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MonitorService } from '../monitor.service';
 import * as L from 'leaflet';
 import { FeatureInfoComponent } from '../feature-info/feature-info.component';
+import { LayerService } from '../layers/layer.service';
+import { layerGroup } from 'leaflet';
 
 @Component({
     selector: 'app-map-del-feature',
@@ -18,6 +20,7 @@ export class DelFeatureComponent implements OnInit {
     public featureId = null;
     public authorized = false;
     private token = null; 
+    public opacity = 1.0;
 
     /** base url of geoserver */
     private urlGeoserver = window['__env'].urlGeoserver;
@@ -27,6 +30,7 @@ export class DelFeatureComponent implements OnInit {
         private as: AuthService,
         private snackBar: MatSnackBar,
         private ms: MonitorService,
+        private ls: LayerService,
         private store: Store<ExploreState>,
         private ref: ChangeDetectorRef,
         private dialogRef: MatDialogRef<DelFeatureComponent>,
@@ -37,6 +41,8 @@ export class DelFeatureComponent implements OnInit {
             this.checkAuth(); 
             this.featureId=data.featureId;
         }
+
+        
     }
 
     ngOnInit() {
@@ -47,39 +53,7 @@ export class DelFeatureComponent implements OnInit {
         try {
             let response = await this.ms.del(this.featureId, this.token);
 
-            this.store.dispatch(removeLayers(['overlayers_deter']));
-
-            setTimeout( _ => {
-                const layer = L.tileLayer.wms(`${this.urlGeoserver}/${this.workspaceGeoserver}/wms?{randint}`, {
-                    randint: (Math.floor( Math.random() * 200000 ) + 1),
-                    layers: `${this.workspaceGeoserver}:deter`,
-                    format: 'image/png',
-                    styles: `${this.workspaceGeoserver}:class_deter`,
-                    transparent: true,
-                    className: `overlayers_deter`,
-                    env: `opacity:1.0`
-                } as any).setZIndex(9999);
-                this.store.dispatch(setLayers([L.layerGroup([layer])]));
-
-                this.snackBar.open('Feature deleted!', '', {
-                    duration: 3000,
-                    verticalPosition: 'top',
-                    horizontalPosition: 'center',
-                    panelClass: 'app_snack-bar-success'
-                });
-                // remove last feature polygon
-                this.store.dispatch(removeGroupLayer({
-                    key: 'attribution',
-                    prefix: 'feature_selected'
-                }));
-                this.store.dispatch(setSelectedFeatureRemove({ payload: null }));
-
-                setTimeout( _ => {
-                    
-                  this.dialogRef.close(true);
-                  
-                });
-            });
+            this.clear();
 
         } catch(err) {
             this.snackBar.open('Error deleting Feature!', '', {
@@ -89,6 +63,46 @@ export class DelFeatureComponent implements OnInit {
                 panelClass: 'app_snack-bar-error'
             });
         }
+
+    }
+
+    private clear() {
+
+        this.store.dispatch(removeLayers(['overlayers_deter']));
+
+        var destinationLayer = this.ls.getDestinationOverlayer();
+
+        if(destinationLayer!=null)
+        {
+            var className= `overlayers_${destinationLayer.id}`;
+            var layerName= `${this.workspaceGeoserver}:${destinationLayer.id}`;
+            var layerStyle=`${this.workspaceGeoserver}:${destinationLayer.style}`;
+            this.store.dispatch(removeLayers(['drawPolygons', className]));
+
+            setTimeout( _ => {
+                const layer = L.tileLayer.wms(`${this.urlGeoserver}/${this.workspaceGeoserver}/wms?{randint}`, {
+                    randint: (Math.floor( Math.random() * 200000 ) + 1),
+                    layers: layerName,
+                    format: 'image/png',
+                    styles: layerStyle,
+                    transparent: true,
+                    className: className,
+                    env: `opacity:${this.opacity.toString()}`
+                } as any).setZIndex(9999);
+                this.store.dispatch(setLayers([layerGroup([layer])]));
+
+                this.snackBar.open('Feature deleted!', '', {
+                             duration: 3000,
+                             verticalPosition: 'top',
+                             horizontalPosition: 'center',
+                             panelClass: 'app_snack-bar-success'
+                        });
+
+                this.close(true);
+            });
+            
+        }
+
 
     }
 
@@ -103,8 +117,8 @@ export class DelFeatureComponent implements OnInit {
         }
       }
 
-      public close()
+      public close(bool: boolean)
       {
-        this.dialogRef.close(false);
+        this.dialogRef.close(bool);
       }
 }

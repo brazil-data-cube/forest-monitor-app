@@ -175,6 +175,12 @@ export class EditBoxFormComponent implements OnInit {
                         }
 
                         const response = await this.ms.add(objToSend, this.token);
+
+                        this.snackBar.open('Feature added!', '', {
+                            duration: 3000,
+                            verticalPosition: 'top',
+                            panelClass: 'app_snack-bar-success'
+                        });
                     }
                     else
                     {
@@ -197,14 +203,16 @@ export class EditBoxFormComponent implements OnInit {
                         }
 
                         const response = await this.ms.update(this.featureId, objToSend, this.token);
+
+                        this.snackBar.open('Feature edited!', '', {
+                            duration: 3000,
+                            verticalPosition: 'top',
+                            panelClass: 'app_snack-bar-success'
+                        });
                     }
 
                     
-                    this.snackBar.open('Feature added!', '', {
-                        duration: 3000,
-                        verticalPosition: 'top',
-                        panelClass: 'app_snack-bar-success'
-                    });
+            
                     this.clear();
                 }
             }

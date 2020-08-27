@@ -54,7 +54,7 @@ export class FeatureInfoComponent implements OnInit
      try {
        var overlayers = this.ls.getOverlayers();
        //get infos Feature by layer (From all Layers)
-       for (let i = overlayers.length-1; i >= 0; i--) {
+       for (let i = overlayers.length-1; i > -1; i--) {
          let layer = overlayers[i];
          const response = await this.ls.getInfoByWMS(
            layer.id, this.map.getBounds().toBBoxString(), point.x, point.y, size.y, size.x);
