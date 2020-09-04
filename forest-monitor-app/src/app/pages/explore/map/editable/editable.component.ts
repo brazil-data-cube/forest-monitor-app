@@ -26,14 +26,13 @@ export class EditableComponent implements OnInit {
     public showBoxForm = false;
     public authorized = false;
     private token = '';
-   
 
-    constructor(private as: AuthService, 
+    constructor(private as: AuthService,
         private monitorService: MonitorService,
         private route: ActivatedRoute,
-        private dialog: MatDialog) 
+        private dialog: MatDialog)
     {
-       
+
     }
 
     ngOnInit() {
@@ -52,14 +51,18 @@ export class EditableComponent implements OnInit {
 
     public add() {
         this.addPolygon.enable();
-        
+    }
+
+    public complete() {
+      this.addPolygon.completeShape();
+      this.addPolygon.enable();
     }
 
     public enableEditing() {
         if (!this.addPolygon) {
-            this.addPolygon = new L.Draw.Polygon(this.map, this.drawControl.options.polygon);
-            this.addPolygon.enable();
-            this.toggleBoxActions();
+          this.addPolygon = new L.Draw.Polygon(this.map, this.drawControl.options.polygon);
+          this.addPolygon.enable();
+          this.toggleBoxActions();
         } else {
             if (this.showActions) {
                 this.addPolygon.disable();
@@ -69,7 +72,6 @@ export class EditableComponent implements OnInit {
             this.toggleBoxActions();
         }
     }
-    
 
     public finish() {
         if (this.addPolygon) {
@@ -85,7 +87,7 @@ export class EditableComponent implements OnInit {
             {
               width: '360px',
               height: '320px',
-              data: { 
+              data: {
                 drawnItems: this.drawnItems
               }
             });
@@ -99,11 +101,11 @@ export class EditableComponent implements OnInit {
           if (response) {
             this.token = response.access_token;
           }
-    
+
         } catch(err) {
           this.authorized = false;
         }
       }
-      
-     
-}   
+
+
+}
