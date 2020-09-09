@@ -61,13 +61,13 @@ export class MapComponent implements OnInit {
     private store: Store<ExploreState>,
     private ngZone: NgZone) {
       this.store.pipe(select('explore')).subscribe(res => {
-        // add layers
+        // add layers, Leaflet Layer Orders (setZIndex)
         if (Object.values(res.layers).length > 1) {
           const lyrs = Object.values(res.layers).slice(0, (Object.values(res.layers).length - 1)) as Layer[];
           lyrs.forEach( l => {
             if (l['options'].className) {
               if (l['options'].className.indexOf(`qls_`) >= 0) {
-                (l as L.TileLayer).setZIndex(3);
+                (l as L.TileLayer).setZIndex(8);
               }
             }
             this.map.addLayer(l);
