@@ -9,7 +9,7 @@ export const satsens = ['CBERS-4:WFI', 'CBERS-4:MUX', 'SENTINEL-2:MSI', 'LANDSAT
 export const collectionKeyByCollection = {
     'landsat': 'landsat-8-l1',
     'sentinel': 'sentinel-2-l1c',
-    'cbers': ['cbers4mux', 'cbers4awfi'],
+    'cbers': ['CBERS4-MUX', 'CBERS4-AWFI'],
     'planet': 'global_monthly'
 };
 
@@ -45,10 +45,17 @@ export function getPathRow(f) {
  * GET SENSOR
  */
 export function getSensor(f) {
-    const eoInstrument = f['properties']['eo:instrument'];
+    let eoInstrument = f['properties']['eo:instrument'];
 
     if (!eoInstrument)
+    {
+        eoInstrument = f['properties']['instruments'];
+    }
+
+    if (!eoInstrument)
+    {
         return "";
+    }
 
     return eoInstrument.toString().substring(0, 4).replace('AWFI', 'WFI').substring(0,3);
 }
@@ -79,12 +86,12 @@ export const defaultRGBBands = {
         green: '5',
         blue: '4'
     },
-    'CBERS4MUX': {
+    'CBERS4-MUX': {
         red: '6',
         green: '8',
         blue: '7'
     },
-    'CBERS4AWFI': {
+    'CBERS4-AWFI': {
         red: '14',
         green: '16',
         blue: '15'
@@ -94,8 +101,8 @@ export const defaultRGBBands = {
 export const bandsBySensor = {
     'sentinel-2-l1c': ['01', '02', '03', '04', '05', '06', '07', '08', '8A', '09', '10', '11', '12'],
     'landsat-8-l1': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', 'QA'],
-    'CBERS4MUX': ['5', '6', '7', '8'],
-    'CBERS4AWFI': ['13', '14', '15', '16']
+    'CBERS-4MUX': ['5', '6', '7', '8'],
+    'CBERS-4AWFI': ['13', '14', '15', '16']
 }
 export const destinationLayerIdField = "id";
 
