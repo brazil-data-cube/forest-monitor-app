@@ -8,6 +8,7 @@ import { FocusMonitor } from '@angular/cdk/a11y';
 import { destinationLayerIdField } from 'src/app/shared/helpers/CONSTS';
 import { DelFeatureComponent } from '../del-feature/del-feature.component';
 import { EditBoxFormComponent } from '../editable/box/box.component';
+import {  MapComponent } from '../map.component'
 
 @Component({
   selector: 'app-feature-info',
@@ -40,11 +41,13 @@ export class FeatureInfoComponent implements OnInit
     
     this.layersData=[];
     this.getFeaturesInfo();
+    
 
-   }
+   } 
+  
 
   ngOnInit() {
-  }
+  }  
 
   async getFeaturesInfo()
   {
@@ -70,6 +73,7 @@ export class FeatureInfoComponent implements OnInit
               {
                 name: key,
                 value: response.features[0].properties[key]
+               
                
               }
               properties.push(property);

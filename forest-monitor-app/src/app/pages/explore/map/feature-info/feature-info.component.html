@@ -15,6 +15,9 @@
         </div>
 
       </header>
+      <div id='latlng'>
+        <p> {{data.latlong}}</p>
+      </div>
 
       <div *ngIf="layersData.length==0" >
         <br><br>
@@ -48,7 +51,7 @@
                 </div>
               </h5>
             </div>
-
+         
             <div id="collapse{{i}}" class="collapse {{ i==0 ? 'show' : ''}}" attr.aria-labelledby="heading{{i}}"
               attr.data-parent="#accordion">
               <div class="card-body">
@@ -60,16 +63,21 @@
                   <tr *ngFor="let featureProperty of layerData.featureProperties">
 
                     <td scope="row"> {{featureProperty.name}} </td>
-                    <td> {{featureProperty.value}} </td>
-                  </tr>
+                    <td> {{featureProperty.value}} </td>        
 
-
-                </table>
+                  </tr>      
+                </table>     
+               
+ 
               </div>
-            </div>
-          </div>
+             <div>
         </div>
       </div>
     </div>
+    
   </div>
+
+  
+
+                  
 
