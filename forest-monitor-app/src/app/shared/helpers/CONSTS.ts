@@ -101,8 +101,8 @@ export const defaultRGBBands = {
 export const bandsBySensor = {
     'sentinel-2-l1c': ['01', '02', '03', '04', '05', '06', '07', '08', '8A', '09', '10', '11', '12'],
     'landsat-8-l1': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', 'QA'],
-    'CBERS-4MUX': ['5', '6', '7', '8'],
-    'CBERS-4AWFI': ['13', '14', '15', '16']
+    'CBERS4-MUX': ['5', '6', '7', '8'],
+    'CBERS4-AWFI': ['13', '14', '15', '16']
 }
 export const destinationLayerIdField = "id";
 
