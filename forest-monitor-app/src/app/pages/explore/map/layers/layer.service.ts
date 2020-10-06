@@ -1,8 +1,10 @@
+import { FeatureInfoComponent } from './../feature-info/feature-info.component';
 import { Injectable } from '@angular/core';
 import { BdcLayer, BdcOverlayer } from './layer.interface';
 import { BaseLayers } from './base-layers.in-memory';
 import { Overlayers } from './overlayer.in-memory';
 import { HttpClient } from '@angular/common/http';
+
 
 /**
  * Layer Service
@@ -12,12 +14,17 @@ import { HttpClient } from '@angular/common/http';
 export class LayerService {
     
     /** start http service client */
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, 
+) { }
 
     /** base url of STAC */
     private urlGeoserver = window['__env'].urlGeoserver;
     private workspaceGeoserver = window['__env'].workspaceGeoserver;
 
+    /** */
+    pathShape = `${this.urlGeoserver}/wfs?request=getfeature&service=wfs&version=1.0.0`;
+    public shape = `${this.pathShape}&typename=${this.workspaceGeoserver}:deter&outputformat=SHAPE-ZIP&cql_filter`;
+    
     /**
      * get base layers of the map
      */
@@ -42,6 +49,15 @@ export class LayerService {
 
         const response = await this.http.get(`${this.urlGeoserver}${urlSuffix}`).toPromise();
         return response;
+    }
+    /**get shapefile */
+
+    getShapefileById(url:string){
+        
+        return this.http.get(url, {
+            responseType: 'blob'
+        })
+   
     }
 
     /**

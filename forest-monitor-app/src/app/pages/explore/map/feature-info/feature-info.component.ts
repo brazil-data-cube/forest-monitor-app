@@ -8,7 +8,7 @@ import { FocusMonitor } from '@angular/cdk/a11y';
 import { destinationLayerIdField } from 'src/app/shared/helpers/CONSTS';
 import { DelFeatureComponent } from '../del-feature/del-feature.component';
 import { EditBoxFormComponent } from '../editable/box/box.component';
-import {  MapComponent } from '../map.component'
+
 
 @Component({
   selector: 'app-feature-info',
@@ -21,6 +21,7 @@ export class FeatureInfoComponent implements OnInit
   private latlong: any;
   private screenPosition: any; 
   public layersData: any;
+  public featureId
   
   /** pointer to reference map */
   private map: MapLeaflet;
@@ -121,6 +122,27 @@ export class FeatureInfoComponent implements OnInit
         }
       });
   }
+   /**get shapefile */
+
+getShapefileById(featureId: any){
+  
+  const shape = this.ls.shape
+  const shapeId = `${shape}=id=${featureId}`;
+  
+  this.ls.getShapefileById(shapeId).subscribe((res:any ) => {
+    const file = new Blob([res],{
+      type: res.type
+    });
+    const blob = window.URL.createObjectURL(file);
+    const link =  document.createElement('a');
+    link.href = blob;
+    link.download = 'deter.zip'
+    link.click();
+    window.URL.revokeObjectURL(blob);
+    link.remove();
+  });
+  
+}
   showEditFeature(featureId: any)
   {
     let editFeature = this.dialog.open(EditBoxFormComponent,
