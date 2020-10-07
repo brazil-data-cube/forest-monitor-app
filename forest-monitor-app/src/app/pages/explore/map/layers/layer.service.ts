@@ -22,8 +22,7 @@ export class LayerService {
     private workspaceGeoserver = window['__env'].workspaceGeoserver;
 
     /** */
-    pathShape = `${this.urlGeoserver}/wfs?request=getfeature&service=wfs&version=1.0.0`;
-    public shape = `${this.pathShape}&typename=${this.workspaceGeoserver}:deter&outputformat=SHAPE-ZIP&cql_filter`;
+
     
     /**
      * get base layers of the map
@@ -95,6 +94,31 @@ export class LayerService {
         }
         
         return layer;
+    }
+    /**
+     *  This functions returns the URL to download a shapefile from geoserver respecting a optinal filter
+     * @param layerName Layer to download from
+     * @param outputFilename Shapefile zip output filename (optional)
+     * @param filter A filter string clause. It will be used as cql_filter. Ex. id=35 (optional)
+     */
+    public getFeaturesDownloadURL(layerName, outputFilename, filter)
+    {
+
+        let url = `${this.urlGeoserver}/wfs?request=getfeature&service=wfs&version=1.0.0`;
+        url+= `&typename=${this.workspaceGeoserver}:${layerName}&outputformat=SHAPE-ZIP`;
+
+        if(filter)
+        {
+            url+=`&cql_filter=${filter}`
+        }
+
+        if(outputFilename)
+        {
+            url+=`&format_options=filename:${outputFilename}`
+        }
+        
+        return url;
+
     }
 
 }

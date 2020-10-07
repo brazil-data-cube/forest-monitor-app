@@ -16,7 +16,13 @@
 
       </header>
       <div id='latlng'>
-        <p> {{data.latlong}}</p>
+        <mat-form-field >
+          <mat-label>Coordinates</mat-label>
+          <div class="row">
+            <div class="col-md-4"><input matInput title="Clicked coordinates" value="{{ latlongTxt }}" #coordinates readonly></div>
+            <div class="col-md-2"><mat-icon matBadge="15" title="Copy coordinates to clipboard" matBadgeColor="warn" (click)="copyCoordinatesToClipboard(coordinates)" id="copyToClipboardIcon">content_copy</mat-icon></div>
+          </div>
+        </mat-form-field>
       </div>
 
       <div *ngIf="layersData.length==0" >
@@ -32,13 +38,13 @@
             <div class="card-header" id="heading{{i}}">
               <h5 class="mb-0">
                 <div class="row ">
-                  <div class="col-md-9">
+                  <div class="col-md-8">
                     <button class="btn btn-link" data-toggle="collapse" attr.data-target="#collapse{{i}}"
                       attr.aria-expanded="{{ i==0 ? 'true' : 'false'}}" attr.aria-controls="collapse{{i}}">
                       {{ layerData.layerName }}
                     </button>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <div *ngIf="layerData.isDestinationLayer" class="row">
                       <div class="col-md-4">
                         <div id="editFeatureButton" (click)="showEditFeature(layerData.featureId)"></div>
@@ -46,8 +52,8 @@
                       <div class="col-md-4">
                         <div id="deleteFeatureButton" (click)="showDeleteFeature(layerData.featureId)"></div>
                       </div>
-                        <div  (click)="getShapefileById(layerData.featureId)">
-                        <img id="shapeFeatureButton" src="assets/images/down.png" >
+                        <div class="col-md-4">
+                          <div id="shapeFeatureButton" (click)="getShapefileById(layerData.layerId, layerData.featureKey, layerData.featureId)"></div>
                         </div>  
                       
                     </div>
