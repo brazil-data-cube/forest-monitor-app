@@ -8,6 +8,8 @@ import { FocusMonitor } from '@angular/cdk/a11y';
 import { destinationLayerIdField } from 'src/app/shared/helpers/CONSTS';
 import { DelFeatureComponent } from '../del-feature/del-feature.component';
 import { EditBoxFormComponent } from '../editable/box/box.component';
+import { MatSnackBar } from '@angular/material';
+
 
 @Component({
   selector: 'app-feature-info',
@@ -18,8 +20,10 @@ import { EditBoxFormComponent } from '../editable/box/box.component';
 export class FeatureInfoComponent implements OnInit
 {
   private latlong: any;
+  public latlongTxt: any;
   private screenPosition: any; 
   public layersData: any;
+  public featureId
   
   /** pointer to reference map */
   private map: MapLeaflet;
@@ -30,21 +34,25 @@ export class FeatureInfoComponent implements OnInit
    private dialogRef: MatDialogRef<FeatureInfoComponent>,
    private cdRef: ChangeDetectorRef,
     private ls: LayerService,
+    private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private focusMonitor: FocusMonitor,
     private ngZone: NgZone)
   {
     this.latlong=data.latlong;
+    this.latlongTxt=data.latlong.lat+", "+data.latlong.lng
     this.screenPosition=data.screenPosition;
     this.map=data.map;
     
     this.layersData=[];
     this.getFeaturesInfo();
+    
 
-   }
+   } 
+  
 
   ngOnInit() {
-  }
+  }  
 
   async getFeaturesInfo()
   {
@@ -71,6 +79,7 @@ export class FeatureInfoComponent implements OnInit
                 name: key,
                 value: response.features[0].properties[key]
                
+               
               }
               properties.push(property);
 
@@ -87,7 +96,8 @@ export class FeatureInfoComponent implements OnInit
               layerName: layer.name,
               isDestinationLayer: layer.destinationLayer,
               featureProperties: properties,
-              featureId: featureId
+              featureId: featureId,
+              featureKey: destinationLayerIdField
              }
              this.layersData.push(data);
              
@@ -117,6 +127,29 @@ export class FeatureInfoComponent implements OnInit
         }
       });
   }
+   /**get shapefile */
+
+getShapefileById(layerId: any, featureKey: any, featureId: any)
+{    
+  const cql_filter = `${featureKey}=${featureId}`;
+  const outputFilename=`${layerId}-${featureId}.zip`;
+
+  let url = this.ls.getFeaturesDownloadURL(layerId, outputFilename, cql_filter);
+  
+  this.ls.getShapefileById(url).subscribe((res:any ) => {
+    const file = new Blob([res],{
+      type: res.type
+    });
+    const blob = window.URL.createObjectURL(file);
+    const link =  document.createElement('a');
+    link.href = blob;
+    link.download = `${outputFilename}`
+    link.click();
+    window.URL.revokeObjectURL(blob);
+    link.remove();
+  });
+  
+}
   showEditFeature(featureId: any)
   {
     let editFeature = this.dialog.open(EditBoxFormComponent,
@@ -134,6 +167,18 @@ export class FeatureInfoComponent implements OnInit
         }
       });
   } 
+  copyCoordinatesToClipboard(inputElement)
+  {
+    inputElement.select();
+    document.execCommand('copy');
+    inputElement.setSelectionRange(0, 0); 
+    this.snackBar.open('Coordinates copied to the clipboard!!', '', {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+      panelClass: 'app_snack-bar-success'
+ });
+  }
   close()
   {
   
