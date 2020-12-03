@@ -19,7 +19,7 @@
         <mat-form-field >
           <mat-label>Coordinates</mat-label>
           <div class="row">
-            <div class="col-md-4"><input matInput title="Clicked coordinates" value="{{ latlongTxt }}" #coordinates readonly></div>
+            <div class="col-md-10"><input matInput title="Clicked coordinates" value="{{ latlongTxt }}" #coordinates readonly></div>
             <div class="col-md-2"><mat-icon matBadge="15" title="Copy coordinates to clipboard" matBadgeColor="warn" (click)="copyCoordinatesToClipboard(coordinates)" id="copyToClipboardIcon">content_copy</mat-icon></div>
           </div>
         </mat-form-field>
