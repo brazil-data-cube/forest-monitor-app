@@ -1,12 +1,12 @@
+
 import { tileLayer } from 'leaflet';
 import { BdcLayer } from './layer.interface';
-
 
 /**
  * return a list of external base layers/maps
  * static WMS list
  */
-export const BaseLayers: BdcLayer[] = [
+export  const BaseLayers: BdcLayer[] = [
    {
       id: 'google_sattelite',
       enabled: false,
@@ -56,12 +56,13 @@ export const BaseLayers: BdcLayer[] = [
          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       }),
    },
+   
    {
       id: 'mosaico',
       enabled: false,
       name: 'MOSAICO 2017',
       layer: tileLayer.wms(`http://terrabrasilis.dpi.inpe.br/geoserver/wms`, {
-         layers: `prodes-legal-amz:temporal_mosaic_legal_amazon_2000_2018`,
+         layers: `prodes-legal-amz:temporal_mosaic_legal_amazon_principal`,
          format: 'image/png',
          transparent: true,
          className: `MOSAICO_landsat`,
@@ -73,7 +74,7 @@ export const BaseLayers: BdcLayer[] = [
       enabled: false,
       name: 'MOSAICO 2018',
       layer: tileLayer.wms(`http://terrabrasilis.dpi.inpe.br/geoserver/wms`, {
-         layers: `prodes-legal-amz:temporal_mosaic_legal_amazon_2000_2018`,
+         layers: `prodes-legal-amz:temporal_mosaic_legal_amazon_principal`,
          format: 'image/png',
          transparent: true,
          className: `MOSAICO_landsat`,
@@ -85,7 +86,7 @@ export const BaseLayers: BdcLayer[] = [
       enabled: false,
       name: 'MOSAICO 2019',
       layer: tileLayer.wms(`http://terrabrasilis.dpi.inpe.br/geoserver/wms`, {
-         layers: `prodes-legal-amz:temporal_mosaic_legal_amazon_2000_2018`,
+         layers: `prodes-legal-amz:temporal_mosaic_legal_amazon_principal`,
          format: 'image/png',
          transparent: true,
          className: `MOSAICO_landsat`,
@@ -93,6 +94,7 @@ export const BaseLayers: BdcLayer[] = [
      } as any)
    }
 ];
-function newFunction(): any {
-   return 'image/png';
-}
+
+
+
+

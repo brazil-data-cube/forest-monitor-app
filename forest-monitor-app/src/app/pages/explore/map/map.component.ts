@@ -19,9 +19,6 @@ import { Router } from '@angular/router';
 import { FeatureInfoComponent } from './feature-info/feature-info.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
-
-
-
 /**
  * Map component
  * component to manage and initialize map in explore page
@@ -52,9 +49,6 @@ export class MapComponent implements OnInit {
 
   /** bounding box of Map */
   private bbox = null;
-
-  private latlong: any;
-  public latlongTxt: any;
 
   /** start Layer and Seatch Services */
   constructor(

@@ -1,4 +1,3 @@
-import { FeatureInfoComponent } from './../feature-info/feature-info.component';
 import { Injectable } from '@angular/core';
 import { BdcLayer, BdcOverlayer } from './layer.interface';
 import { BaseLayers } from './base-layers.in-memory';
@@ -11,19 +10,17 @@ import { HttpClient } from '@angular/common/http';
  * returns layers to visualization in the map
  */
 @Injectable({ providedIn: 'root' })
-export class LayerService {
+export class LayerService {   
+    
     
     /** start http service client */
-    constructor(private http: HttpClient, 
-) { }
+    constructor(private http: HttpClient) { }
 
     /** base url of STAC */
     private urlGeoserver = window['__env'].urlGeoserver;
     private workspaceGeoserver = window['__env'].workspaceGeoserver;
 
-    /** */
-
-    
+    /** */   
     /**
      * get base layers of the map
      */
@@ -37,7 +34,7 @@ export class LayerService {
     public getOverlayers(): BdcOverlayer[] {
         return window['__env'].geoserverLayers;
     }
-
+    /**
     /**
      * get info feature WMS
      */
@@ -49,17 +46,7 @@ export class LayerService {
         const response = await this.http.get(`${this.urlGeoserver}${urlSuffix}`).toPromise();
         return response;
     }
-    /**get shapefile */
-
-    getShapefileById(url:string){
-        
-        return this.http.get(url, {
-            responseType: 'blob'
-        })
-   
-    }
-
-    /**
+   /**
      * Get Overlayer by id
      */
     public getOverlayerById(layerId) : BdcOverlayer {
@@ -95,6 +82,15 @@ export class LayerService {
         
         return layer;
     }
+        /**get shapefile */
+
+        getShapefileById(url:string){
+        
+            return this.http.get(url, {
+                responseType: 'blob'
+            })
+       
+        }
     /**
      *  This functions returns the URL to download a shapefile from geoserver respecting a optinal filter
      * @param layerName Layer to download from
