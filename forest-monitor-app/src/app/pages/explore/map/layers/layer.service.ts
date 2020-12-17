@@ -3,6 +3,8 @@ import { BdcLayer, BdcOverlayer } from './layer.interface';
 import { BaseLayers } from './base-layers.in-memory';
 import { Overlayers } from './overlayer.in-memory';
 import { HttpClient } from '@angular/common/http';
+import { EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs';
 
 
 /**
@@ -10,11 +12,12 @@ import { HttpClient } from '@angular/common/http';
  * returns layers to visualization in the map
  */
 @Injectable({ providedIn: 'root' })
-export class LayerService {   
-    
-    
+export class LayerService { 
+      
     /** start http service client */
     constructor(private http: HttpClient) { }
+    
+   
 
     /** base url of STAC */
     private urlGeoserver = window['__env'].urlGeoserver;
@@ -24,10 +27,13 @@ export class LayerService {
     /**
      * get base layers of the map
      */
-    public getBaseLayers(): BdcLayer[] {
-        return BaseLayers;
+    public getBaseLayers() {
+        
+        return BaseLayers.getBaseL([]);
+        
     }
 
+ 
     /**
      * get grids of the BDC project
      */
@@ -82,9 +88,19 @@ export class LayerService {
         
         return layer;
     }
+    private static emitters: {
+        [nomeEvento: string]: EventEmitter<any>
+    } = {}
+
+    static get (nomeEvento:string): EventEmitter<any> {
+        if (!this.emitters[nomeEvento])
+            this.emitters[nomeEvento] = new EventEmitter<any>();
+        return this.emitters[nomeEvento];
+    }
+        
         /**get shapefile */
 
-        getShapefileById(url:string){
+    public getShapefileById(url:string){
         
             return this.http.get(url, {
                 responseType: 'blob'
