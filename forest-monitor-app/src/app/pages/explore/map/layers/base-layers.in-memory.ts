@@ -61,7 +61,7 @@ export const BaseLayers: BdcLayer[] = [
       enabled: false,
       name: 'MOSAICO 2017',
       layer: tileLayer.wms(`http://terrabrasilis.dpi.inpe.br/geoserver/wms`, {
-         layers: `prodes-legal-amz:temporal_mosaic_legal_amazon_2000_2018`,
+         layers: `prodes-legal-amz:temporal_mosaic_legal_amazon_principal`,
          format: 'image/png',
          transparent: true,
          className: `MOSAICO_landsat`,
@@ -73,7 +73,7 @@ export const BaseLayers: BdcLayer[] = [
       enabled: false,
       name: 'MOSAICO 2018',
       layer: tileLayer.wms(`http://terrabrasilis.dpi.inpe.br/geoserver/wms`, {
-         layers: `prodes-legal-amz:temporal_mosaic_legal_amazon_2000_2018`,
+         layers: `prodes-legal-amz:temporal_mosaic_legal_amazon_principal`,
          format: 'image/png',
          transparent: true,
          className: `MOSAICO_landsat`,
@@ -85,7 +85,7 @@ export const BaseLayers: BdcLayer[] = [
       enabled: false,
       name: 'MOSAICO 2019',
       layer: tileLayer.wms(`http://terrabrasilis.dpi.inpe.br/geoserver/wms`, {
-         layers: `prodes-legal-amz:temporal_mosaic_legal_amazon_2000_2018`,
+         layers: `prodes-legal-amz:temporal_mosaic_legal_amazon_principal`,
          format: 'image/png',
          transparent: true,
          className: `MOSAICO_landsat`,
