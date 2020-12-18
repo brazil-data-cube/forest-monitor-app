@@ -215,7 +215,8 @@ export class MapComponent implements OnInit {
           data: {
             latlong: evt['latlng'],
             screenPosition: evt['containerPoint'],
-            map: this.map
+            map: this.map,
+            drawControl: this.drawControl
           }
          });
       });
