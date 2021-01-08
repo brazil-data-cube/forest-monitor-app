@@ -56,6 +56,10 @@ export class EditBoxFormComponent implements OnInit {
 
     public headerTitle = '';
 
+    public isSplitFeature = false;
+
+    public splitGeom = null;
+
     constructor(
         private snackBar: MatSnackBar,
         private as: AuthService,
@@ -108,6 +112,8 @@ export class EditBoxFormComponent implements OnInit {
             }
             else
             {
+                this.isSplitFeature = data.isSplit;
+                this.splitGeom = data.splitGeom;
                 //If featureId isn't null, it's an update
                 this.featureId = data.featureId; 
                 this.headerTitle = 'Edit Feature';
@@ -151,36 +157,47 @@ export class EditBoxFormComponent implements OnInit {
 
                     if(this.featureId==null)
                     {
-                        //Inserting new feature
-                        const polygonEdited = turf.multiPolygon(this.drawnItems.toGeoJSON()['features'].map( f => f.geometry.coordinates ));
-                        const polygonScene = this.getCoordinates(feature[0]);
-                        const intersection = intersect(polygonEdited, polygonScene);
-    
-                        const objToSend = {
-                            view_date: formatDateUSA(this.obj['viewDate']),
-                            classname: this.obj['class'],
-                            quadrant: this.obj['quadrant'] || null,
-                            path_row: getPathRow(feature[0]),
-                            satellite: getSatellite(feature[0]),
-                            sensor: getSensor(feature[0]),
-                            areauckm: this.obj['areauckm'] || null,
-                            uc: this.obj['uc'] || null,
-                            areamunkm: this.obj['areamunkm'] || null,
-                            municipali: this.obj['city'] || null,
-                            uf: this.obj['uf'] || null,
-                            image_date: formatDateUSA(new Date(feature[0]['properties']['datetime'])),
-                            scene_id: feature[0]['id'],
-                            project: `${window['__env'].appName}`,
-                            geom: { "type": "FeatureCollection", "features": [intersection] }
+                        if(!this.isSplitFeature)
+                        {
+                            //Inserting new feature
+                            const polygonEdited = turf.multiPolygon(this.drawnItems.toGeoJSON()['features'].map( f => f.geometry.coordinates ));
+                            const polygonScene = this.getCoordinates(feature[0]);
+                            const intersection = intersect(polygonEdited, polygonScene);
+
+                            const objToSend = {
+                                view_date: formatDateUSA(this.obj['viewDate']),
+                                classname: this.obj['class'],
+                                quadrant: this.obj['quadrant'] || null,
+                                path_row: getPathRow(feature[0]),
+                                satellite: getSatellite(feature[0]),
+                                sensor: getSensor(feature[0]),
+                                areauckm: this.obj['areauckm'] || null,
+                                uc: this.obj['uc'] || null,
+                                areamunkm: this.obj['areamunkm'] || null,
+                                municipali: this.obj['city'] || null,
+                                uf: this.obj['uf'] || null,
+                                image_date: formatDateUSA(new Date(feature[0]['properties']['datetime'])),
+                                scene_id: feature[0]['id'],
+                                project: `${window['__env'].appName}`,
+                                geom: { "type": "FeatureCollection", "features": [intersection] }
+                            }
+
+                            const response = await this.ms.add(objToSend, this.token);
+
+                            this.snackBar.open('Feature added!', '', {
+                                duration: 3000,
+                                verticalPosition: 'top',
+                                panelClass: 'app_snack-bar-success'
+                            });
                         }
-
-                        const response = await this.ms.add(objToSend, this.token);
-
-                        this.snackBar.open('Feature added!', '', {
-                            duration: 3000,
-                            verticalPosition: 'top',
-                            panelClass: 'app_snack-bar-success'
-                        });
+                        else
+                        {
+                            //TODO: Submit split feature to backend
+                            console.log("FeatureId to split: " +this.featureId);
+                            console.log("isSplit: " +this.isSplitFeature);
+                            console.log("SplitGeom: " + this.splitGeom);
+                        }
+                        
                     }
                     else
                     {
