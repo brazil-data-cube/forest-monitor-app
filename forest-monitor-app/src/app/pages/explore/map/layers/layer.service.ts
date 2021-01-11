@@ -29,7 +29,7 @@ export class LayerService {
      */
     public getBaseLayers() {
         
-        return BaseLayers.getBaseL([]);
+        return BaseLayers.getBdcLayer([]);
         
     }
 
