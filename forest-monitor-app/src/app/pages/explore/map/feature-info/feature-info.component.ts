@@ -207,7 +207,7 @@ getShapefileById(layerId: any, featureKey: any, featureId: any)
   }
   close()
   {
-    this.disableSplitEditing();
+    
     this.dialogRef.close();
   }
   public enableSplitEditing(originalGeoJSON: any, featureId: any) {
