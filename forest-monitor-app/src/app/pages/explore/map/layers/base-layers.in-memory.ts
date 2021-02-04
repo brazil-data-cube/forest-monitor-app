@@ -1,5 +1,3 @@
-import { formatDateUSA } from 'src/app/shared/helpers/date';
-
 import { tileLayer } from 'leaflet';
 import { BdcLayer } from './layer.interface';
 
@@ -25,12 +23,9 @@ export class BaseLayers  {
          strmonthOld = month - 2;
          if (month < 10 || strmonthOld < 10) {
             strMonth = '0' + month;
-            
-   
          } else {
             strMonth = month.toString();
-         }
-         
+         }         
          strData = year + '-' +  strMonth; 
          strDataOld = year + '-' + strMonth;
       }
