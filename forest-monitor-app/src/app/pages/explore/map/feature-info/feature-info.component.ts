@@ -2,7 +2,7 @@ import { Component, OnInit, Input, NgModule, Inject, Optional, ChangeDetectorRef
 import { LayerService } from '../layers/layer.service';
 import { latLng, MapOptions, Layer, Map as MapLeaflet,
   LatLngBoundsExpression, Control, Draw, rectangle, LatLngLiteral } from 'leaflet';
-
+import * as L from 'leaflet';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { destinationLayerIdField } from 'src/app/shared/helpers/CONSTS';
@@ -10,6 +10,9 @@ import { DelFeatureComponent } from '../del-feature/del-feature.component';
 import { EditBoxFormComponent } from '../editable/box/box.component';
 import { MatSnackBar } from '@angular/material';
 
+declare var splitGeometryDone: Function;
+declare var splitGeometry: any;
+declare var splitFeatureId: any;
 
 @Component({
   selector: 'app-feature-info',
@@ -17,13 +20,18 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./feature-info.component.scss'],
 })
 
+
 export class FeatureInfoComponent implements OnInit
 {
   private latlong: any;
   public latlongTxt: any;
   private screenPosition: any; 
   public layersData: any;
-  public featureId
+  public featureId;
+  public splitPolygon: any;
+  private drawControl: any;
+
+  
   
   /** pointer to reference map */
   private map: MapLeaflet;
@@ -43,7 +51,7 @@ export class FeatureInfoComponent implements OnInit
     this.latlongTxt=data.latlong.lat+", "+data.latlong.lng
     this.screenPosition=data.screenPosition;
     this.map=data.map;
-    
+    this.drawControl = data.drawControl;
     this.layersData=[];
     this.getFeaturesInfo();
     
@@ -78,8 +86,6 @@ export class FeatureInfoComponent implements OnInit
               {
                 name: key,
                 value: response.features[0].properties[key]
-               
-               
               }
               properties.push(property);
 
@@ -97,7 +103,9 @@ export class FeatureInfoComponent implements OnInit
               isDestinationLayer: layer.destinationLayer,
               featureProperties: properties,
               featureId: featureId,
-              featureKey: destinationLayerIdField
+              featureKey: destinationLayerIdField,
+              geom: response.features[0].geometry
+
              }
              this.layersData.push(data);
              
@@ -127,6 +135,22 @@ export class FeatureInfoComponent implements OnInit
         }
       });
   }
+
+  showSplitFeature(featureData: any)
+  {
+    this.zoomToFeature(featureData.geom);
+    
+    this.enableSplitEditing(featureData.geom, featureData.featureId);
+
+    let dialogPosition = { left: `10px` };
+    this.dialogRef.updatePosition(dialogPosition);
+  }
+  zoomToFeature(geom: any)
+  {
+    let layer = new L.GeoJSON(geom);
+    let ll = layer.getBounds();
+    this.map.fitBounds(ll);
+  }
    /**get shapefile */
 
 getShapefileById(layerId: any, featureKey: any, featureId: any)
@@ -150,14 +174,16 @@ getShapefileById(layerId: any, featureKey: any, featureId: any)
   });
   
 }
-  showEditFeature(featureId: any)
+  showEditFeature(featureId: any, isSplit: boolean, splitGeom: any)
   {
     let editFeature = this.dialog.open(EditBoxFormComponent,
       {
         width: '360px',
         height: '320px',
         data: { 
-          featureId: featureId
+          featureId: featureId,
+          isSplit: isSplit,
+          splitGeom: splitGeom
         }
       });
       editFeature.afterClosed().subscribe(result => {
@@ -181,8 +207,38 @@ getShapefileById(layerId: any, featureKey: any, featureId: any)
   }
   close()
   {
-  
+    
     this.dialogRef.close();
+  }
+  public enableSplitEditing(originalGeoJSON: any, featureId: any) {
+
+    if (!this.splitPolygon) 
+    {      
+      this.splitPolygon = new L.Draw.Polygon(this.map, this.drawControl.options.polygon);
+      
+      this.splitPolygon.enable();
+
+      splitFeatureId=featureId;
+
+      this.map.on(L.Draw.Event.CREATED, function(e) {
+        splitGeometryDone(e);
+    });
+
+    }
+  }
+  public showSplitEditFeature()
+  {
+    this.showEditFeature(splitFeatureId, true, splitGeometry);
+  }
+
+  public disableSplitEditing() {
+
+    if (!this.splitPolygon) {
+      this.map.off(L.Draw.Event.CREATED);
+      this.splitPolygon.disable();
+      this.splitPolygon = null;
+      
+    }
   }
 
 }

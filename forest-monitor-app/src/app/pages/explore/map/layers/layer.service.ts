@@ -3,9 +3,6 @@ import { BdcLayer, BdcOverlayer } from './layer.interface';
 import { BaseLayers } from './base-layers.in-memory';
 import { Overlayers } from './overlayer.in-memory';
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs';
-
 
 /**
  * Layer Service
@@ -29,7 +26,7 @@ export class LayerService {
      */
     public getBaseLayers() {
         
-        return BaseLayers.getBaseL([]);
+        return BaseLayers.getBdcLayer([]);
         
     }
 
@@ -88,15 +85,7 @@ export class LayerService {
         
         return layer;
     }
-    private static emitters: {
-        [nomeEvento: string]: EventEmitter<any>
-    } = {}
-
-    static get (nomeEvento:string): EventEmitter<any> {
-        if (!this.emitters[nomeEvento])
-            this.emitters[nomeEvento] = new EventEmitter<any>();
-        return this.emitters[nomeEvento];
-    }
+    
         
         /**get shapefile */
 
