@@ -13,7 +13,7 @@ URL_LAMBDA_SENTINEL="https://g3fesq0i2k.execute-api.eu-central-1.amazonaws.com/p
 AWS_TOKEN="lkFM2938e2adki2" \
 URL_OAUTH="http://oauth.dpi.inpe.br/api/oauth" \
 URL_OAUTH_APP="http://oauth.dpi.inpe.br" \
-API_KEY="08c4d049131640b4bd35ee793e226322" \
+API_KEY="" \
 GEOSERVER_LAYERS="
 [ {
 id: 'areas_interesse',
