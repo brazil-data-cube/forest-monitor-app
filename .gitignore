@@ -7,3 +7,4 @@
 .history/*
 .vscode
 deploy/*
+!./forest-monitor-app/run-local.sh

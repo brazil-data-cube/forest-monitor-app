@@ -1,4 +1,3 @@
-
 import { tileLayer } from 'leaflet';
 import { BdcLayer } from './layer.interface';
 
@@ -12,30 +11,38 @@ export class BaseLayers  {
    public static getBdcLayer(BdcLayer) { 
       let data = new Date();
       let month = data.getMonth() +1 ;
-      let str_Month;
-      if (month < 10) {
-         str_Month = '0' + month;
-      } else {
-         str_Month = month.toString();
-         }
       let year = data.getFullYear(); 
-      let str_data;
-      let str_data_old;
-      if (str_Month > 1 && str_Month != 2){
-         str_data = year + '-' + (str_Month-1) ;   
-         str_data_old = year + '-' + (str_Month-2)
-      }
-      else if (str_Month == 1) {
-         str_data = (year -1) + '-' + 12 ;
-         str_data_old = (year -1) + '-' + 11 ;
-         }
-      else if (str_Month == 2) {
-         str_data = year + '-' + (str_Month-1) ;
-         str_data_old = (year -1) + '-' + 12 ;
-         }
-      
 
-      
+      let strMonth;
+      let strmonthOld;
+      let strData;
+      let strDataOld;
+              
+      if (month > 1 && month != 2){
+         strMonth = month - 1 ;
+         strmonthOld = month - 2;
+         if (strMonth < 10 || strmonthOld < 10) {
+            strMonth = '0' + strMonth;
+            strmonthOld = '0' + strmonthOld;
+
+         } else {
+            strMonth = strMonth.toString();
+            strmonthOld = strmonthOld.toSttring();
+         }         
+         strData = year + '-' +  strMonth; 
+         strDataOld = year + '-' + strmonthOld;
+         
+      }
+      else if (month == 1) {
+         strData = (year -1) + '-' + 12 ;
+         strDataOld = (year -1) + '-' + 11 ;
+         }
+      else if (month == 2) {
+         strMonth = month - 1 ;
+         strData = year + '-' +   '0' + strMonth;
+         strDataOld = (year -1) + '-' + 12 ;
+      }
+
       return  BdcLayer  = [
          {
             id: 'google_sattelite',
@@ -126,15 +133,8 @@ export class BaseLayers  {
          {        
             id: 'planet',
             enabled: false,
-            name: `PLANET ${str_data_old}`,
-            layer: tileLayer(`https://tiles.planet.com/basemaps/v1/planet-tiles/planet_medres_normalized_analytic_${str_data_old}_mosaic/gmap/{z}/{x}/{y}.png?api_key=12b17c3548c047218485084e2f8c8048`)
-         },
-         {
-            
-            id: 'planet',
-            enabled: false,
-            name: `PLANET ${str_data}`,
-            layer: tileLayer(`https://tiles.planet.com/basemaps/v1/planet-tiles/planet_medres_normalized_analytic_${str_data}_mosaic/gmap/{z}/{x}/{y}.png?api_key=12b17c3548c047218485084e2f8c8048`)
+            name: `PLANET ${strDataOld} até ${strData}`,
+            layer: tileLayer(`https://tiles.planet.com/basemaps/v1/planet-tiles/planet_medres_normalized_analytic_${strDataOld}_mosaic/gmap/{z}/{x}/{y}.png?api_key=12b17c3548c047218485084e2f8c8048`)
          }
             
       ];
