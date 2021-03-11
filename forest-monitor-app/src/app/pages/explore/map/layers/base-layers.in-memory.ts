@@ -19,23 +19,27 @@ export class BaseLayers  {
       let strDataOld;
               
       if (month > 1 && month != 2){
-         month = month - 1 ;
+         strMonth = month - 1 ;
          strmonthOld = month - 2;
-         if (month < 10 || strmonthOld < 10) {
-            strMonth = '0' + month;
+         if (strMonth < 10 || strmonthOld < 10) {
+            strMonth = '0' + strMonth;
+            strmonthOld = '0' + strmonthOld;
+
          } else {
-            strMonth = month.toString();
+            strMonth = strMonth.toString();
+            strmonthOld = strmonthOld.toSttring();
          }         
          strData = year + '-' +  strMonth; 
-         strDataOld = year + '-' + strMonth;
+         strDataOld = year + '-' + strmonthOld;
+         
       }
       else if (month == 1) {
          strData = (year -1) + '-' + 12 ;
          strDataOld = (year -1) + '-' + 11 ;
          }
       else if (month == 2) {
-         month = month - 1 ;
-         strData = year + '-' +   '0' + month;
+         strMonth = month - 1 ;
+         strData = year + '-' +   '0' + strMonth;
          strDataOld = (year -1) + '-' + 12 ;
       }
 
