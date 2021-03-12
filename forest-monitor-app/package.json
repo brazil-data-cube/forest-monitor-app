@@ -3,7 +3,7 @@
   "version": "1.2.3",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4200",
+    "start": "ng serve --prod --host 0.0.0.0 --disableHostCheck --port 4200",
     "build": "ng build --prod --configuration=production",
     "lint": "ng lint",
     "doc": "npx compodoc -p tsconfig.app.json"
