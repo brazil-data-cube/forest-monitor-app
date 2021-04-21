@@ -165,7 +165,7 @@ export class EditBoxFormComponent implements OnInit {
                             const intersection = intersect(polygonEdited, polygonScene);
 
                             const objToSend = {
-                                view_date: formatDateUSA(this.obj['viewDate']),
+                                view_date: formatDateUSA(new Date(feature[0]['properties']['datetime'])),
                                 classname: this.obj['class'],
                                 quadrant: this.obj['quadrant'] || null,
                                 path_row: getPathRow(feature[0]),
@@ -203,7 +203,7 @@ export class EditBoxFormComponent implements OnInit {
                     {
                         //Editing new feature
                         const objToSend = {
-                            view_date: formatDateUSA(this.obj['viewDate']),
+                            view_date: formatDateUSA(new Date(feature[0]['properties']['datetime'])),
                             classname: this.obj['class'],
                             quadrant: this.obj['quadrant'] || null,
                             path_row: getPathRow(feature[0]),
