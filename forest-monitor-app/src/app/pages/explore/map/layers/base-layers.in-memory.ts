@@ -24,7 +24,6 @@ export class BaseLayers  {
          if (strMonth < 10 || strmonthOld < 10) {
             strMonth = '0' + strMonth;
             strmonthOld = '0' + strmonthOld;
-
          } else {
             strMonth = strMonth.toString();
             strmonthOld = strmonthOld.toSttring();
