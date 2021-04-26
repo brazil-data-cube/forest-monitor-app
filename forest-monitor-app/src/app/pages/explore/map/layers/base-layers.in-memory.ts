@@ -94,7 +94,7 @@ export class BaseLayers  {
          },
          
          {
-            id: 'mosaico',
+            id: 'mosaico7',
             enabled: false,
             name: 'MOSAICO 2017',
             layer: tileLayer.wms(`http://terrabrasilis.dpi.inpe.br/geoserver/wms`, {
@@ -106,7 +106,7 @@ export class BaseLayers  {
            } as any)
          },
          {
-            id: 'mosaico',
+            id: 'mosaico8',
             enabled: false,
             name: 'MOSAICO 2018',
             layer: tileLayer.wms(`http://terrabrasilis.dpi.inpe.br/geoserver/wms`, {
@@ -118,7 +118,7 @@ export class BaseLayers  {
            } as any)
          },
          {
-            id: 'mosaico',
+            id: 'mosaico9',
             enabled: false,
             name: 'MOSAICO 2019',
             layer: tileLayer.wms(`http://terrabrasilis.dpi.inpe.br/geoserver/wms`, {
@@ -127,6 +127,18 @@ export class BaseLayers  {
                transparent: true,
                className: `MOSAICO_landsat`,
                time:'2019-01-01T00:00:00.000Z'
+           } as any)
+         },
+         {
+            id: 'mosaico0',
+            enabled: false,
+            name: 'MOSAICO 2020',
+            layer: tileLayer.wms(`http://terrabrasilis.dpi.inpe.br/geoserver/wms`, {
+               layers: `prodes-legal-amz:temporal_mosaic_legal_amazon_principal`,
+               format: 'image/png',
+               transparent: true,
+               className: `MOSAICO_landsat`,
+               time:'2020-01-01T00:00:00.000Z'
            } as any)
          },
          {        
