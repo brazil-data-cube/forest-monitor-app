@@ -8,4 +8,3 @@
 .vscode
 deploy/*
 forest-monitor-app/run-local.sh
-forest-monitor-app/run-default.sh
