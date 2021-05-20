@@ -19,7 +19,6 @@ import { AuthService } from '../../auth/auth.service';
 import { FeatureInfoComponent } from './feature-info/feature-info.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
-
 /**
  * Map component
  * component to manage and initialize map in explore page
@@ -223,8 +222,6 @@ export class MapComponent implements OnInit {
     });
 
   }
-
-
 
   /**
    * set the visible layers in the layer component of the map

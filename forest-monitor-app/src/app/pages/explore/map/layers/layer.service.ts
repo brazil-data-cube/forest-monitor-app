@@ -1,7 +1,9 @@
-import {Injectable} from '@angular/core';
-import {BdcLayer, BdcOverlayer} from './layer.interface';
-import {BaseLayers} from './base-layers.in-memory';
-import {HttpClient} from '@angular/common/http';
+import { FeatureInfoComponent } from './../feature-info/feature-info.component';
+import { Injectable } from '@angular/core';
+import { BdcLayer, BdcOverlayer } from './layer.interface';
+import { BaseLayers } from './base-layers.in-memory';
+import { Overlayers } from './overlayer.in-memory';
+import { HttpClient } from '@angular/common/http';
 
 
 /**
@@ -22,8 +24,8 @@ export class LayerService {
   /**
    * get base layers of the map
    */
-  public getBaseLayers(): BdcLayer[] {
-    return BaseLayers;
+  public getBaseLayers() {
+    return BaseLayers.getBdcLayer([]);
   }
 
   /**
@@ -78,7 +80,7 @@ export class LayerService {
   }
 
 
-  /**get shapefile */
+  /** get shapefile */
 
   public getShapefileById(url: string) {
 
