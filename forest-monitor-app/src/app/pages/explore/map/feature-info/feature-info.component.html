@@ -19,7 +19,7 @@
         <mat-form-field >
           <mat-label>Coordinates</mat-label>
           <div class="row">
-            <div class="col-md-4"><input matInput title="Clicked coordinates" value="{{ latlongTxt }}" #coordinates readonly></div>
+            <div class="col-md-10"><input matInput title="Clicked coordinates" value="{{ latlongTxt }}" #coordinates readonly></div>
             <div class="col-md-2"><mat-icon matBadge="15" title="Copy coordinates to clipboard" matBadgeColor="warn" (click)="copyCoordinatesToClipboard(coordinates)" id="copyToClipboardIcon">content_copy</mat-icon></div>
           </div>
         </mat-form-field>
@@ -46,22 +46,34 @@
                   </div>
                   <div class="col-md-4">
                     <div *ngIf="layerData.isDestinationLayer" class="row">
+<!--                      <div class="col-md-2">-->
+<!--                        <div id="editFeatureButton" (click)="showEditFeature(layerData.featureId, false, null)" title="Edit Feature Classification"></div>-->
+<!--                      </div>-->
+<!--                      <div (click)="showSplitEditFeature(layerData.featureId)" id="showSplitEditFeature" style="display: none;"></div>-->
+<!--                      <div class="col-md-2">-->
+<!--                        <div id="deleteFeatureButton" (click)="showDeleteFeature(layerData.featureId)" title="Delete Feature"></div>-->
+<!--                      </div>-->
+<!--                      <div class="col-md-2">-->
+<!--                        <div id="splitFeatureButton" (click)="showSplitFeature(layerData)" title="Split Feature"></div>-->
+<!--                      </div>-->
+<!--                      <div class="col-md-2">-->
+<!--                        <div id="shapeFeatureButton" (click)="getShapefileById(layerData.layerId, layerData.featureKey, layerData.featureId)" title="Download Feature Shapefile"></div>-->
+<!--                      </div>-->
                       <div class="col-md-4">
-                        <div id="editFeatureButton" (click)="showEditFeature(layerData.featureId)"></div>
+                        <div id="editFeatureButton" (click)="showEditFeature(layerData.featureId, false, null)" title="Edit Feature Classification"><div (click)="showSplitEditFeature()" id="showSplitEditFeature" style="display: none;"></div></div>
                       </div>
                       <div class="col-md-4">
-                        <div id="deleteFeatureButton" (click)="showDeleteFeature(layerData.featureId)"></div>
+                        <div id="deleteFeatureButton" (click)="showDeleteFeature(layerData.featureId)" title="Delete Feature"></div>
                       </div>
-                        <div class="col-md-4">
-                          <div id="shapeFeatureButton" (click)="getShapefileById(layerData.layerId, layerData.featureKey, layerData.featureId)"></div>
-                        </div>  
-                      
+                      <div class="col-md-4">
+                        <div id="shapeFeatureButton" (click)="getShapefileById(layerData.layerId, layerData.featureKey, layerData.featureId)" title="Download Feature Shapefile"></div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </h5>
             </div>
-         
+
             <div id="collapse{{i}}" class="collapse {{ i==0 ? 'show' : ''}}" attr.aria-labelledby="heading{{i}}"
               attr.data-parent="#accordion">
               <div class="card-body">
@@ -73,21 +85,21 @@
                   <tr *ngFor="let featureProperty of layerData.featureProperties">
 
                     <td scope="row"> {{featureProperty.name}} </td>
-                    <td> {{featureProperty.value}} </td>        
+                    <td> {{featureProperty.value}} </td>
 
-                  </tr>      
-                </table>     
-               
- 
+                  </tr>
+                </table>
+
+
               </div>
              <div>
         </div>
       </div>
     </div>
-    
+
   </div>
 
-  
 
-                  
+
+
 

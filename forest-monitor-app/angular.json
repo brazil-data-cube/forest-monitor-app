@@ -37,7 +37,9 @@
               "node_modules/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css",
               "node_modules/primeicons/primeicons.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/app/pages/explore/map/feature-info/feature-info.js"
+            ]
           },
           "configurations": {
             "production": {

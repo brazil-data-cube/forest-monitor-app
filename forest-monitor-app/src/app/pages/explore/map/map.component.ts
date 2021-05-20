@@ -16,7 +16,6 @@ import { Store, select } from '@ngrx/store';
 import { ExploreState } from '../explore.state';
 import { setPositionMap, setBbox, removeLayers, setLayers, removeGroupLayer, setSelectedFeatureRemove } from '../explore.action';
 import { AuthService } from '../../auth/auth.service';
-import { Router } from '@angular/router';
 import { FeatureInfoComponent } from './feature-info/feature-info.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
@@ -214,7 +213,8 @@ export class MapComponent implements OnInit {
           data: {
             latlong: evt['latlng'],
             screenPosition: evt['containerPoint'],
-            map: this.map
+            map: this.map,
+            drawControl: this.drawControl
           }
          });
       });
@@ -249,7 +249,7 @@ export class MapComponent implements OnInit {
       imperial: false
     }).addTo(this.map);
   }
-   /**
+  /**
    * buscar  área por lat e lon
    */
   private setCoordinatesLatLng(){
@@ -257,7 +257,7 @@ export class MapComponent implements OnInit {
      (L.Control  as any).geocoder({
         position: 'topleft',
         expand: 'click',
-        placeholder:'Ex: -7.59122,-59.34494',
+        placeholder: 'Ex: -7.59122,-59.34494',
         defaultMarkGeocode: false
       }).on('markgeocode', e => {
         this.map.setView(e.geocode.center,10);
