@@ -7,4 +7,5 @@
 .history/*
 .vscode
 deploy/*
+.idea
 forest-monitor-app/run-local.sh
