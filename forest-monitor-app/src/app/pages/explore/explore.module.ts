@@ -48,6 +48,8 @@ import { DelFeatureComponent } from './map/del-feature/del-feature.component';
 import { StyleBoxComponent } from './map/style-box/style-box.component';
 import { FeatureInfoComponent } from './map/feature-info/feature-info.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TemporalRangeComponent } from './map/temporal-range/temporal-range.component';
+import { TemporalBoxComponent } from './map/temporal-range/temporal-box/temporal-box.component'
 
 
 /**
@@ -69,7 +71,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     DelFeatureComponent,
     StyleBoxComponent,
     SliderComponent,
-    FeatureInfoComponent
+    FeatureInfoComponent,
+    TemporalRangeComponent,
+    TemporalBoxComponent
   ],
   exports: [
     RouterModule,

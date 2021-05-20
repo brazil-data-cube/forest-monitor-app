@@ -11,7 +11,6 @@ import { AuthModule } from './pages/auth/auth.module';
 import * as fromApp from './app.reducer';
 import * as fromAuth from './pages/auth/auth.reducer';
 import * as fromExplore from './pages/explore/explore.reducer';
-import { APP_BASE_HREF } from '@angular/common';
 
 /**
  * Initial Module of Application (SPA)

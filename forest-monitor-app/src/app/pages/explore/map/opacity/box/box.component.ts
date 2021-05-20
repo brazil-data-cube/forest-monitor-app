@@ -14,25 +14,25 @@ import { removeLayers, setLayers } from '../../../explore.action';
     styleUrls: ['./box.component.scss']
 })
 export class OpacityBoxComponent implements OnInit {
-    
+
     @Input('show') public showBox: boolean;
-    
+
     @Output() toggleToEmit = new EventEmitter();
-    
+
     public layersTitle = [];
     public layers = {};
 
     /** base url of geoserver */
     private urlGeoserver = window['__env'].urlGeoserver;
     private workspaceGeoserver = window['__env'].workspaceGeoserver;
-    
+
     constructor(private ls: LayerService,
         private store: Store<ExploreState>) {}
-    
+
     ngOnInit(): void {
         this.mountListLayers();
     }
-    
+
     public mountListLayers() {
         this.ls.getOverlayers().forEach( (l: BdcOverlayer) => {
             this.layersTitle.push(l.name);
