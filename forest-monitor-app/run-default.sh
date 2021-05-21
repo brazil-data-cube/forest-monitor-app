@@ -64,4 +64,68 @@ destinationLayer: true
 }
 ]
 " \
+ \
+GEOSERVER_CLASS="[
+     {
+        
+       enabled: true,
+       name: 'CICATRIZ_DE_QUEIMADA',  
+       filter: true,        
+       layer: 'deter',
+       style: 'class_deter'
+      },{
+        
+        enabled: true,
+        name: 'CORTE_SELETIVO', 
+        filter: true,         
+        layer: 'deter',
+        style: 'class_deter'
+      },
+      {
+         
+        enabled: true,
+        name: 'CS_DESORDENADO',  
+        filter: true,        
+        layer: 'deter',
+        style: 'class_deter'
+      },
+       {
+         
+        enabled: true,
+        name: 'CS_GEOMETRICO',  
+        filter: true,        
+        layer: 'deter',
+        style: 'class_deter'
+      },
+       {
+         
+        enabled: true,
+        name: 'DEGRADACAO',  
+        filter: true,        
+        layer: 'deter',
+        style: 'class_deter'
+      },
+       {
+        
+        enabled: true,
+        name: 'DESMATAMENTO_CR',  
+        filter: true,        
+        layer: 'deter',
+        style: 'class_deter'
+      },
+       {
+         
+        enabled: true,
+        name: 'DESMATAMENTO_VEG',  
+        filter: true,        
+        layer: 'deter',
+        style: 'class_deter'
+      },
+       {
+        
+        enabled: true,
+        name: 'MINERACAO',  
+        filter: true,        
+        layer:'deter',
+        style: 'class_deter'}]" \
 ./run.sh

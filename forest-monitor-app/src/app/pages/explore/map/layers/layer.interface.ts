@@ -15,6 +15,17 @@ export interface BdcLayer {
     layer: Layer;
 }
 
+/**interface of class of geoserver */
+export interface BdcClassLayer {
+    enable: boolean;
+    name: string;
+    filter: boolean;
+    layer: string;
+    style: string;
+
+
+}
+
 export interface BdcOverlayer {
     /** id (unique) to layer identification */
     id: string;

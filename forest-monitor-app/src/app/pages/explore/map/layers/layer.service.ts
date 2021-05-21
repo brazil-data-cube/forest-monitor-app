@@ -1,6 +1,6 @@
 import { FeatureInfoComponent } from './../feature-info/feature-info.component';
 import { Injectable } from '@angular/core';
-import { BdcLayer, BdcOverlayer } from './layer.interface';
+import { BdcLayer, BdcOverlayer, BdcClassLayer } from './layer.interface';
 import { BaseLayers } from './base-layers.in-memory';
 import { Overlayers } from './overlayer.in-memory';
 import { HttpClient } from '@angular/common/http';
@@ -33,6 +33,13 @@ export class LayerService {
    */
   public getOverlayers(): BdcOverlayer[] {
     return window['__env'].geoserverLayers;
+  }
+
+  /**
+   * get class of the geoserver
+   */
+   public getClass(): BdcClassLayer[] {
+    return window['__env'].geoserverClass;
   }
 
   /**

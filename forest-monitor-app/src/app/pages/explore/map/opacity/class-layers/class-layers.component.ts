@@ -1,10 +1,10 @@
-import { BdcClassLayer } from '../layer.interface';
 import { removeLayers,setLayers } from '../../../explore.action';
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { layerGroup } from 'leaflet';
 
 import { ExploreState } from '../../../explore.state';
-import { LayerService } from '../layer.service';
+import { LayerService } from '../../layers/layer.service';
+import { BdcClassLayer } from '../../layers/layer.interface';
 import { Store } from '@ngrx/store';
 import * as L from 'leaflet';
 
@@ -16,10 +16,9 @@ import * as L from 'leaflet';
   styleUrls: ['./class-layers.component.scss']
 })
 export class ClassLayesrComponent implements OnInit {
-  @Input('show') public showBox: boolean;
-    
-  @Output() toggleToEmit = new EventEmitter();
-    
+
+  @Input('show') public showBox: boolean;    
+  @Output() toggleToEmit = new EventEmitter();    
   
   
   /** base url of geoserver */
@@ -27,19 +26,16 @@ export class ClassLayesrComponent implements OnInit {
   private workspaceGeoserver = window['__env'].workspaceGeoserver;
   
   constructor(private ls: LayerService,
-      private store: Store<ExploreState>,
+      private store: Store<ExploreState>) {}
       
-      
-      ) {}
-      public classDeter = [];
-      public classD = {};
+    public classDeter = [];
+    public classD = {};
           
     
     ngOnInit() {
       this.moutclasss();
       
-    } 
-  
+    }   
     
     public toggleBoxC() {
       this.toggleToEmit.emit();
@@ -76,8 +72,7 @@ export class ClassLayesrComponent implements OnInit {
                 
             });
         });
-    }
-   
+    }   
   
 }
 

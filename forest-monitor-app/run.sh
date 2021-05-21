@@ -110,6 +110,7 @@ echo "   window.__env.sliderGroupDays = '$URL_SLIDER_GROUP_DAYS';" >> src/assets
 echo "   window.__env.urlOauthApp = '$URL_OAUTH_APP';" >> src/assets/env.js
 echo "   window.__env.planetAPIKey = '$API_KEY';" >> src/assets/env.js
 echo "   window.__env.geoserverLayers = $GEOSERVER_LAYERS;" >> src/assets/env.js
+echo "   window.__env.geoserverClass = $GEOSERVER_CLASS;" >> src/assets/env.js
 
 echo "}(this));" >> src/assets/env.js
 echo "" >> src/assets/env.js
@@ -132,6 +133,7 @@ echo "URL_OAUTH: $URL_OAUTH"
 echo "URL_OAUTH_APP: $URL_OAUTH_APP"
 echo "API_KEY: $API_KEY"
 echo "GEOSERVER_LAYERS: $GEOSERVER_LAYERS"
+echo "GEOSERVER_CLASS: $GEOSERVER_CLASS"
 echo "BASE_PATH: $BASE_PATH"
 
 echo ""

@@ -40,7 +40,7 @@
     "leaflet-draw": "1.0.0",
     "leaflet-locationpicker": "^0.3.2",
     "leaflet.fullscreen": "^1.5.1",
-    "materialize-css": "^1.0.0",
+    "materialize-css": "^1.0.0-rc.2",
     "moment": "2.24.0",
     "ng2-charts": "^2.2.4",
     "ng5-slider": "^1.2.4",

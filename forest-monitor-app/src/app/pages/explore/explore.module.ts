@@ -48,6 +48,8 @@ import { DelFeatureComponent } from './map/del-feature/del-feature.component';
 import { StyleBoxComponent } from './map/style-box/style-box.component';
 import { FeatureInfoComponent } from './map/feature-info/feature-info.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { OpacityClassComponent } from './map/opacity/class-layers/opacity-class/opacity-class.component';
+import { ClassLayesrComponent } from './map/opacity/class-layers/class-layers.component';
 import { TemporalRangeComponent } from './map/temporal-range/temporal-range.component';
 import { TemporalBoxComponent } from './map/temporal-range/temporal-box/temporal-box.component'
 
@@ -72,6 +74,8 @@ import { TemporalBoxComponent } from './map/temporal-range/temporal-box/temporal
     StyleBoxComponent,
     SliderComponent,
     FeatureInfoComponent,
+    ClassLayesrComponent,
+    OpacityClassComponent,
     TemporalRangeComponent,
     TemporalBoxComponent
   ],
