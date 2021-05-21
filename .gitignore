@@ -8,4 +8,4 @@
 .vscode
 deploy/*
 .idea
-
+forest-monitor-app-upstream/forest-monitor-app/run-local.sh
