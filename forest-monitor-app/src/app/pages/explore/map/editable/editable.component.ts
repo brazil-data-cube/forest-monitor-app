@@ -4,7 +4,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { Map as MapLeaflet } from 'leaflet';
 import { AuthService } from 'src/app/pages/auth/auth.service';
-import { resolveSanitizationFn } from '@angular/compiler/src/render3/view/template';
 import { MatDialog } from '@angular/material';
 import { EditBoxFormComponent } from './box/box.component';
 
@@ -28,10 +27,9 @@ export class EditableComponent implements OnInit {
     private token = '';
 
     constructor(private as: AuthService,
-        private monitorService: MonitorService,
-        private route: ActivatedRoute,
-        private dialog: MatDialog)
-    {
+                private monitorService: MonitorService,
+                private route: ActivatedRoute,
+                private dialog: MatDialog) {
 
     }
 
@@ -81,9 +79,8 @@ export class EditableComponent implements OnInit {
         this.showEditFeature();
     }
 
-    public showEditFeature()
-    {
-        let editFeature = this.dialog.open(EditBoxFormComponent,
+    public showEditFeature() {
+        const editFeature = this.dialog.open(EditBoxFormComponent,
             {
               width: '360px',
               height: '320px',
@@ -102,10 +99,9 @@ export class EditableComponent implements OnInit {
             this.token = response.access_token;
           }
 
-        } catch(err) {
+        } catch (err) {
           this.authorized = false;
         }
       }
-
 
 }

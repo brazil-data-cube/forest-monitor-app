@@ -1,3 +1,4 @@
+
 import { Component, OnInit, Input, ViewChild, ChangeDetectorRef, NgZone } from '@angular/core';
 
 import * as L from 'leaflet';
@@ -15,7 +16,6 @@ import { Store, select } from '@ngrx/store';
 import { ExploreState } from '../explore.state';
 import { setPositionMap, setBbox, removeLayers, setLayers, removeGroupLayer, setSelectedFeatureRemove } from '../explore.action';
 import { AuthService } from '../../auth/auth.service';
-import { Router } from '@angular/router';
 import { FeatureInfoComponent } from './feature-info/feature-info.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
@@ -32,7 +32,6 @@ export class MapComponent implements OnInit {
 
   /** props with width of the map */
   @Input() width: number;
-    
   /** props with height of the map */
   @Input() height: number;
 
@@ -66,7 +65,7 @@ export class MapComponent implements OnInit {
           lyrs.forEach( l => {
             if (l['options'].className) {
               if (l['options'].className.indexOf(`qls_`) >= 0) {
-                (l as L.TileLayer).setZIndex(7);
+                (l as L.TileLayer).setZIndex(8);
               }
             }
             this.map.addLayer(l);
@@ -129,9 +128,7 @@ export class MapComponent implements OnInit {
    */
   private setPosition(bounds: LatLngBoundsExpression) {
     this.map.fitBounds(Object.values(bounds).slice(0, 2));
-    
-  } 
-  
+  }
 
   /**
    * set Draw control of the map
@@ -249,22 +246,21 @@ export class MapComponent implements OnInit {
       imperial: false
     }).addTo(this.map);
   }
-   /**
-   * search area by lat and lon
+  /**
+   * buscar  área por lat e lon
    */
   private setCoordinatesLatLng(){
-    var _geocoderType = (L.Control as any).Geocoder.latLng(1000);
-    (L.Control as any).geocoder({
-      position: 'topleft',
-      placeholder:'Ex: -7.59122,-59.34494',
-      defaultMarkGeocode: false,
-      geocoder: _geocoderType
-    }).on('markgeocode', e => {
-      this.map.setView(e.geocode.center,13);
-     }).addTo(this.map);
- 
-    
-  }
+
+     (L.Control  as any).geocoder({
+        position: 'topleft',
+        expand: 'click',
+        placeholder: 'Ex: -7.59122,-59.34494',
+        defaultMarkGeocode: false
+      }).on('markgeocode', e => {
+        this.map.setView(e.geocode.center,10);
+       }).addTo(this.map);
+
+   }
 
   /**
    * set Coordinates options in the map

@@ -6,18 +6,18 @@ import { BdcLayer } from './layer.interface';
  * static WMS list, and the dates are of layer Planet
  */
 
-export class BaseLayers  { 
-   public  BdcLayer  = []; 
-   public static getBdcLayer(BdcLayer) { 
+export class BaseLayers  {
+   public  BdcLayer  = [];
+   public static getBdcLayer(BdcLayer) {
       let data = new Date();
       let month = data.getMonth() +1 ;
-      let year = data.getFullYear(); 
+      let year = data.getFullYear();
 
       let strMonth;
       let strmonthOld;
       let strData;
       let strDataOld;
-              
+
       if (month > 1 && month != 2){
          strMonth = month - 1 ;
          strmonthOld = month - 2;
@@ -27,10 +27,10 @@ export class BaseLayers  {
          } else {
             strMonth = strMonth.toString();
             strmonthOld = strmonthOld.toSttring();
-         }         
-         strData = year + '-' +  strMonth; 
+         }
+         strData = year + '-' +  strMonth;
          strDataOld = year + '-' + strmonthOld;
-         
+
       }
       else if (month == 1) {
          strData = (year -1) + '-' + 12 ;
@@ -92,9 +92,9 @@ export class BaseLayers  {
                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             }),
          },
-         
+
          {
-            id: 'mosaico',
+            id: 'mosaico7',
             enabled: false,
             name: 'MOSAICO 2017',
             layer: tileLayer.wms(`http://terrabrasilis.dpi.inpe.br/geoserver/wms`, {
@@ -106,7 +106,7 @@ export class BaseLayers  {
            } as any)
          },
          {
-            id: 'mosaico',
+            id: 'mosaico8',
             enabled: false,
             name: 'MOSAICO 2018',
             layer: tileLayer.wms(`http://terrabrasilis.dpi.inpe.br/geoserver/wms`, {
@@ -118,7 +118,7 @@ export class BaseLayers  {
            } as any)
          },
          {
-            id: 'mosaico',
+            id: 'mosaico9',
             enabled: false,
             name: 'MOSAICO 2019',
             layer: tileLayer.wms(`http://terrabrasilis.dpi.inpe.br/geoserver/wms`, {
@@ -129,18 +129,30 @@ export class BaseLayers  {
                time:'2019-01-01T00:00:00.000Z'
            } as any)
          },
-         {        
+         {
+            id: 'mosaico0',
+            enabled: false,
+            name: 'MOSAICO 2020',
+            layer: tileLayer.wms(`http://terrabrasilis.dpi.inpe.br/geoserver/wms`, {
+               layers: `prodes-legal-amz:temporal_mosaic_legal_amazon_principal`,
+               format: 'image/png',
+               transparent: true,
+               className: `MOSAICO_landsat`,
+               time:'2020-01-01T00:00:00.000Z'
+           } as any)
+         },
+         {
             id: 'planet',
             enabled: false,
             name: `PLANET ${strDataOld} até ${strData}`,
             layer: tileLayer(`https://tiles.planet.com/basemaps/v1/planet-tiles/planet_medres_normalized_analytic_${strDataOld}_mosaic/gmap/{z}/{x}/{y}.png?api_key=12b17c3548c047218485084e2f8c8048`)
          }
-            
+
       ];
-     
-      
+
+
    }
 
 
-   
+
 }

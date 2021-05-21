@@ -12,10 +12,9 @@ import { MonitorService } from '../../monitor.service';
 import { AuthService } from 'src/app/pages/auth/auth.service';
 import { DETERclasses, getPathRow, getSensor, getSatellite } from 'src/app/shared/helpers/CONSTS';
 import intersect from '@turf/intersect';
-import * as turf from "@turf/helpers";
+import * as turf from '@turf/helpers';
 import { Editable } from './box.interface';
 import { LayerService } from '../../layers/layer.service';
-import { BdcLayer, BdcOverlayer } from '../../layers/layer.interface';
 
 
 @Component({
@@ -57,7 +56,6 @@ export class EditBoxFormComponent implements OnInit {
     public headerTitle = '';
 
     public isSplitFeature = false;
-
     public splitGeom = null;
 
     constructor(
@@ -70,10 +68,10 @@ export class EditBoxFormComponent implements OnInit {
         private dialogRef: MatDialogRef<EditBoxFormComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
         private fb: FormBuilder) {
-            
+
 
           this.store.pipe(select('explore')).subscribe(res => {
-              if(res.featuresPeriod) {
+              if (res.featuresPeriod) {
                 const features = Object.values(res.featuresPeriod).slice(0, (Object.values(res.featuresPeriod).length - 1)) as object[];
                 this.scenes = features.filter( feat => feat['enabled'] ).map( feat => feat['id'] );
                 this.features = features.filter( feat => feat['enabled'] );
@@ -81,18 +79,18 @@ export class EditBoxFormComponent implements OnInit {
                 this.satsens = [];
                 this.features.forEach( feat => {
                     if (feat['id'].indexOf('CBERS') >= 0 && feat['id'].indexOf('MUX') >= 0) {
-                        if (this.satsens.indexOf('CBERS-4:MUX') < 0) this.satsens.push('CBERS-4:MUX');
+                        if (this.satsens.indexOf('CBERS-4:MUX') < 0) { this.satsens.push('CBERS-4:MUX'); }
 
                     } else if (feat['id'].indexOf('CBERS') >= 0 && feat['id'].indexOf('WFI') >= 0) {
-                        if (this.satsens.indexOf('CBERS-4:WFI') < 0) this.satsens.push('CBERS-4:WFI');
+                        if (this.satsens.indexOf('CBERS-4:WFI') < 0) { this.satsens.push('CBERS-4:WFI'); }
 
                     } else if (feat['id'].toLowerCase().indexOf('lc8') >= 0) {
-                        if (this.satsens.indexOf('LANDSAT-8:OLI') < 0) this.satsens.push('LANDSAT-8:OLI');
+                        if (this.satsens.indexOf('LANDSAT-8:OLI') < 0) { this.satsens.push('LANDSAT-8:OLI'); }
 
                     } else if (feat['id'].toLowerCase().indexOf('s2') >= 0) {
-                        if (this.satsens.indexOf('SENTINEL-2:MSI') < 0) this.satsens.push('SENTINEL-2:MSI');
+                        if (this.satsens.indexOf('SENTINEL-2:MSI') < 0) { this.satsens.push('SENTINEL-2:MSI'); }
                     }
-                })
+                });
               }
           });
 
@@ -101,24 +99,23 @@ export class EditBoxFormComponent implements OnInit {
             class: ['', [Validators.required]]
           });
 
-          
-          if(data!=null)
-          {
-            if(data.drawnItems)
-            {
-                //If drawnItems isn't null, it's an insert
-                this.drawnItems = data.drawnItems;
-                this.headerTitle = 'Add new Feature';
-            }
-            else
-            {
-                this.isSplitFeature = data.isSplit;
-                this.splitGeom = data.splitGeom;
-                //If featureId isn't null, it's an update
-                this.featureId = data.featureId; 
+
+          if (data != null) {
+            if (data.drawnItems) {
+              // If drawnItems isn't null, it's an insert
+              this.drawnItems = data.drawnItems;
+              this.headerTitle = 'Add new Feature';
+            } else {
+              this.isSplitFeature = data.isSplit;
+              this.splitGeom = data.splitGeom;
+              // If featureId isn't null, it's an update
+              this.featureId = data.featureId;
+              if (this.isSplitFeature) {
+                this.headerTitle = 'Split Feature';
+              } else {
                 this.headerTitle = 'Edit Feature';
-                this.loadCurrentFeature();
-    
+              }
+              this.loadCurrentFeature();
             }
           }
         }
@@ -133,11 +130,10 @@ export class EditBoxFormComponent implements OnInit {
         this.obj = {
             viewDate: new Date(),
             class: null
-        }
+        };
     }
 
-    close(sucess:boolean)
-    {
+    close(sucess: boolean) {
       this.dialogRef.close(sucess);
     }
 
@@ -155,55 +151,14 @@ export class EditBoxFormComponent implements OnInit {
 
                 } else {
 
-                    if(this.featureId==null)
-                    {
-                        if(!this.isSplitFeature)
-                        {
-                            //Inserting new feature
-                            const polygonEdited = turf.multiPolygon(this.drawnItems.toGeoJSON()['features'].map( f => f.geometry.coordinates ));
-                            const polygonScene = this.getCoordinates(feature[0]);
-                            const intersection = intersect(polygonEdited, polygonScene);
+                    if (this.featureId == null) {
+                        // Inserting new feature
+                        const polygonEdited = turf.multiPolygon(this.drawnItems.toGeoJSON()['features'].map( f => f.geometry.coordinates ));
+                        const polygonScene = this.getCoordinates(feature[0]);
+                        const intersection = intersect(polygonEdited, polygonScene);
 
-                            const objToSend = {
-                                view_date: formatDateUSA(new Date(feature[0]['properties']['datetime'])),
-                                classname: this.obj['class'],
-                                quadrant: this.obj['quadrant'] || null,
-                                path_row: getPathRow(feature[0]),
-                                satellite: getSatellite(feature[0]),
-                                sensor: getSensor(feature[0]),
-                                areauckm: this.obj['areauckm'] || null,
-                                uc: this.obj['uc'] || null,
-                                areamunkm: this.obj['areamunkm'] || null,
-                                municipali: this.obj['city'] || null,
-                                uf: this.obj['uf'] || null,
-                                image_date: formatDateUSA(new Date(feature[0]['properties']['datetime'])),
-                                scene_id: feature[0]['id'],
-                                project: `${window['__env'].appName}`,
-                                geom: { "type": "FeatureCollection", "features": [intersection] }
-                            }
-
-                            const response = await this.ms.add(objToSend, this.token);
-
-                            this.snackBar.open('Feature added!', '', {
-                                duration: 3000,
-                                verticalPosition: 'top',
-                                panelClass: 'app_snack-bar-success'
-                            });
-                        }
-                        else
-                        {
-                            //TODO: Submit split feature to backend
-                            console.log("FeatureId to split: " +this.featureId);
-                            console.log("isSplit: " +this.isSplitFeature);
-                            console.log("SplitGeom: " + this.splitGeom);
-                        }
-                        
-                    }
-                    else
-                    {
-                        //Editing new feature
                         const objToSend = {
-                            view_date: formatDateUSA(new Date(feature[0]['properties']['datetime'])),
+                            view_date: formatDateUSA(this.obj['viewDate']),
                             classname: this.obj['class'],
                             quadrant: this.obj['quadrant'] || null,
                             path_row: getPathRow(feature[0]),
@@ -216,24 +171,88 @@ export class EditBoxFormComponent implements OnInit {
                             uf: this.obj['uf'] || null,
                             image_date: formatDateUSA(new Date(feature[0]['properties']['datetime'])),
                             scene_id: feature[0]['id'],
-                            project: `${window['__env'].appName}`                            
-                        }
+                            project: `${window['__env'].appName}`,
+                            geom: { type: 'FeatureCollection', features: [intersection] }
+                        };
 
-                        const response = await this.ms.update(this.featureId, objToSend, this.token);
+                        const response = await this.ms.add(objToSend, this.token);
 
-                        this.snackBar.open('Feature edited!', '', {
+                        this.snackBar.open('Feature added!', '', {
                             duration: 3000,
                             verticalPosition: 'top',
                             panelClass: 'app_snack-bar-success'
                         });
-                    }
+                    } else {
+                      if (this.isSplitFeature) {
 
-                    
-            
+                        // Split feature
+
+                        const polygonEdited = this.getCoordinates(this.splitGeom);
+                        const polygonScene = this.getCoordinates(feature[0]);
+
+                        const intersection = intersect(polygonEdited, polygonScene);
+
+                        const objToSend = {
+                          view_date: formatDateUSA(this.obj['viewDate']),
+                          classname: this.obj['class'],
+                          quadrant: this.obj['quadrant'] || null,
+                          path_row: getPathRow(feature[0]),
+                          satellite: getSatellite(feature[0]),
+                          sensor: getSensor(feature[0]),
+                          areauckm: this.obj['areauckm'] || null,
+                          uc: this.obj['uc'] || null,
+                          areamunkm: this.obj['areamunkm'] || null,
+                          municipali: this.obj['city'] || null,
+                          uf: this.obj['uf'] || null,
+                          image_date: formatDateUSA(new Date(feature[0]['properties']['datetime'])),
+                          scene_id: feature[0]['id'],
+                          project: `${window['__env'].appName}`,
+                          featureId: this.featureId,
+                          geom: {type: 'FeatureCollection', features: [polygonEdited]}
+                        };
+
+                        const response = await this.ms.split(objToSend, this.token);
+
+                        this.snackBar.open('Feature split!', '', {
+                          duration: 3000,
+                          verticalPosition: 'top',
+                          panelClass: 'app_snack-bar-success'
+                        });
+
+                      } else {
+
+                        // Editing new feature
+
+                        const objToSend = {
+                          view_date: formatDateUSA(this.obj['viewDate']),
+                          classname: this.obj['class'],
+                          quadrant: this.obj['quadrant'] || null,
+                          path_row: getPathRow(feature[0]),
+                          satellite: getSatellite(feature[0]),
+                          sensor: getSensor(feature[0]),
+                          areauckm: this.obj['areauckm'] || null,
+                          uc: this.obj['uc'] || null,
+                          areamunkm: this.obj['areamunkm'] || null,
+                          municipali: this.obj['city'] || null,
+                          uf: this.obj['uf'] || null,
+                          image_date: formatDateUSA(new Date(feature[0]['properties']['datetime'])),
+                          scene_id: feature[0]['id'],
+                          project: `${window['__env'].appName}`
+                        };
+
+                        const response = await this.ms.update(this.featureId, objToSend, this.token);
+
+                        this.snackBar.open('Feature edited!', '', {
+                          duration: 3000,
+                          verticalPosition: 'top',
+                          panelClass: 'app_snack-bar-success'
+                        });
+                      }
+                    }
                     this.clear();
                 }
             }
-        } catch(err) {
+        } catch (err) {
             this.snackBar.open('Error inserting Feature!', '', {
                 duration: 3000,
                 verticalPosition: 'top',
@@ -244,13 +263,12 @@ export class EditBoxFormComponent implements OnInit {
 
     private clear() {
 
-        var destinationLayer = this.ls.getDestinationOverlayer();
+        const destinationLayer = this.ls.getDestinationOverlayer();
 
-        if(destinationLayer!=null)
-        {
-            var className= `overlayers_${destinationLayer.id}`;
-            var layerName= `${this.workspaceGeoserver}:${destinationLayer.id}`;
-            var layerStyle=`${this.workspaceGeoserver}:${destinationLayer.style}`;
+        if (destinationLayer != null) {
+            const className = `overlayers_${destinationLayer.id}`;
+            const layerName = `${this.workspaceGeoserver}:${destinationLayer.id}`;
+            const layerStyle = `${this.workspaceGeoserver}:${destinationLayer.style}`;
             this.store.dispatch(removeLayers(['drawPolygons', className]));
 
             setTimeout( _ => {
@@ -260,15 +278,13 @@ export class EditBoxFormComponent implements OnInit {
                     format: 'image/png',
                     styles: layerStyle,
                     transparent: true,
-                    className: className,
+                    className,
                     env: `opacity:${this.opacity.toString()}`
                 } as any).setZIndex(9999);
                 this.store.dispatch(setLayers([layerGroup([layer])]));
             });
             this.close(true);
         }
-
-
     }
 
     public getCoordinates(feature) {
@@ -288,35 +304,26 @@ export class EditBoxFormComponent implements OnInit {
           } catch (err) {}
     }
 
-    public async loadCurrentFeature()
-    {
-        try 
-        {
+    public async loadCurrentFeature() {
+        try {
             this.as.token(`${window['__env'].appName}:manage:POST`).then(response => {
                 this.token = response.access_token;
                 this.monitorService.readById(this.featureId, this.token).then(featureResponse => {
                     this.feature = JSON.parse(featureResponse);
-                    if(this.feature)
-                    {
+                    if (this.feature) {
                         this.obj = {
                             viewDate: new Date(),
                             class: this.feature.classname
-                        }
+                        };
                         this.formEdit = this.fb.group({
-                            viewDate: [formatDateUSA(new Date()), [Validators.required]], 
+                            viewDate: [formatDateUSA(new Date()), [Validators.required]],
                             class: [this.feature.classname, [Validators.required]]
                           });
                     }
-                    
                 });
-                
-            })
-
-        }
-        catch(err)
-        {
+            });
+        } catch (err) {
             console.log(err);
         }
     }
-
 }
