@@ -42,5 +42,4 @@ Thumbs.db
 /src/assets/env.js
 
 ##
-./forest-monitor-app/run-local.sh
-!./forest-monitor-app/run-local.sh
+run-local.sh
