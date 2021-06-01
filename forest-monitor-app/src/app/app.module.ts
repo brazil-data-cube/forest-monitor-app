@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { MatSliderModule } from '@angular/material/slider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { GestureConfig } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,7 +19,9 @@ import { APP_BASE_HREF } from '@angular/common';
  * Initial Module of Application (SPA)
  */
 @NgModule({
-  providers: [],
+  providers: [
+    {provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig}
+    ],
   declarations: [
     AppComponent
   ],
@@ -28,6 +32,7 @@ import { APP_BASE_HREF } from '@angular/common';
     SharedModule,
     ExploreModule,
     AuthModule,
+    MatSliderModule,
     StoreModule.forRoot({
       app: fromApp.reducer,
       auth: fromAuth.reducer,

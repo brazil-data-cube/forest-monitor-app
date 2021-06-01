@@ -104,10 +104,10 @@ export const bandsBySensor = {
     'CBERS4-MUX': ['5', '6', '7', '8'],
     'CBERS4-AWFI': ['13', '14', '15', '16']
 }
-export const destinationLayerIdField = "id";
+export const destinationLayerIdField = 'id';
 
 export function getLocalStorageAuthKey()
 {
-  let applicationName = window['__env'].appName;
+  const applicationName = window['__env'].appName;
   return `user-${applicationName}`;
 }
