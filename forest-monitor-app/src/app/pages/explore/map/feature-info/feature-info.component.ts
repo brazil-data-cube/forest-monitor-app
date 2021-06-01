@@ -71,6 +71,13 @@ export class FeatureInfoComponent implements OnInit {
           const keys = Object.keys(response.features[0].properties);
           const properties = [];
           keys.forEach(key => {
+            if (key.includes('date') || key.includes('created_at')) {
+              let value = response.features[0].properties[key];
+              if (value && value[value.length - 1] === 'Z') {
+                value = value.substring(0, value.length - 1);
+                response.features[0].properties[key] = value;
+              }
+            }
             const property = {
               name: key,
               value: response.features[0].properties[key]
