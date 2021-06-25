@@ -46,26 +46,17 @@
                   </div>
                   <div class="col-md-4">
                     <div *ngIf="layerData.isDestinationLayer" class="row">
-                     <div class="col-md-2">
-                       <div id="editFeatureButton" (click)="showEditFeature(layerData.featureId, false, null)" title="Edit Feature Classification"></div>
-                     </div>
-<!--                      <div (click)="showSplitEditFeature(layerData.featureId)" id="showSplitEditFeature" style="display: none;"></div>-->
-<!--                      <div class="col-md-2">-->
-<!--                        <div id="deleteFeatureButton" (click)="showDeleteFeature(layerData.featureId)" title="Delete Feature"></div>-->
-<!--                      </div>-->
-<!--                      <div class="col-md-2">-->
-<!--                        <div id="splitFeatureButton" (click)="showSplitFeature(layerData)" title="Split Feature"></div>-->
-<!--                      </div>-->
-<!--                      <div class="col-md-2">-->
-<!--                        <div id="shapeFeatureButton" (click)="getShapefileById(layerData.layerId, layerData.featureKey, layerData.featureId)" title="Download Feature Shapefile"></div>-->
-<!--                      </div>-->
-                      <!-- <div class="col-md-4">
-                        <div id="editFeatureButton" (click)="showEditFeature(layerData.featureId, false, null)" title="Edit Feature Classification">z<div (click)="showSplitEditFeature()" id="showSplitEditFeature" style="display: none;"></div></div>
-                      </div> -->
-                      <div class="col-md-4">
+                      <div class="col-md-2">
+                        <div id="editFeatureButton" (click)="showEditFeature(layerData.featureId, false, null)" title="Edit Feature Classification"></div>
+                      </div>
+                      <div (click)="showSplitEditFeature(layerData)" id="showSplitEditFeature" style="display: none;"></div>
+                      <div class="col-md-2">
+                        <div id="splitFeatureButton" (click)="showSplitFeature(layerData)" title="Split Feature"></div>
+                      </div>
+                      <div class="col-md-2">
                         <div id="deleteFeatureButton" (click)="showDeleteFeature(layerData.featureId)" title="Delete Feature"></div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-2">
                         <div id="shapeFeatureButton" (click)="getShapefileById(layerData.layerId, layerData.featureKey, layerData.featureId)" title="Download Feature Shapefile"></div>
                       </div>
                     </div>

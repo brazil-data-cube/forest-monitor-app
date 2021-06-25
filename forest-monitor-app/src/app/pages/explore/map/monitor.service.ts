@@ -68,9 +68,9 @@ export class MonitorService {
     return response;
   }
 
-  public async split(data: object, token: string): Promise<any> {
+  public async split(id: string, data: object, token: string): Promise<any> {
 
-    const urlSuffix = `/monitor/split`;
+    const urlSuffix = `/monitor/split/${id}`;
     const response = await this.http.post(`${this.urlForestAPI}${urlSuffix}`, data, {
       headers: {
         Authorization: `Bearer ${token}`

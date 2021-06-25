@@ -12,6 +12,7 @@ import { MonitorService } from '../../monitor.service';
 import { AuthService } from 'src/app/pages/auth/auth.service';
 import { DETERclasses, getPathRow, getSensor, getSatellite } from 'src/app/shared/helpers/CONSTS';
 import intersect from '@turf/intersect';
+import difference from '@turf/difference';
 import * as turf from '@turf/helpers';
 import { Editable } from './box.interface';
 import { LayerService } from '../../layers/layer.service';
@@ -57,6 +58,7 @@ export class EditBoxFormComponent implements OnInit {
 
     public isSplitFeature = false;
     public splitGeom = null;
+    public sourceGeom = null;
 
     constructor(
         private snackBar: MatSnackBar,
@@ -108,6 +110,7 @@ export class EditBoxFormComponent implements OnInit {
             } else {
               this.isSplitFeature = data.isSplit;
               this.splitGeom = data.splitGeom;
+              this.sourceGeom = data.sourceGeom;
               // If featureId isn't null, it's an update
               this.featureId = data.featureId;
               if (this.isSplitFeature) {
@@ -187,10 +190,14 @@ export class EditBoxFormComponent implements OnInit {
 
                         // Split feature
 
-                        const polygonEdited = this.getCoordinates(this.splitGeom);
+                        const polygonSplit = this.getCoordinates(this.splitGeom);
                         const polygonScene = this.getCoordinates(feature[0]);
 
-                        const intersection = intersect(polygonEdited, polygonScene);
+                        const splitIntersection = intersect(polygonSplit, polygonScene);
+
+                        const polygonSource = turf.multiPolygon(this.sourceGeom.coordinates);
+
+                        const polygonSourceEdited = difference(polygonSource, polygonSplit);
 
                         const objToSend = {
                           view_date: formatDateUSA(this.obj['viewDate']),
@@ -207,11 +214,11 @@ export class EditBoxFormComponent implements OnInit {
                           image_date: formatDateUSA(new Date(feature[0]['properties']['datetime'])),
                           scene_id: feature[0]['id'],
                           project: `${window['__env'].appName}`,
-                          featureId: this.featureId,
-                          geom: {type: 'FeatureCollection', features: [polygonEdited]}
+                          geom: {type: 'FeatureCollection', features: [splitIntersection]},
+                          edited_geom: {type: 'FeatureCollection', features: [polygonSourceEdited]}
                         };
 
-                        const response = await this.ms.split(objToSend, this.token);
+                        const response = await this.ms.split(this.featureId, objToSend, this.token);
 
                         this.snackBar.open('Feature split!', '', {
                           duration: 3000,
@@ -292,6 +299,8 @@ export class EditBoxFormComponent implements OnInit {
             return turf.polygon(feature.geometry.coordinates);
         } else if (feature.geometry.type.toLowerCase() === 'multipolygon') {
             return turf.multiPolygon(feature.geometry.coordinates);
+        } else {
+          return turf.multiPolygon(feature.coordinates);
         }
     }
 
