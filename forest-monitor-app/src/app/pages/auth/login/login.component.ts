@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { Router } from '@angular/router';
-import { AuthState } from '../auth.state';
+import {Component} from '@angular/core';
+import {select, Store} from '@ngrx/store';
+import {Router} from '@angular/router';
+import {AuthState} from '../auth.state';
 
 /**
  * login page component

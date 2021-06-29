@@ -1,15 +1,13 @@
-import { Component } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { ExploreState } from '../../explore.state';
-import { Options, LabelType } from 'ng5-slider';
-import { setFeaturesPeriod, setLayers, removeGroupLayer } from '../../explore.action';
-import { Layer } from 'leaflet';
-import { addDays } from 'src/app/shared/helpers/date';
-import * as moment from 'moment';
-
-
+import {Component} from '@angular/core';
+import {select, Store} from '@ngrx/store';
+import {ExploreState} from '../../explore.state';
+import {LabelType, Options} from 'ng5-slider';
+import {removeGroupLayer, setFeaturesPeriod, setLayers} from '../../explore.action';
 import * as L from 'leaflet';
-import { getSatellite, defaultRGBBands } from 'src/app/shared/helpers/CONSTS';
+import {Layer} from 'leaflet';
+import {addDays} from 'src/app/shared/helpers/date';
+import * as moment from 'moment';
+import {defaultRGBBands, getSatellite} from 'src/app/shared/helpers/CONSTS';
 
 /**
  * Map Slider component
@@ -110,7 +108,7 @@ export class SliderComponent {
 
       // apply filter
       const featSelected = this.features.filter(feat => {
-        const featureDatetime = feat['properties'].datetime ? 
+        const featureDatetime = feat['properties'].datetime ?
           moment.utc(feat['properties'].datetime):
           moment.utc(feat['properties'].acquired);
 
@@ -129,7 +127,7 @@ export class SliderComponent {
               filter: []
             });
             this.store.dispatch(setLayers([layerTile]));
-    
+
           } else if(getSatellite(f) === 'PlanetDaily') {
             const url = `https://tiles0.planet.com/data/v1/${f.properties.item_type}/${f.id}/{z}/{x}/{y}.png?api_key=${this.planetAPIKey}`
             const layerTile = (L.tileLayer as any).colorFilter(url, {
@@ -137,7 +135,7 @@ export class SliderComponent {
               filter: []
             });
             this.store.dispatch(setLayers([layerTile]));
-    
+
           } else {
             const style = {}
             if (f['style']) {
@@ -179,7 +177,7 @@ export class SliderComponent {
               this.store.dispatch(setLayers([layerTile]));
 
             } else if (collection.indexOf('CBERS') >= 0) {
-              
+
               const sceneId = f['id'];
               if (sceneId.indexOf('MUX') >= 0) {
                 const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
@@ -198,7 +196,7 @@ export class SliderComponent {
               }
 
             }
-          } 
+          }
           f['enabled'] = true;
           return f;
 

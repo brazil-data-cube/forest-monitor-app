@@ -1,40 +1,40 @@
 <div class="temporal-box" *ngIf="showBox" cdkDrag>
   <div class="content">
-      <header cdkDragHandle>
-          <h1>Temporal Range</h1>
-      </header>
+    <header cdkDragHandle>
+      <h1>Temporal Range</h1>
+    </header>
 
-      <button class="btn-close" mat-icon-button (click)="toggleBox()">
-          <mat-icon>close</mat-icon>
-      </button>
+    <button class="btn-close" mat-icon-button (click)="toggleBox()">
+      <mat-icon>close</mat-icon>
+    </button>
 
-        <div style="display: flex;"></div>
-          <mat-form-field appearance="fill" style = "width: 40%; margin-left: 4%;">
-            <mat-label>Start Date</mat-label>
-            <input matInput
-              [matDatepicker]="start_date"
-              mask="00/00/000"
-              name="start_date"
-              (dateInput)="startDateEvent('input', $event)" (startDate)="startDateEvent('change', $event)">
-            <mat-datepicker-toggle matSuffix [for]="start_date"></mat-datepicker-toggle>
-            <mat-datepicker #start_date></mat-datepicker>
-          </mat-form-field>
+    <div style="display: flex;"></div>
+    <mat-form-field appearance="fill" style="width: 40%; margin-left: 4%;">
+      <mat-label>Start Date</mat-label>
+      <input matInput
+             [matDatepicker]="start_date"
+             mask="00/00/000"
+             name="start_date"
+             (dateInput)="startDateEvent('input', $event)" (startDate)="startDateEvent('change', $event)">
+      <mat-datepicker-toggle matSuffix [for]="start_date"></mat-datepicker-toggle>
+      <mat-datepicker #start_date></mat-datepicker>
+    </mat-form-field>
 
-        <mat-form-field appearance="fill" style = "width: 40%; margin-left: 8%;">
-          <mat-label>Last Date</mat-label>
-          <input matInput
-           [matDatepicker]="last_date"
-           (dateInput)="lastDateEvent('input', $event)" (lastDate)="lastDateEvent('change', $event)">
-          <mat-datepicker-toggle matSuffix [for]="last_date"></mat-datepicker-toggle>
-          <mat-datepicker #last_date></mat-datepicker>
-        </mat-form-field>
+    <mat-form-field appearance="fill" style="width: 40%; margin-left: 8%;">
+      <mat-label>Last Date</mat-label>
+      <input matInput
+             [matDatepicker]="last_date"
+             (dateInput)="lastDateEvent('input', $event)" (lastDate)="lastDateEvent('change', $event)">
+      <mat-datepicker-toggle matSuffix [for]="last_date"></mat-datepicker-toggle>
+      <mat-datepicker #last_date></mat-datepicker>
+    </mat-form-field>
 
-        <button
-          mat-stroked-button
-          color="accent"
-          (click)="updateOpacityLayers()">Update
-        </button>
-      </div>
-
+    <button
+      mat-stroked-button
+      color="accent"
+      (click)="updateOpacityLayers()">Update
+    </button>
+  </div>
+</div>
 
 

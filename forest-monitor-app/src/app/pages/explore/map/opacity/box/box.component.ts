@@ -1,12 +1,12 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { layerGroup } from 'leaflet';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Store} from '@ngrx/store';
 import * as L from 'leaflet';
+import {layerGroup} from 'leaflet';
 
-import { LayerService } from '../../layers/layer.service';
-import { BdcOverlayer } from '../../layers/layer.interface';
-import { ExploreState } from '../../../explore.state';
-import { removeLayers, setLayers } from '../../../explore.action';
+import {LayerService} from '../../layers/layer.service';
+import {BdcOverlayer} from '../../layers/layer.interface';
+import {ExploreState} from '../../../explore.state';
+import {removeLayers, setLayers} from '../../../explore.action';
 
 @Component({
     selector: 'app-map-opacity-box',

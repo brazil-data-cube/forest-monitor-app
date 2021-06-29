@@ -1,9 +1,6 @@
-import { createReducer, on, Action } from '@ngrx/store';
-import {
-  showLoading,
-  closeLoading
-} from './app.action';
-import { AppState } from './app.state';
+import {Action, createReducer, on} from '@ngrx/store';
+import {closeLoading, showLoading} from './app.action';
+import {AppState} from './app.state';
 
 /** initial values to App State */
 const initialState: AppState = {
@@ -25,4 +22,4 @@ const reducerApp = createReducer(initialState,
 
 export function reducer(state: AppState | undefined, action: Action) {
   return reducerApp(state, action);
-} 
+}

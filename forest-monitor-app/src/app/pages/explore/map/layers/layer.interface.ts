@@ -1,4 +1,4 @@
-import { Layer } from 'leaflet';
+import {Layer} from 'leaflet';
 
 /**
  * Language

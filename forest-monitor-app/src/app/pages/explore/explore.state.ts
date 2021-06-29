@@ -1,4 +1,4 @@
-import { Layer, LatLngBoundsExpression } from 'leaflet';
+import {LatLngBoundsExpression, Layer} from 'leaflet';
 
 /** State Model - used in Explore module */
 export interface ExploreState {

@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import * as moment from 'moment';
 
 /** Service to search items in STAC */
@@ -27,13 +27,13 @@ export class SearchService {
         const url = `https://api.planet.com/data/v1/quick-search?_sort=acquired desc`;
 
         const query = {
-            "filter":  {  
+            "filter":  {
                 "type":"AndFilter",
-                "config":[ 
+                "config":[
                     {
                         "type":"DateRangeFilter",
                         "field_name":"acquired",
-                        "config":{  
+                        "config":{
                             "gt": start_date,
                             "lte": end_date
                         }
@@ -41,13 +41,13 @@ export class SearchService {
                     {
                         "type":"GeometryFilter",
                         "field_name":"geometry",
-                        "config":{  
+                        "config":{
                             "type":"Polygon",
                             "coordinates": coordinates
                         }
                     }
                 ]
-                   
+
             },
             "item_types": ["REOrthoTile", "PSScene4Band", "SkySatCollect"]
         }

@@ -1,19 +1,24 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatSnackBar, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
-import { Store, select } from '@ngrx/store';
-import { rectangle, LatLngBoundsExpression, Rectangle } from 'leaflet';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {DateAdapter, MAT_DATE_FORMATS, MatSnackBar} from '@angular/material';
+import {select, Store} from '@ngrx/store';
+import {LatLngBoundsExpression, rectangle, Rectangle} from 'leaflet';
 
-import { SearchService } from './search.service';
-import { ExploreState } from '../../explore.state';
-import { formatDateUSA } from 'src/app/shared/helpers/date';
+import {SearchService} from './search.service';
+import {ExploreState} from '../../explore.state';
+import {formatDateUSA} from 'src/app/shared/helpers/date';
 import {
-  setLayers, setPositionMap, setRangeTemporal, setFeatures, removeGroupLayer, setBbox
+  removeGroupLayer,
+  setBbox,
+  setFeatures,
+  setLayers,
+  setPositionMap,
+  setRangeTemporal
 } from '../../explore.action';
-import { showLoading, closeLoading } from 'src/app/app.action';
-import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/shared/helpers/date.adapter';
-import { collectionKeyByCollection } from 'src/app/shared/helpers/CONSTS';
-import { Search } from './search.interface';
+import {closeLoading, showLoading} from 'src/app/app.action';
+import {APP_DATE_FORMATS, AppDateAdapter} from 'src/app/shared/helpers/date.adapter';
+import {collectionKeyByCollection} from 'src/app/shared/helpers/CONSTS';
+import {Search} from './search.interface';
 
 @Component({
   selector: 'app-search',

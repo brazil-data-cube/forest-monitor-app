@@ -290,8 +290,6 @@ export class EditBoxFormComponent implements OnInit {
       return turf.polygon(feature.geometry.coordinates);
     } else if (feature.geometry.type.toLowerCase() === 'multipolygon') {
       return turf.multiPolygon(feature.geometry.coordinates);
-    } else {
-      return turf.multiPolygon(feature.coordinates);
     }
   }
 

@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { getLocalStorageAuthKey } from '../../shared/helpers/CONSTS';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
+import {getLocalStorageAuthKey} from '../../shared/helpers/CONSTS';
 
 /**
  * Service to authentication
@@ -46,7 +46,7 @@ export class AuthService {
 
           const response = await this.token(`${this.applicationName}:manage:POST`);
 
-        } catch(err) 
+        } catch(err)
         {
             return false;
         }
