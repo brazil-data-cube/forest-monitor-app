@@ -1,23 +1,20 @@
-
-import { Component, OnInit, Input, ViewChild, ChangeDetectorRef, NgZone } from '@angular/core';
+import {ChangeDetectorRef, Component, Input, NgZone, OnInit} from '@angular/core';
 
 import * as L from 'leaflet';
+import {Control, Draw, latLng, LatLngBoundsExpression, Layer, Map as MapLeaflet, MapOptions, rectangle} from 'leaflet';
 import 'leaflet.fullscreen/Control.FullScreen.js';
 import 'src/assets/plugins/Leaflet.Coordinates/Leaflet.Coordinates-0.1.5.min.js';
 import 'esri-leaflet/dist/esri-leaflet.js';
 import 'leaflet-control-geocoder/dist/Control.Geocoder.js';
 import * as LE from 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.js';
-
-import { latLng, MapOptions, Layer, Map as MapLeaflet,
-  LatLngBoundsExpression, Control, Draw, rectangle } from 'leaflet';
-import { BdcLayer, BdcOverlayer } from './layers/layer.interface';
-import { LayerService } from './layers/layer.service';
-import { Store, select } from '@ngrx/store';
-import { ExploreState } from '../explore.state';
-import { setPositionMap, setBbox, removeLayers, setLayers, removeGroupLayer, setSelectedFeatureRemove } from '../explore.action';
-import { AuthService } from '../../auth/auth.service';
-import { FeatureInfoComponent } from './feature-info/feature-info.component';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import {BdcLayer} from './layers/layer.interface';
+import {LayerService} from './layers/layer.service';
+import {select, Store} from '@ngrx/store';
+import {ExploreState} from '../explore.state';
+import {removeGroupLayer, removeLayers, setBbox, setLayers, setPositionMap} from '../explore.action';
+import {AuthService} from '../../auth/auth.service';
+import {FeatureInfoComponent} from './feature-info/feature-info.component';
+import {MatDialog, MatDialogRef} from '@angular/material';
 
 /**
  * Map component

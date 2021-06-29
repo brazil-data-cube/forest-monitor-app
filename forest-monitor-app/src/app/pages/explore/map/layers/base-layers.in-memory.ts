@@ -1,5 +1,4 @@
-import { tileLayer } from 'leaflet';
-import { BdcLayer } from './layer.interface';
+import {tileLayer} from 'leaflet';
 
 /**
  * return a list of external base layers/maps

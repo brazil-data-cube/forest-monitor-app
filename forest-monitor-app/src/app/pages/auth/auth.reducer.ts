@@ -1,9 +1,7 @@
-import { createReducer, on, Action } from '@ngrx/store';
-import {
-  Login, Logout
-} from './auth.action';
-import { AuthState } from './auth.state';
-import { getLocalStorageAuthKey } from '../../shared/helpers/CONSTS';
+import {Action, createReducer, on} from '@ngrx/store';
+import {Login, Logout} from './auth.action';
+import {AuthState} from './auth.state';
+import {getLocalStorageAuthKey} from '../../shared/helpers/CONSTS';
 
 /** initial values to Auth State */
 const initialState: AuthState = {

@@ -1,8 +1,14 @@
-import { Component } from '@angular/core';
-import { select, Store } from '@ngrx/store';
-import { ExploreState } from '../../explore.state';
-import { setFeaturesPeriod, setLayers, removeLayers, removeGroupLayer, setSelectedFeatureEdit } from '../../explore.action';
-import { getPathRow, getSensor, getSatellite, defaultRGBBands } from 'src/app/shared/helpers/CONSTS';
+import {Component} from '@angular/core';
+import {select, Store} from '@ngrx/store';
+import {ExploreState} from '../../explore.state';
+import {
+  removeGroupLayer,
+  removeLayers,
+  setFeaturesPeriod,
+  setLayers,
+  setSelectedFeatureEdit
+} from '../../explore.action';
+import {defaultRGBBands, getPathRow, getSatellite, getSensor} from 'src/app/shared/helpers/CONSTS';
 import 'src/assets/plugins/Leaflet.TileFilter/leaflet-tilefilter.js';
 import * as moment from 'moment';
 import * as L from 'leaflet';
@@ -75,7 +81,7 @@ export class ResultsPeriodComponent {
 
   public isPlanet(feature): boolean {
     return this.isPlanetDaily(feature) || this.isPlanetMosaic(feature);
-  } 
+  }
 
   public getThumbnail(feature): string {
     if (this.isPlanetDaily(feature)) {
@@ -144,7 +150,7 @@ export class ResultsPeriodComponent {
           this.store.dispatch(setLayers([layerTile]));
 
         } else if (collection.indexOf('CBERS') >= 0) {
-          
+
           const sceneId = f['id'];
           if (sceneId.indexOf('MUX') >= 0) {
             const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;

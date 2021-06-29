@@ -1,5 +1,5 @@
-import { createAction, props } from '@ngrx/store';
-import { Layer, LatLngBounds } from 'leaflet';
+import {createAction, props} from '@ngrx/store';
+import {LatLngBounds, Layer} from 'leaflet';
 
 /**
  * set Features in store application

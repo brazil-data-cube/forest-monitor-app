@@ -1,19 +1,19 @@
-import { createReducer, on, Action } from '@ngrx/store';
+import {Action, createReducer, on} from '@ngrx/store';
 import {
-  setLayers,
+  removeGroupLayer,
+  removeLayers,
+  setActualRangeTemporal,
   setBbox,
-  setPositionMap,
-  setRangeTemporal,
   setFeatures,
   setFeaturesPeriod,
-  removeLayers,
-  removeGroupLayer,
-  setActualRangeTemporal,
+  setLayers,
+  setPositionMap,
+  setRangeTemporal,
   setSelectedFeatureEdit,
-  setStyleForLayer,
-  setSelectedFeatureRemove
+  setSelectedFeatureRemove,
+  setStyleForLayer
 } from './explore.action';
-import { ExploreState } from './explore.state';
+import {ExploreState} from './explore.state';
 
 /** initial values to Explore State */
 const initialState: ExploreState = {
@@ -76,4 +76,4 @@ const reducerExplore = createReducer(initialState,
 
 export function reducer(state: ExploreState | undefined, action: Action) {
   return reducerExplore(state, action);
-} 
+}

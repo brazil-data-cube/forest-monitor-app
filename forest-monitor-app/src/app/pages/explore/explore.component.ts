@@ -1,16 +1,9 @@
-import {
-  Component,
-  OnInit,
-  HostListener,
-  ElementRef,
-  ViewChild,
-  AfterViewInit
-} from '@angular/core';
-import { MatSidenav } from '@angular/material';
-import { Store, select } from '@ngrx/store';
-import { AuthState } from '../auth/auth.state';
-import { Router } from '@angular/router';
-import { AuthService } from '../auth/auth.service';
+import {AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import {MatSidenav} from '@angular/material';
+import {select, Store} from '@ngrx/store';
+import {AuthState} from '../auth/auth.state';
+import {Router} from '@angular/router';
+import {AuthService} from '../auth/auth.service';
 
 /**
  * Explore Component
@@ -49,7 +42,7 @@ export class ExploreComponent implements OnInit, AfterViewInit {
       }
     });
 
-    
+
   }
 
   /**
@@ -93,7 +86,7 @@ export class ExploreComponent implements OnInit, AfterViewInit {
 	public async checkAuth() {
     try {
       const response = await this.as.token(`${window['__env'].appName}:manage:POST`);
-    } catch(err) 
+    } catch(err)
     {
       this.as.logout(this.router);
       this.router.navigate(['/auth/login']);
