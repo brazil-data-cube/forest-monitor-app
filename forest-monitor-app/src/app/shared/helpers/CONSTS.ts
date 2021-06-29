@@ -7,10 +7,10 @@ export const satsens = ['CBERS-4:WFI', 'CBERS-4:MUX', 'SENTINEL-2:MSI', 'LANDSAT
  * return collection key by collection
  */
 export const collectionKeyByCollection = {
-    'landsat': 'landsat-8-l1',
-    'sentinel': 'sentinel-2-l1c',
-    'cbers': ['CBERS4-MUX', 'CBERS4-AWFI'],
-    'planet': 'global_monthly'
+    landsat: 'landsat-8-l1',
+    sentinel: 'sentinel-2-l1c',
+    cbers: ['CBERS4-MUX', 'CBERS4-AWFI'],
+    planet: 'global_monthly'
 };
 
 /**
@@ -47,17 +47,15 @@ export function getPathRow(f) {
 export function getSensor(f) {
     let eoInstrument = f['properties']['eo:instrument'];
 
-    if (!eoInstrument)
-    {
+    if (!eoInstrument) {
         eoInstrument = f['properties']['instruments'];
     }
 
-    if (!eoInstrument)
-    {
-        return "";
+    if (!eoInstrument) {
+        return '';
     }
 
-    return eoInstrument.toString().substring(0, 4).replace('AWFI', 'WFI').substring(0,3);
+    return eoInstrument.toString().substring(0, 4).replace('AWFI', 'WFI').substring(0, 3);
 }
 
 /**
@@ -66,10 +64,7 @@ export function getSensor(f) {
 export function getSatellite(f) {
     const collection = f.collection ? f.collection : f.properties.collection || null;
     if (collection) {
-        if (collection.indexOf('sentinel') >= 0) return 'Sentinel-2';
-        else if (collection.indexOf('landsat') >= 0) return 'Landsat-8';
-        else if (collection.toLowerCase().indexOf('cbers') >= 0) return 'Cbers-4';
-        else if (collection.toLowerCase().indexOf('global_monthly') >= 0) return 'Planet';
+        if (collection.indexOf('sentinel') >= 0) { return 'Sentinel-2'; } else if (collection.indexOf('landsat') >= 0) { return 'Landsat-8'; } else if (collection.toLowerCase().indexOf('cbers') >= 0) { return 'Cbers-4'; } else if (collection.toLowerCase().indexOf('global_monthly') >= 0) { return 'Planet'; }
     } else {
         return 'PlanetDaily';
     }
@@ -96,18 +91,17 @@ export const defaultRGBBands = {
         green: '16',
         blue: '15'
     }
-}
+};
 
 export const bandsBySensor = {
     'sentinel-2-l1c': ['01', '02', '03', '04', '05', '06', '07', '08', '8A', '09', '10', '11', '12'],
     'landsat-8-l1': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', 'QA'],
     'CBERS4-MUX': ['5', '6', '7', '8'],
     'CBERS4-AWFI': ['13', '14', '15', '16']
-}
+};
 export const destinationLayerIdField = 'id';
 
-export function getLocalStorageAuthKey()
-{
+export function getLocalStorageAuthKey() {
   const applicationName = window['__env'].appName;
   return `user-${applicationName}`;
 }

@@ -145,7 +145,7 @@ export class MapComponent implements OnInit {
           }
         }
       }
-    }
+    };
     if (this.as.checkAuthPost()) {
       config['edit'] = { featureGroup: drawnItems };
     }
@@ -198,7 +198,7 @@ export class MapComponent implements OnInit {
     // Add context menu event
     this.map.on('contextmenu', async evt => {
 
-      //Opening dialog with get feature info from layers
+      // Opening dialog with get feature info from layers
       this.ngZone.run(() => {
         this.featureInfoDialog = this.dialog.open(FeatureInfoComponent, {
           width: '550px',
@@ -247,6 +247,7 @@ export class MapComponent implements OnInit {
  /**
    * search area by lat and lon
    */
+
    private setCoordinatesLatLng(){
     var _geocoderType = (L.Control as any).Geocoder.latLng(1000);
     (L.Control as any).geocoder({

@@ -11,7 +11,7 @@ import * as L from 'leaflet';
   styleUrls: ['./style-box.component.scss']
 })
 export class StyleBoxComponent implements OnInit {
-  showStyleBox: boolean = false;
+  showStyleBox = false;
   style: any;
   bandsAvailable: string[];
 
@@ -41,7 +41,7 @@ export class StyleBoxComponent implements OnInit {
       }
       this.showStyleBox = true;
       this.bandsAvailable = bandsBySensor[collection];
-    })
+    });
   }
 
   sendStyle() {
@@ -128,7 +128,7 @@ export class StyleBoxComponent implements OnInit {
       gamma: 1,
       saturation: 1,
       sigmoidal: null
-    }
+    };
   }
 
   getFeatureName() {
@@ -152,6 +152,6 @@ export class StyleBoxComponent implements OnInit {
   }
 
   closeBox() {
-    this.store.dispatch(setSelectedFeatureEdit({ payload: null }))
+    this.store.dispatch(setSelectedFeatureEdit({ payload: null }));
   }
 }

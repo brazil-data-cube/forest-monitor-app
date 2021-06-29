@@ -15,9 +15,9 @@ export class LoginComponent {
 	/** declare services */
 	constructor(
 		private store: Store<AuthState>,
-        public router: Router) {
+  public router: Router) {
         this.store.pipe(select('auth')).subscribe(res => {
-            if (res.userId !== "" && res.token !== "") {
+            if (res.userId !== '' && res.token !== '') {
                 this.router.navigate(['/explore']);
             }
         });

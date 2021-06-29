@@ -30,11 +30,10 @@ export class AuthService {
         return response;
     }
 
-    public logout(router: Router)
-    {
+    public logout(router: Router) {
 
         localStorage.removeItem(getLocalStorageAuthKey());
-        let basePath = "/"+`${window['__env'].basePath}`;
+        const basePath = '/' + `${window['__env'].basePath}`;
         document.location.href = basePath;
     }
 
@@ -46,8 +45,7 @@ export class AuthService {
 
           const response = await this.token(`${this.applicationName}:manage:POST`);
 
-        } catch(err)
-        {
+        } catch (err) {
             return false;
         }
         return true;

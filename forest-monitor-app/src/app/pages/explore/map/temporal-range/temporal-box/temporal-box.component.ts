@@ -30,6 +30,13 @@ import {AuthService} from 'src/app/pages/auth/auth.service';
 })
 export class TemporalBoxComponent implements OnInit {
 
+  constructor(private ls: LayerService,
+              private store: Store<ExploreState>,
+              private monitorService: MonitorService,
+              private as: AuthService,
+              private fb: FormBuilder) { }
+  static lastDateTemporalRange: any;
+
   @Input('show') public showBox: boolean;
 
   @Output() toggleToEmit = new EventEmitter();
@@ -42,7 +49,7 @@ export class TemporalBoxComponent implements OnInit {
 
   public layersTitle = [];
   public layers = {};
-  public dateForm: FormGroup
+  public dateForm: FormGroup;
 
   public id = '1';
   public token = null;
@@ -55,13 +62,8 @@ export class TemporalBoxComponent implements OnInit {
   private urlGeoserver = window['__env'].urlGeoserver;
   private workspaceGeoserver = window['__env'].workspaceGeoserver;
   resposta: string;
-  static lastDateTemporalRange: any;
 
-  constructor(private ls: LayerService,
-    private store: Store<ExploreState>,
-    private monitorService: MonitorService,
-    private as: AuthService,
-    private fb: FormBuilder) { }
+  events: string[] = [];
 
   ngOnInit(): void {
     this.mountListLayers();
@@ -81,12 +83,10 @@ export class TemporalBoxComponent implements OnInit {
     this.toggleToEmit.emit();
   }
 
-  events: string[] = [];
-
 
   startDateEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     this.events.push(`${type}: ${event.value}`);
-    var startDate = event.value.toString()
+    let startDate = event.value.toString();
     // console.log("START Event: ", startDateTemporalRange)
     // startDate = startDate.substr(4, 11)
     // startDate = startDate.substr(7, 4) + '-' + startDate.substr(0, 3) + '-' + startDate.substr(4, 2)
@@ -221,8 +221,7 @@ export class TemporalBoxComponent implements OnInit {
     // return lastDateTemporalRange
   }
 
-  public async teste()
-    {
+  public async teste() {
         // this.monitorService.readByDate(this.token);
     }
 
@@ -230,18 +229,18 @@ export class TemporalBoxComponent implements OnInit {
     const overlayers = this.ls.getOverlayers().map(l => `overlayers_${l.id}`);
     this.store.dispatch(removeLayers(overlayers));
     // console.log('TemporalBoxComponent.lastDateTemporalRange: ',TemporalBoxComponent.lastDateTemporalRange)
-    //pegar o valor do mat-datepicker
+    // pegar o valor do mat-datepicker
     // console.log('FeatureInfoComponent.getDateRange: ',FeatureInfoComponent.getDateRange)
 
 
-    this.teste()
+    this.teste();
 
-    //apertar update pra testar
+    // apertar update pra testar
     // if (FeatureInfoComponent.getDateRange() <= TemporalBoxComponent.lastDateTemporalRange) {
       // console.log('FeatureInfoComponent.getDateRange: ',FeatureInfoComponent.getDateRange)
 
 
-      setTimeout(_ => {
+    setTimeout(_ => {
         this.ls.getOverlayers().forEach((l: BdcOverlayer) => {
           const layer = L.tileLayer.wms(`${this.urlGeoserver}/${this.workspaceGeoserver}/wms`, {
             layers: `${this.workspaceGeoserver}:${l.id}`,

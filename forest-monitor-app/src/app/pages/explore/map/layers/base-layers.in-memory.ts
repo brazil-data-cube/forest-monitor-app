@@ -8,16 +8,16 @@ import {tileLayer} from 'leaflet';
 export class BaseLayers  {
    public  BdcLayer  = [];
    public static getBdcLayer(BdcLayer) {
-      let data = new Date();
-      let month = data.getMonth() +1 ;
-      let year = data.getFullYear();
+      const data = new Date();
+      const month = data.getMonth() + 1 ;
+      const year = data.getFullYear();
 
       let strMonth;
       let strmonthOld;
       let strData;
       let strDataOld;
 
-      if (month > 1 && month != 2){
+      if (month > 1 && month != 2) {
          strMonth = month - 1 ;
          strmonthOld = month - 2;
          if (strMonth < 10 || strmonthOld < 10) {
@@ -30,15 +30,13 @@ export class BaseLayers  {
          strData = year + '-' +  strMonth;
          strDataOld = year + '-' + strmonthOld;
 
-      }
-      else if (month == 1) {
-         strData = (year -1) + '-' + 12 ;
-         strDataOld = (year -1) + '-' + 11 ;
-         }
-      else if (month == 2) {
+      } else if (month == 1) {
+         strData = (year - 1) + '-' + 12 ;
+         strDataOld = (year - 1) + '-' + 11 ;
+         } else if (month == 2) {
          strMonth = month - 1 ;
          strData = year + '-' +   '0' + strMonth;
-         strDataOld = (year -1) + '-' + 12 ;
+         strDataOld = (year - 1) + '-' + 12 ;
       }
 
       return  BdcLayer  = [
@@ -80,7 +78,7 @@ export class BaseLayers  {
             name: 'OSM',
             layer: tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-               ///subdomains: ['a','b','c']
+               /// subdomains: ['a','b','c']
             }),
          },
          {
@@ -101,7 +99,7 @@ export class BaseLayers  {
                format: 'image/png',
                transparent: true,
                className: `MOSAICO_landsat`,
-               time:'2017-01-01T00:00:00.000Z'
+               time: '2017-01-01T00:00:00.000Z'
            } as any)
          },
          {
@@ -113,7 +111,7 @@ export class BaseLayers  {
                format: 'image/png',
                transparent: true,
                className: `MOSAICO_landsat`,
-               time:'2018-01-01T00:00:00.000Z'
+               time: '2018-01-01T00:00:00.000Z'
            } as any)
          },
          {
@@ -125,7 +123,7 @@ export class BaseLayers  {
                format: 'image/png',
                transparent: true,
                className: `MOSAICO_landsat`,
-               time:'2019-01-01T00:00:00.000Z'
+               time: '2019-01-01T00:00:00.000Z'
            } as any)
          },
          {
@@ -137,7 +135,7 @@ export class BaseLayers  {
                format: 'image/png',
                transparent: true,
                className: `MOSAICO_landsat`,
-               time:'2020-01-01T00:00:00.000Z'
+               time: '2020-01-01T00:00:00.000Z'
            } as any)
          },
          {
