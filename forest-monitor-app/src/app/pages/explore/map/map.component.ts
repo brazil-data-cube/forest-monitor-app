@@ -145,7 +145,7 @@ export class MapComponent implements OnInit {
           }
         }
       }
-    }
+    };
     if (this.as.checkAuthPost()) {
       config['edit'] = { featureGroup: drawnItems };
     }
@@ -198,7 +198,7 @@ export class MapComponent implements OnInit {
     // Add context menu event
     this.map.on('contextmenu', async evt => {
 
-      //Opening dialog with get feature info from layers
+      // Opening dialog with get feature info from layers
       this.ngZone.run(() => {
         this.featureInfoDialog = this.dialog.open(FeatureInfoComponent, {
           width: '550px',
@@ -246,7 +246,7 @@ export class MapComponent implements OnInit {
   /**
    * buscar  área por lat e lon
    */
-  private setCoordinatesLatLng(){
+  private setCoordinatesLatLng() {
 
      (L.Control  as any).geocoder({
         position: 'topleft',
@@ -254,7 +254,7 @@ export class MapComponent implements OnInit {
         placeholder: 'Ex: -7.59122,-59.34494',
         defaultMarkGeocode: false
       }).on('markgeocode', e => {
-        this.map.setView(e.geocode.center,10);
+        this.map.setView(e.geocode.center, 10);
        }).addTo(this.map);
 
    }

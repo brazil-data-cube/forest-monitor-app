@@ -64,13 +64,13 @@ const reducerExplore = createReducer(initialState,
     return { ...state, bbox: payload };
   }),
   on(setSelectedFeatureEdit, (state, action) => {
-    return { ...state, selectedFeatureEdit: action.payload }
+    return { ...state, selectedFeatureEdit: action.payload };
   }),
   on(setSelectedFeatureRemove, (state, action) => {
-    return { ...state, selectedFeatureRemove: action.payload }
+    return { ...state, selectedFeatureRemove: action.payload };
   }),
   on(setStyleForLayer, (state, action) => {
-    return { ...state, styleFeature: action.payload }
+    return { ...state, styleFeature: action.payload };
   })
 );
 

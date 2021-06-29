@@ -27,7 +27,7 @@ export class OpacityBoxComponent implements OnInit {
     private workspaceGeoserver = window['__env'].workspaceGeoserver;
 
     constructor(private ls: LayerService,
-        private store: Store<ExploreState>) {}
+                private store: Store<ExploreState>) {}
 
     ngOnInit(): void {
         this.mountListLayers();
@@ -59,7 +59,7 @@ export class OpacityBoxComponent implements OnInit {
                     styles: `${this.workspaceGeoserver}:${l.style}`,
                     transparent: true,
                     className: `overlayers_${l.id}`,
-                    env: `opacity:${(this.layers[l.name]['opacity']/10).toString()}`
+                    env: `opacity:${(this.layers[l.name]['opacity'] / 10).toString()}`
                 } as any).setZIndex(9999);
                 this.store.dispatch(setLayers([layerGroup([layer])]));
             });
