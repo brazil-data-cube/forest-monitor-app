@@ -10,7 +10,7 @@ import {layerGroup} from 'leaflet';
 import {formatDateUSA} from 'src/app/shared/helpers/date';
 import {MonitorService} from '../../monitor.service';
 import {AuthService} from 'src/app/pages/auth/auth.service';
-import {DETERclasses, getPathRow, getSatellite, getSensor} from 'src/app/shared/helpers/CONSTS';
+import {DETERclasses, DETERclassesSPLIT, getPathRow, getSatellite, getSensor} from 'src/app/shared/helpers/CONSTS';
 import intersect from '@turf/intersect';
 import difference from '@turf/difference';
 import * as turf from '@turf/helpers';
@@ -125,7 +125,11 @@ export class EditBoxFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAuthorizeToken();
+
     this.classes = DETERclasses;
+    if (this.isSplitFeature) {
+      this.classes = DETERclassesSPLIT;
+    }
     this.reset();
   }
 
