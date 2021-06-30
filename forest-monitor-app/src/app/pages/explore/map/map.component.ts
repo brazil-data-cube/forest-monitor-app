@@ -243,23 +243,23 @@ export class MapComponent implements OnInit {
       imperial: false
     }).addTo(this.map);
   }
- 
+
  /**
    * search area by lat and lon
    */
 
    private setCoordinatesLatLng(){
-    var _geocoderType = (L.Control as any).Geocoder.latLng(1000);
+    const _geocoderType = (L.Control as any).Geocoder.latLng(1000);
     (L.Control as any).geocoder({
       position: 'topleft',
-      placeholder:'Ex: -7.59122,-59.34494',
+      placeholder: 'Ex: -7.59122,-59.34494',
       defaultMarkGeocode: false,
       geocoder: _geocoderType
     }).on('markgeocode', e => {
-      this.map.setView(e.geocode.center,13);
+      this.map.setView(e.geocode.center, 14);
      }).addTo(this.map);
- 
-    
+
+
   }
 
   /**
