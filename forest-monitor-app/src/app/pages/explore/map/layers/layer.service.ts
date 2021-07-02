@@ -1,9 +1,7 @@
-import { FeatureInfoComponent } from './../feature-info/feature-info.component';
-import { Injectable } from '@angular/core';
-import { BdcLayer, BdcOverlayer, BdcClassLayer } from './layer.interface';
-import { BaseLayers } from './base-layers.in-memory';
-import { Overlayers } from './overlayer.in-memory';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {BdcClassLayer, BdcOverlayer} from './layer.interface';
+import {BaseLayers} from './base-layers.in-memory';
+import {HttpClient} from '@angular/common/http';
 
 
 /**

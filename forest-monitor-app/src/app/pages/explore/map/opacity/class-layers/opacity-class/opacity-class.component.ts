@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-opacity-class',
@@ -9,10 +9,10 @@ export class OpacityClassComponent implements OnInit {
 
   constructor() { }
 
+  public showBox = false;
+
   ngOnInit() {
   }
-
-  public showBox = false;
   public toggleBoxC() {
       this.showBox = !this.showBox;
   }

@@ -1,15 +1,13 @@
-import { Component } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { ExploreState } from '../../explore.state';
-import { Options, LabelType } from 'ng5-slider';
-import { setFeaturesPeriod, setLayers, removeGroupLayer } from '../../explore.action';
-import { Layer } from 'leaflet';
-import { addDays } from 'src/app/shared/helpers/date';
-import * as moment from 'moment';
-
-
+import {Component} from '@angular/core';
+import {select, Store} from '@ngrx/store';
+import {ExploreState} from '../../explore.state';
+import {LabelType, Options} from 'ng5-slider';
+import {removeGroupLayer, setFeaturesPeriod, setLayers} from '../../explore.action';
 import * as L from 'leaflet';
-import { getSatellite, defaultRGBBands } from 'src/app/shared/helpers/CONSTS';
+import {Layer} from 'leaflet';
+import {addDays} from 'src/app/shared/helpers/date';
+import * as moment from 'moment';
+import {defaultRGBBands, getSatellite} from 'src/app/shared/helpers/CONSTS';
 
 /**
  * Map Slider component
@@ -73,12 +71,12 @@ export class SliderComponent {
           showTicks: true,
           showSelectionBar: true,
           floor: this.steps[0].getTime(),
-          ceil: this.steps[this.steps.length-1].getTime(),
+          ceil: this.steps[this.steps.length - 1].getTime(),
           stepsArray: this.steps.map((date: Date) => {
             return { value: date.getTime() };
           }),
           translate: (value: number, _: LabelType): string => {
-            return `${this.formatDate(value)}`
+            return `${this.formatDate(value)}`;
           }
         };
 
@@ -110,13 +108,13 @@ export class SliderComponent {
 
       // apply filter
       const featSelected = this.features.filter(feat => {
-        const featureDatetime = feat['properties'].datetime ? 
-          moment.utc(feat['properties'].datetime):
+        const featureDatetime = feat['properties'].datetime ?
+          moment.utc(feat['properties'].datetime) :
           moment.utc(feat['properties'].acquired);
 
         return feat['type'].toLowerCase() === 'feature'
-          && featureDatetime.isSameOrAfter(startPeriod)// >= startPeriod
-          && featureDatetime.isBefore(endPeriod)
+          && featureDatetime.isSameOrAfter(startPeriod) // >= startPeriod
+          && featureDatetime.isBefore(endPeriod);
       });
 
       // plot new features
@@ -129,19 +127,19 @@ export class SliderComponent {
               filter: []
             });
             this.store.dispatch(setLayers([layerTile]));
-    
-          } else if(getSatellite(f) === 'PlanetDaily') {
-            const url = `https://tiles0.planet.com/data/v1/${f.properties.item_type}/${f.id}/{z}/{x}/{y}.png?api_key=${this.planetAPIKey}`
+
+          } else if (getSatellite(f) === 'PlanetDaily') {
+            const url = `https://tiles0.planet.com/data/v1/${f.properties.item_type}/${f.id}/{z}/{x}/{y}.png?api_key=${this.planetAPIKey}`;
             const layerTile = (L.tileLayer as any).colorFilter(url, {
               className: `qls_planet_${f.id}`,
               filter: []
             });
             this.store.dispatch(setLayers([layerTile]));
-    
+
           } else {
-            const style = {}
+            const style = {};
             if (f['style']) {
-              const st = f['style']
+              const st = f['style'];
               style['bands'] = `${st['red']['band']},${st['green']['band']},${st['blue']['band']}`;
 
               style['percents'] = `${st['red']['min']},${st['red']['max']},${st['green']['min']},${st['green']['max']},`;
@@ -179,7 +177,7 @@ export class SliderComponent {
               this.store.dispatch(setLayers([layerTile]));
 
             } else if (collection.indexOf('CBERS') >= 0) {
-              
+
               const sceneId = f['id'];
               if (sceneId.indexOf('MUX') >= 0) {
                 const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
@@ -198,7 +196,7 @@ export class SliderComponent {
               }
 
             }
-          } 
+          }
           f['enabled'] = true;
           return f;
 

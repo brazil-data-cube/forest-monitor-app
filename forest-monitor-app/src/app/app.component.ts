@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { AppState } from './app.state';
-import { NgxSpinnerService } from 'ngx-spinner';
+import {Component} from '@angular/core';
+import {select, Store} from '@ngrx/store';
+import {AppState} from './app.state';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 /**
  * First application component

@@ -1,27 +1,20 @@
-import { temporalInterface } from './temporal.interface';
-import { TestBed } from '@angular/core/testing';
-import { FeatureInfoComponent } from './../../feature-info/feature-info.component';
-import { TemporalRangeComponent } from './../temporal-range.component';
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { layerGroup } from 'leaflet';
+import {temporalInterface} from './temporal.interface';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Store} from '@ngrx/store';
 import * as L from 'leaflet';
-import { MatSnackBar, DateAdapter, MAT_DATE_FORMATS, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/shared/helpers/date.adapter';
+import {layerGroup} from 'leaflet';
+import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material';
+import {APP_DATE_FORMATS, AppDateAdapter} from 'src/app/shared/helpers/date.adapter';
 
-import { LayerService } from '../../layers/layer.service';
-import { BdcOverlayer } from '../../layers/layer.interface';
-import { ExploreState } from '../../../explore.state';
-import { removeLayers, setLayers } from '../../../explore.action';
-import { Editable } from './temporal-box.interface';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Search } from '../../../sidenav/search/search.interface';
-import { EditBoxFormComponent } from '../../editable/box/box.component';
-import { MatDatepickerContent, MatDatepickerInput, MatDatepickerInputEvent, MAT_DATEPICKER_VALUE_ACCESSOR } from '@angular/material/datepicker';
-import { Datepicker } from 'materialize-css';
-import { MonitorService } from '../../monitor.service';
-import { AuthService } from 'src/app/pages/auth/auth.service';
-
+import {LayerService} from '../../layers/layer.service';
+import {BdcOverlayer} from '../../layers/layer.interface';
+import {ExploreState} from '../../../explore.state';
+import {removeLayers, setLayers} from '../../../explore.action';
+import {Editable} from './temporal-box.interface';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import {MonitorService} from '../../monitor.service';
+import {AuthService} from 'src/app/pages/auth/auth.service';
 
 
 @Component({
@@ -37,6 +30,13 @@ import { AuthService } from 'src/app/pages/auth/auth.service';
 })
 export class TemporalBoxComponent implements OnInit {
 
+  constructor(private ls: LayerService,
+              private store: Store<ExploreState>,
+              private monitorService: MonitorService,
+              private as: AuthService,
+              private fb: FormBuilder) { }
+  static lastDateTemporalRange: any;
+
   @Input('show') public showBox: boolean;
 
   @Output() toggleToEmit = new EventEmitter();
@@ -49,7 +49,7 @@ export class TemporalBoxComponent implements OnInit {
 
   public layersTitle = [];
   public layers = {};
-  public dateForm: FormGroup
+  public dateForm: FormGroup;
 
   public id = '1';
   public token = null;
@@ -62,13 +62,8 @@ export class TemporalBoxComponent implements OnInit {
   private urlGeoserver = window['__env'].urlGeoserver;
   private workspaceGeoserver = window['__env'].workspaceGeoserver;
   resposta: string;
-  static lastDateTemporalRange: any;
 
-  constructor(private ls: LayerService,
-    private store: Store<ExploreState>,
-    private monitorService: MonitorService,
-    private as: AuthService,
-    private fb: FormBuilder) { }
+  events: string[] = [];
 
   ngOnInit(): void {
     this.mountListLayers();
@@ -88,12 +83,10 @@ export class TemporalBoxComponent implements OnInit {
     this.toggleToEmit.emit();
   }
 
-  events: string[] = [];
-
 
   startDateEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     this.events.push(`${type}: ${event.value}`);
-    var startDate = event.value.toString()
+    let startDate = event.value.toString();
     // console.log("START Event: ", startDateTemporalRange)
     // startDate = startDate.substr(4, 11)
     // startDate = startDate.substr(7, 4) + '-' + startDate.substr(0, 3) + '-' + startDate.substr(4, 2)
@@ -228,8 +221,7 @@ export class TemporalBoxComponent implements OnInit {
     // return lastDateTemporalRange
   }
 
-  public async teste()
-    {
+  public async teste() {
         // this.monitorService.readByDate(this.token);
     }
 
@@ -237,18 +229,18 @@ export class TemporalBoxComponent implements OnInit {
     const overlayers = this.ls.getOverlayers().map(l => `overlayers_${l.id}`);
     this.store.dispatch(removeLayers(overlayers));
     // console.log('TemporalBoxComponent.lastDateTemporalRange: ',TemporalBoxComponent.lastDateTemporalRange)
-    //pegar o valor do mat-datepicker
+    // pegar o valor do mat-datepicker
     // console.log('FeatureInfoComponent.getDateRange: ',FeatureInfoComponent.getDateRange)
 
 
-    this.teste()
+    this.teste();
 
-    //apertar update pra testar
+    // apertar update pra testar
     // if (FeatureInfoComponent.getDateRange() <= TemporalBoxComponent.lastDateTemporalRange) {
       // console.log('FeatureInfoComponent.getDateRange: ',FeatureInfoComponent.getDateRange)
 
 
-      setTimeout(_ => {
+    setTimeout(_ => {
         this.ls.getOverlayers().forEach((l: BdcOverlayer) => {
           const layer = L.tileLayer.wms(`${this.urlGeoserver}/${this.workspaceGeoserver}/wms`, {
             layers: `${this.workspaceGeoserver}:${l.id}`,

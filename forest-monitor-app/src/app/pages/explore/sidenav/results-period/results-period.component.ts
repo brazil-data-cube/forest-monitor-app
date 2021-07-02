@@ -1,8 +1,14 @@
-import { Component } from '@angular/core';
-import { select, Store } from '@ngrx/store';
-import { ExploreState } from '../../explore.state';
-import { setFeaturesPeriod, setLayers, removeLayers, removeGroupLayer, setSelectedFeatureEdit } from '../../explore.action';
-import { getPathRow, getSensor, getSatellite, defaultRGBBands } from 'src/app/shared/helpers/CONSTS';
+import {Component} from '@angular/core';
+import {select, Store} from '@ngrx/store';
+import {ExploreState} from '../../explore.state';
+import {
+  removeGroupLayer,
+  removeLayers,
+  setFeaturesPeriod,
+  setLayers,
+  setSelectedFeatureEdit
+} from '../../explore.action';
+import {defaultRGBBands, getPathRow, getSatellite, getSensor} from 'src/app/shared/helpers/CONSTS';
 import 'src/assets/plugins/Leaflet.TileFilter/leaflet-tilefilter.js';
 import * as moment from 'moment';
 import * as L from 'leaflet';
@@ -35,11 +41,11 @@ export class ResultsPeriodComponent {
     this.store.pipe(select('explore')).subscribe(res => {
       if (res.featuresPeriod) {
         const features = Object.values(res.featuresPeriod).slice(0, (Object.values(res.featuresPeriod).length - 1)) as object[];
-        this.features = features.sort( (a,b) => {
+        this.features = features.sort( (a, b) => {
           const aDate = a['properties']['datetime'] || a['properties']['acquired'];
           const bDate = a['properties']['datetime'] || a['properties']['acquired'];
           return new Date(bDate).getTime() - new Date(aDate).getTime();
-        })
+        });
       } else {
         this.features = [];
       }
@@ -58,8 +64,8 @@ export class ResultsPeriodComponent {
 
     if (satellite === 'Planet') {
       return 'Planet (Mosaic)';
-    } else if(satellite === 'PlanetDaily') {
-      return 'Planet (Daily)'
+    } else if (satellite === 'PlanetDaily') {
+      return 'Planet (Daily)';
     } else {
       return `${satellite} - ${this.getSensor(feature)} - (${this.getPathRow(feature)})`;
     }
@@ -75,7 +81,7 @@ export class ResultsPeriodComponent {
 
   public isPlanet(feature): boolean {
     return this.isPlanetDaily(feature) || this.isPlanetMosaic(feature);
-  } 
+  }
 
   public getThumbnail(feature): string {
     if (this.isPlanetDaily(feature)) {
@@ -95,8 +101,8 @@ export class ResultsPeriodComponent {
         });
         this.store.dispatch(setLayers([layerTile]));
 
-      } else if(this.isPlanetDaily(f)) {
-        const url = `https://tiles0.planet.com/data/v1/${f.properties.item_type}/${f.id}/{z}/{x}/{y}.png?api_key=${this.planetAPIKey}`
+      } else if (this.isPlanetDaily(f)) {
+        const url = `https://tiles0.planet.com/data/v1/${f.properties.item_type}/${f.id}/{z}/{x}/{y}.png?api_key=${this.planetAPIKey}`;
         const layerTile = (L.tileLayer as any).colorFilter(url, {
           className: `qls_planet_${f.id}`,
           filter: []
@@ -104,9 +110,9 @@ export class ResultsPeriodComponent {
         this.store.dispatch(setLayers([layerTile]));
 
       } else {
-        const style = {}
+        const style = {};
         if (f['style']) {
-          const st = f['style']
+          const st = f['style'];
           style['bands'] = `${st['red']['band']},${st['green']['band']},${st['blue']['band']}`;
 
           style['percents'] = `${st['red']['min']},${st['red']['max']},${st['green']['min']},${st['green']['max']},`;
@@ -144,7 +150,7 @@ export class ResultsPeriodComponent {
           this.store.dispatch(setLayers([layerTile]));
 
         } else if (collection.indexOf('CBERS') >= 0) {
-          
+
           const sceneId = f['id'];
           if (sceneId.indexOf('MUX') >= 0) {
             const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
@@ -211,7 +217,7 @@ export class ResultsPeriodComponent {
     this.store.dispatch(removeGroupLayer({
       key: 'attribution',
       prefix: 'polygon_scene_selected'
-    }))
+    }));
 
     const fIdSelected = event.checked ? feature['id'] : '';
     const newFeatures = this.features.map( feature => {
@@ -219,8 +225,9 @@ export class ResultsPeriodComponent {
         feature['editable'] = true;
 
         // Skip since planet does not provides geometry geojson
-        if (this.isPlanet(feature))
+        if (this.isPlanet(feature)) {
           return;
+        }
 
         const newLayer = new L.GeoJSON(feature as any, {
           attribution: 'polygon_scene_selected'
@@ -240,6 +247,6 @@ export class ResultsPeriodComponent {
   }
 
   public openStyleBox($event, feature) {
-    this.store.dispatch(setSelectedFeatureEdit({ payload: feature }))
+    this.store.dispatch(setSelectedFeatureEdit({ payload: feature }));
   }
 }

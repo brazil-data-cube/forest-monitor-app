@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import * as moment from 'moment';
 
 /** Service to search items in STAC */
@@ -27,30 +27,30 @@ export class SearchService {
         const url = `https://api.planet.com/data/v1/quick-search?_sort=acquired desc`;
 
         const query = {
-            "filter":  {  
-                "type":"AndFilter",
-                "config":[ 
+            filter:  {
+                type: 'AndFilter',
+                config: [
                     {
-                        "type":"DateRangeFilter",
-                        "field_name":"acquired",
-                        "config":{  
-                            "gt": start_date,
-                            "lte": end_date
+                        type: 'DateRangeFilter',
+                        field_name: 'acquired',
+                        config: {
+                            gt: start_date,
+                            lte: end_date
                         }
                     },
                     {
-                        "type":"GeometryFilter",
-                        "field_name":"geometry",
-                        "config":{  
-                            "type":"Polygon",
-                            "coordinates": coordinates
+                        type: 'GeometryFilter',
+                        field_name: 'geometry',
+                        config: {
+                            type: 'Polygon',
+                            coordinates: coordinates
                         }
                     }
                 ]
-                   
+
             },
-            "item_types": ["REOrthoTile", "PSScene4Band", "SkySatCollect"]
-        }
+            item_types: ['REOrthoTile', 'PSScene4Band', 'SkySatCollect']
+        };
 
         const response = await this.http.post(`${url}`, query, {
             headers: {
@@ -66,7 +66,7 @@ export class SearchService {
         const params = {
             api_key: this.API_KEY,
             bbox
-        }
+        };
 
         const response: any = await this.http.get(url, { params }).toPromise();
 
@@ -78,16 +78,17 @@ export class SearchService {
 
         const response: any = await this.http.get(`${url}`).toPromise();
 
-        let output = [];
+        const output = [];
 
-        for(const mosaic of response.mosaics) {
+        for (const mosaic of response.mosaics) {
             const mosaicDate = moment(mosaic.first_acquired, 'YYYY-MM-DD');
 
             if (mosaicDate.isSameOrAfter(moment(start_date)) && mosaicDate.isSameOrBefore(moment(end_date))) {
                 const res = await this.searchPlanetMosaicQuads(mosaic.id, bbox);
 
-                if (res.length === 0)
+                if (res.length === 0) {
                     continue;
+                }
 
                 // Adapting the planet result as STAC object like
 
@@ -105,7 +106,7 @@ export class SearchService {
                 mosaic.properties = {
                     collection: mosaic.name,
                     datetime: `${mosaic.first_acquired}`
-                }
+                };
                 output.push(mosaic);
             }
         }
@@ -113,7 +114,7 @@ export class SearchService {
         return {
             meta: { found: output.length },
             mosaics: output
-        }
+        };
     }
 
 }

@@ -164,7 +164,7 @@ export class FeatureInfoComponent implements OnInit {
 
   }
 
-  showEditFeature(featureId: any, isSplit: boolean, splitGeom: any) {
+  showEditFeature(featureId: any, isSplit: boolean, splitGeom: any, sourceGeom: any = null) {
     const editFeature = this.dialog.open(EditBoxFormComponent,
       {
         width: '360px',
@@ -172,7 +172,8 @@ export class FeatureInfoComponent implements OnInit {
         data: {
           featureId,
           isSplit,
-          splitGeom
+          splitGeom,
+          sourceGeom
         }
       });
     editFeature.afterClosed().subscribe(result => {
@@ -215,8 +216,10 @@ export class FeatureInfoComponent implements OnInit {
     }
   }
 
-  public showSplitEditFeature(featureId: any) {
-    this.showEditFeature(featureId, true, splitGeometry);
+  public showSplitEditFeature(layerData: any) {
+    const featureId = layerData.featureId;
+    const sourceGeom = layerData.geom;
+    this.showEditFeature(featureId, true, splitGeometry, sourceGeom);
   }
 
   public disableSplitEditing() {

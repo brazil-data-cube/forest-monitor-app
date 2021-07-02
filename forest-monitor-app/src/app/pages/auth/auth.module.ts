@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { AuthRoutingModule } from './auth-routing.module';
-import { LoginComponent } from './login/login.component';
-import { RedirectLoginComponent } from './redirect-login/redirect-login.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule, MatButtonModule, MatIconModule, MatSnackBarModule } from '@angular/material';
-import { HttpClientModule } from '@angular/common/http';
-import { SharedModule } from 'src/app/shared/shared.module';
+import {AuthRoutingModule} from './auth-routing.module';
+import {LoginComponent} from './login/login.component';
+import {RedirectLoginComponent} from './redirect-login/redirect-login.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatButtonModule, MatIconModule, MatInputModule, MatSnackBarModule} from '@angular/material';
+import {HttpClientModule} from '@angular/common/http';
+import {SharedModule} from 'src/app/shared/shared.module';
 
 /**
  * Auth Module

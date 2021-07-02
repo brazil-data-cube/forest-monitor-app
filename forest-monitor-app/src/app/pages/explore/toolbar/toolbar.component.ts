@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { Router } from '@angular/router';
-import { AuthState } from '../../auth/auth.state';
-import { Store, select } from '@ngrx/store';
-import { Logout } from '../../auth/auth.action';
+import {Component, EventEmitter, Output} from '@angular/core';
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {Router} from '@angular/router';
+import {AuthState} from '../../auth/auth.state';
+import {select, Store} from '@ngrx/store';
+import {Logout} from '../../auth/auth.action';
 
 /**
  * Toolbar component
@@ -24,7 +24,7 @@ export class ToolbarComponent {
     private store: Store<AuthState>,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    public router: Router) { 
+    public router: Router) {
       this.store.pipe(select('auth')).subscribe(res => {
         this.logged = res.userId && res.token;
       });

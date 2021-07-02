@@ -1,11 +1,11 @@
-import { ActivatedRoute } from '@angular/router';
-import { MonitorService } from './../monitor.service';
-import { Component, Input, OnInit } from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {MonitorService} from './../monitor.service';
+import {Component, Input, OnInit} from '@angular/core';
 import * as L from 'leaflet';
-import { Map as MapLeaflet } from 'leaflet';
-import { AuthService } from 'src/app/pages/auth/auth.service';
-import { MatDialog } from '@angular/material';
-import { EditBoxFormComponent } from './box/box.component';
+import {Map as MapLeaflet} from 'leaflet';
+import {AuthService} from 'src/app/pages/auth/auth.service';
+import {MatDialog} from '@angular/material';
+import {EditBoxFormComponent} from './box/box.component';
 
 
 @Component({

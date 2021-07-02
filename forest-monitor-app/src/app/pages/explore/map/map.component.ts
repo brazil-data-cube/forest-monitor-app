@@ -1,23 +1,20 @@
-
-import { Component, OnInit, Input, ViewChild, ChangeDetectorRef, NgZone } from '@angular/core';
+import {ChangeDetectorRef, Component, Input, NgZone, OnInit} from '@angular/core';
 
 import * as L from 'leaflet';
+import {Control, Draw, latLng, LatLngBoundsExpression, Layer, Map as MapLeaflet, MapOptions, rectangle} from 'leaflet';
 import 'leaflet.fullscreen/Control.FullScreen.js';
 import 'src/assets/plugins/Leaflet.Coordinates/Leaflet.Coordinates-0.1.5.min.js';
 import 'esri-leaflet/dist/esri-leaflet.js';
 import 'leaflet-control-geocoder/dist/Control.Geocoder.js';
 import * as LE from 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.js';
-
-import { latLng, MapOptions, Layer, Map as MapLeaflet,
-  LatLngBoundsExpression, Control, Draw, rectangle } from 'leaflet';
-import { BdcLayer, BdcOverlayer } from './layers/layer.interface';
-import { LayerService } from './layers/layer.service';
-import { Store, select } from '@ngrx/store';
-import { ExploreState } from '../explore.state';
-import { setPositionMap, setBbox, removeLayers, setLayers, removeGroupLayer, setSelectedFeatureRemove } from '../explore.action';
-import { AuthService } from '../../auth/auth.service';
-import { FeatureInfoComponent } from './feature-info/feature-info.component';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import {BdcLayer} from './layers/layer.interface';
+import {LayerService} from './layers/layer.service';
+import {select, Store} from '@ngrx/store';
+import {ExploreState} from '../explore.state';
+import {removeGroupLayer, removeLayers, setBbox, setLayers, setPositionMap} from '../explore.action';
+import {AuthService} from '../../auth/auth.service';
+import {FeatureInfoComponent} from './feature-info/feature-info.component';
+import {MatDialog, MatDialogRef} from '@angular/material';
 
 /**
  * Map component
@@ -148,7 +145,7 @@ export class MapComponent implements OnInit {
           }
         }
       }
-    }
+    };
     if (this.as.checkAuthPost()) {
       config['edit'] = { featureGroup: drawnItems };
     }
@@ -201,7 +198,7 @@ export class MapComponent implements OnInit {
     // Add context menu event
     this.map.on('contextmenu', async evt => {
 
-      //Opening dialog with get feature info from layers
+      // Opening dialog with get feature info from layers
       this.ngZone.run(() => {
         this.featureInfoDialog = this.dialog.open(FeatureInfoComponent, {
           width: '550px',
@@ -246,21 +243,24 @@ export class MapComponent implements OnInit {
       imperial: false
     }).addTo(this.map);
   }
-  /**
-   * buscar  área por lat e lon
+
+ /**
+   * search area by lat and lon
    */
-  private setCoordinatesLatLng(){
 
-     (L.Control  as any).geocoder({
-        position: 'topleft',
-        expand: 'click',
-        placeholder: 'Ex: -7.59122,-59.34494',
-        defaultMarkGeocode: false
-      }).on('markgeocode', e => {
-        this.map.setView(e.geocode.center,10);
-       }).addTo(this.map);
+   private setCoordinatesLatLng(){
+    const _geocoderType = (L.Control as any).Geocoder.latLng(1000);
+    (L.Control as any).geocoder({
+      position: 'topleft',
+      placeholder: 'Ex: -7.59122,-59.34494',
+      defaultMarkGeocode: false,
+      geocoder: _geocoderType
+    }).on('markgeocode', e => {
+      this.map.setView(e.geocode.center, 14);
+     }).addTo(this.map);
 
-   }
+
+  }
 
   /**
    * set Coordinates options in the map

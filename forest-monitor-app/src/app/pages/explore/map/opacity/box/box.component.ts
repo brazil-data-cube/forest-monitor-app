@@ -1,12 +1,12 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { layerGroup } from 'leaflet';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Store} from '@ngrx/store';
 import * as L from 'leaflet';
+import {layerGroup} from 'leaflet';
 
-import { LayerService } from '../../layers/layer.service';
-import { BdcOverlayer } from '../../layers/layer.interface';
-import { ExploreState } from '../../../explore.state';
-import { removeLayers, setLayers } from '../../../explore.action';
+import {LayerService} from '../../layers/layer.service';
+import {BdcOverlayer} from '../../layers/layer.interface';
+import {ExploreState} from '../../../explore.state';
+import {removeLayers, setLayers} from '../../../explore.action';
 
 @Component({
     selector: 'app-map-opacity-box',
@@ -27,7 +27,7 @@ export class OpacityBoxComponent implements OnInit {
     private workspaceGeoserver = window['__env'].workspaceGeoserver;
 
     constructor(private ls: LayerService,
-        private store: Store<ExploreState>) {}
+                private store: Store<ExploreState>) {}
 
     ngOnInit(): void {
         this.mountListLayers();
@@ -59,7 +59,7 @@ export class OpacityBoxComponent implements OnInit {
                     styles: `${this.workspaceGeoserver}:${l.style}`,
                     transparent: true,
                     className: `overlayers_${l.id}`,
-                    env: `opacity:${(this.layers[l.name]['opacity']/10).toString()}`
+                    env: `opacity:${(this.layers[l.name]['opacity'] / 10).toString()}`
                 } as any).setZIndex(9999);
                 this.store.dispatch(setLayers([layerGroup([layer])]));
             });

@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 import {
   MatButtonModule,
+  MatCheckboxModule,
   MatIconModule,
-  MatSelectModule,
-  MatRadioModule,
   MatInputModule,
-  MatCheckboxModule
+  MatRadioModule,
+  MatSelectModule
 } from '@angular/material';
 
-import { LoadingComponent } from './components/loading/loading.component';
-import { NgxSpinnerModule } from 'ngx-spinner';
-import { FormFieldErrorComponent } from './components/form-field-input/form-field-error.component';
-import { AlertComponent } from './components/alert/alert.component';
+import {LoadingComponent} from './components/loading/loading.component';
+import {NgxSpinnerModule} from 'ngx-spinner';
+import {FormFieldErrorComponent} from './components/form-field-input/form-field-error.component';
+import {AlertComponent} from './components/alert/alert.component';
 
 /**
  * Shared Module
