@@ -52,6 +52,15 @@ filter: false,
 style: 'class_deter',
 destinationLayer: false
 },
+{
+id: 'limite_municipal_amz_2007_2500',
+enabled: true,
+name: 'LIMITE MUNICIPAL',
+layer: null,
+filter: false,
+style: 'limite',
+destinationLayer: false
+},
 
 {
 id: 'deter',
