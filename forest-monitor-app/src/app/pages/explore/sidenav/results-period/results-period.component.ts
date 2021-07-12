@@ -141,7 +141,6 @@ export class ResultsPeriodComponent {
           this.store.dispatch(setLayers([layerTile]));
 
         } else if (collection === 'landsat-8-l1-c1') {
-          // const sceneId = f['properties']['landsat:product_id'];
           const sceneId = f.id;
           const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
           const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaLANDSAT}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
