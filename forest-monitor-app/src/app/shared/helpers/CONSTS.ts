@@ -7,8 +7,8 @@ export const satsens = ['CBERS-4:WFI', 'CBERS-4:MUX', 'SENTINEL-2:MSI', 'LANDSAT
  * return collection key by collection
  */
 export const collectionKeyByCollection = {
-  'landsat': 'landsat-8-l1',
-  'sentinel': 'sentinel-2-l1c',
+  'landsat': 'landsat-8-l1-c1',
+  'sentinel': 'sentinel-s2-l2a-cogs',
   'cbers': ['CBERS4-MUX', 'CBERS4-AWFI'],
   'planet': 'global_monthly'
 };
@@ -35,11 +35,10 @@ export const UFList = ['AM', 'PA'];
  * GET PATHROW
  */
 export function getPathRow(f) {
-  if (f['properties']['collection'] === 'sentinel-2-l1c') {
+  if (f['collection'] === 'sentinel-s2-l2a-cogs') {
     return f['id'].split('_')[1];
-  } else if (f['properties']['collection'] === 'landsat-8-l1') {
-    const prop = f['properties'];
-    return `${prop['eo:column']}${prop['eo:row']}`;
+  } else if (f['collection'] === 'landsat-8-l1-c1') {
+    return f['id'].split('_')[1];
   } else if (f['collection'] && f['collection'].indexOf('CBERS') >= 0) {
     const prop = f['properties'];
     return `${prop['cbers:path']}${prop['cbers:row']}`;
@@ -62,7 +61,11 @@ export function getSensor(f) {
     return '';
   }
 
-  return eoInstrument.toString().substring(0, 4).replace('AWFI', 'WFI').substring(0,3);
+  if (Array.isArray(eoInstrument)) {
+    eoInstrument = eoInstrument[0];
+  }
+
+  return eoInstrument.toString().substring(0, 4).replace('AWFI', 'WFI').substring(0, 3);
 }
 
 /**
@@ -81,12 +84,12 @@ export function getSatellite(f) {
 }
 
 export const defaultRGBBands = {
-  'sentinel-2-l1c': {
+  'sentinel-s2-l2a-cogs': {
     red: '11',
     green: '8A',
     blue: '04'
   },
-  'landsat-8-l1': {
+  'landsat-8-l1-c1': {
     red: '6',
     green: '5',
     blue: '4'
@@ -104,8 +107,8 @@ export const defaultRGBBands = {
 }
 
 export const bandsBySensor = {
-  'sentinel-2-l1c': ['01', '02', '03', '04', '05', '06', '07', '08', '8A', '09', '10', '11', '12'],
-  'landsat-8-l1': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', 'QA'],
+  'sentinel-s2-l2a-cogs': ['01', '02', '03', '04', '05', '06', '07', '08', '8A', '09', '10', '11', '12'],
+  'landsat-8-l1-c1': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', 'QA'],
   'CBERS4-MUX': ['5', '6', '7', '8'],
   'CBERS4-AWFI': ['13', '14', '15', '16']
 }

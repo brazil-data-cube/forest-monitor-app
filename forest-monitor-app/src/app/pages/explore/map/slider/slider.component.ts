@@ -157,7 +157,7 @@ export class SliderComponent {
             const collection = f['properties']['collection'] || f['collection'];
             const bands = style['bands'] || Object.values(defaultRGBBands[collection]).join(',');
 
-            if (collection === 'sentinel-2-l1c') {
+            if (collection === 'sentinel-s2-l2a-cogs') {
               const infosFeature = f.id.split('_');
               const sceneId = `${infosFeature[0]}_tile_${infosFeature[2]}_${infosFeature[1]}_${infosFeature[3]}`;
               const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
@@ -167,7 +167,7 @@ export class SliderComponent {
               });
               this.store.dispatch(setLayers([layerTile]));
 
-            } else if (collection === 'landsat-8-l1') {
+            } else if (collection === 'landsat-8-l1-c1') {
               const sceneId = f['properties']['landsat:product_id'];
               const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
               const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaLANDSAT}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
