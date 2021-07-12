@@ -19,6 +19,8 @@ import {closeLoading, showLoading} from 'src/app/app.action';
 import {APP_DATE_FORMATS, AppDateAdapter} from 'src/app/shared/helpers/date.adapter';
 import {collectionKeyByCollection} from 'src/app/shared/helpers/CONSTS';
 import {Search} from './search.interface';
+import {bboxPolygon} from '@turf/turf';
+import * as turf from '@turf/helpers';
 
 @Component({
   selector: 'app-search',
@@ -128,10 +130,19 @@ export class SearchComponent implements OnInit {
           const lastDate = new Date(this.searchObj['last_date']);
 
           const bbox: number[] = Object.values(this.searchObj['bbox']);
+
           const bboxStr = `${bbox[2]},${bbox[1]},${bbox[3]},${bbox[0]}`;
 
           let planetFeatures = { mosaics: [] };
           let planetItemsFeatures = { features: [] };
+          let limit = 1000;
+          let coords = '';
+          if (this.satellites.sentinel || this.satellites.landsat) {
+            const polygonBBox = bboxPolygon([bbox[2], bbox[1], bbox[3], bbox[0]]);
+            const polygon = turf.polygon(polygonBBox.geometry.coordinates);
+            coords = JSON.stringify(polygon.geometry.coordinates);
+            limit = 100;
+          }
 
           if (this.satellites.planet) {
             collections.splice(collections.indexOf(collectionKeyByCollection.planet), 1);
@@ -147,11 +158,12 @@ export class SearchComponent implements OnInit {
 
           if (collections.length > 0) {
             let query = `bbox=${bboxStr}`;
+            query += `&polygon=${coords}`;
             query += `&collections=${collections.join(',')}`;
             query += `&cloud_cover=${this.searchObj['cloudCover']}`;
             query += `&time=${formatDateUSA(startDate)}`;
             query += `/${formatDateUSA(lastDate)}`;
-            query += `&limit=1000`;
+            query += `&limit=${limit}`;
             const res = await this.ss.searchSTAC(query);
 
             output = {...res};

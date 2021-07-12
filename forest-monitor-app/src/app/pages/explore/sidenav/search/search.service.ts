@@ -43,7 +43,7 @@ export class SearchService {
                         field_name: 'geometry',
                         config: {
                             type: 'Polygon',
-                            coordinates: coordinates
+                            coordinates
                         }
                     }
                 ]
