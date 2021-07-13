@@ -8,13 +8,11 @@
       <mat-icon>close</mat-icon>
     </button>
 
-    <div style="display: flex;"></div>
+
     <mat-form-field appearance="fill" style="width: 40%; margin-left: 4%;">
       <mat-label>Start Date</mat-label>
       <input matInput
              [matDatepicker]="start_date"
-             mask="00/00/000"
-             name="start_date"
              (dateInput)="startDateEvent('input', $event)" (startDate)="startDateEvent('change', $event)">
       <mat-datepicker-toggle matSuffix [for]="start_date"></mat-datepicker-toggle>
       <mat-datepicker #start_date></mat-datepicker>
@@ -28,12 +26,19 @@
       <mat-datepicker-toggle matSuffix [for]="last_date"></mat-datepicker-toggle>
       <mat-datepicker #last_date></mat-datepicker>
     </mat-form-field>
+    <div style="display: flex;">
+      <button appearance="fill" style="width: 40%; margin-left: 4%;"
+        mat-stroked-button
+        color="accent"
+        (click)="reset()">Reset
+      </button>
 
-    <button
-      mat-stroked-button
-      color="accent"
-      (click)="updateOpacityLayers()">Update
-    </button>
+      <button appearance="fill" style="width: 40%; margin-right: 8%;"
+        mat-stroked-button
+        color="accent"
+        (click)="updateOpacityLayers()">Update
+      </button>
+    </div>
   </div>
 </div>
 

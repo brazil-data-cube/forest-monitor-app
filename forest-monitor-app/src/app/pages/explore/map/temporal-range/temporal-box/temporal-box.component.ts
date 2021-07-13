@@ -15,6 +15,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {MonitorService} from '../../monitor.service';
 import {AuthService} from 'src/app/pages/auth/auth.service';
+import { formatDateUSA } from 'src/app/shared/helpers/date';
 
 
 @Component({
@@ -56,6 +57,9 @@ export class TemporalBoxComponent implements OnInit {
   private featureId = null;
   private feature = null;
 
+  public start_date: any
+  public last_date: any
+
 
 
   /** base url of geoserver */
@@ -86,7 +90,7 @@ export class TemporalBoxComponent implements OnInit {
 
   startDateEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     this.events.push(`${type}: ${event.value}`);
-    let startDate = event.value.toString();
+    this.start_date = formatDateUSA(event.value);
     // console.log("START Event: ", startDateTemporalRange)
     // startDate = startDate.substr(4, 11)
     // startDate = startDate.substr(7, 4) + '-' + startDate.substr(0, 3) + '-' + startDate.substr(4, 2)
@@ -153,6 +157,7 @@ export class TemporalBoxComponent implements OnInit {
 
   lastDateEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     this.events.push(`${type}: ${event.value}`);
+    this.last_date = formatDateUSA(event.value);
     // console.log('Teste',event.value)
     // TemporalBoxComponent.lastDateTemporalRange = event.value
     // return this.lastDateTemporalRange
@@ -221,9 +226,24 @@ export class TemporalBoxComponent implements OnInit {
     // return lastDateTemporalRange
   }
 
-  public async teste() {
-        // this.monitorService.readByDate(this.token);
-    }
+  public reset() {
+    const overlayers = this.ls.getOverlayers().map( l => `overlayers_${l.id}` );
+    this.store.dispatch(removeLayers(overlayers));
+
+    setTimeout( _ => {
+        this.ls.getOverlayers().forEach( (l: BdcOverlayer) => {
+            const layer = L.tileLayer.wms(`${this.urlGeoserver}/${this.workspaceGeoserver}/wms`, {
+                layers: `${this.workspaceGeoserver}:${l.id}`,
+                format: 'image/png',
+                styles: `${this.workspaceGeoserver}:${l.style}`,
+                transparent: true,
+                className: `overlayers_${l.id}`,
+                env: `opacity:${(this.layers[l.name]['opacity'] / 10).toString()}`
+            } as any).setZIndex(9999);
+            this.store.dispatch(setLayers([layerGroup([layer])]));
+        });
+    });
+}
 
   public updateOpacityLayers() {
     const overlayers = this.ls.getOverlayers().map(l => `overlayers_${l.id}`);
@@ -233,26 +253,26 @@ export class TemporalBoxComponent implements OnInit {
     // console.log('FeatureInfoComponent.getDateRange: ',FeatureInfoComponent.getDateRange)
 
 
-    this.teste();
+    const destinationLayer = this.ls.getDestinationOverlayer();
 
-    // apertar update pra testar
-    // if (FeatureInfoComponent.getDateRange() <= TemporalBoxComponent.lastDateTemporalRange) {
-      // console.log('FeatureInfoComponent.getDateRange: ',FeatureInfoComponent.getDateRange)
+    if (destinationLayer != null) {
+      const className = `overlayers_${destinationLayer.id}`;
+      const layerName = `${this.workspaceGeoserver}:${destinationLayer.id}`;
+      const layerStyle = `${this.workspaceGeoserver}:${destinationLayer.style}`;
 
-
-    setTimeout(_ => {
-        this.ls.getOverlayers().forEach((l: BdcOverlayer) => {
-          const layer = L.tileLayer.wms(`${this.urlGeoserver}/${this.workspaceGeoserver}/wms`, {
-            layers: `${this.workspaceGeoserver}:${l.id}`,
-            format: 'image/png',
-            styles: `${this.workspaceGeoserver}:${l.style}`,
-            transparent: true,
-            className: `overlayers_${l.id}`,
-            env: `opacity:${(this.layers[l.name]['opacity'] / 10).toString()}`
-          } as any).setZIndex(9999);
-          this.store.dispatch(setLayers([layerGroup([layer])]));
+    setTimeout( _ => {
+                const layer = L.tileLayer.wms(`${this.urlGeoserver}/${this.workspaceGeoserver}/wms`, {
+                    layers: `${layerName}`,
+                    format: 'image/png',
+                    styles: `${layerStyle}`,
+                    transparent: true,
+                    className: `${className}`,
+                    crs: L.CRS.EPSG4326,
+                    CQL_FILTER: `view_date >= '${this.start_date}' && view_date <= '${this.last_date}'`
+                } as any).setZIndex(9999);
+                this.store.dispatch(setLayers([layerGroup([layer])]));
+                console.log(layer)
         });
-      });
-    // }
+     }
   }
 }
