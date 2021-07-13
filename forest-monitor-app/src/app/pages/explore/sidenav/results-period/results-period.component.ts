@@ -189,9 +189,9 @@ export class ResultsPeriodComponent {
       });
       this.store.dispatch(setFeaturesPeriod(newFeatures));
 
-      if (f['properties']['collection'] === 'sentinel-s2-l2a-cogs') {
+      if (f['collection'] === 'sentinel-s2-l2a-cogs') {
         this.store.dispatch(removeLayers([`qls_sentinel_${f.id}`]));
-      } else if (f['properties']['collection'] === 'landsat-8-l1-c1') {
+      } else if (f['collection'] === 'landsat-8-l1-c1') {
         this.store.dispatch(removeLayers([`qls_landsat_${f.id}`]));
       } else if (f['collection'] && f['collection'].indexOf('CBERS') >= 0) {
         this.store.dispatch(removeLayers([`qls_cbers_${f.id}`]));
