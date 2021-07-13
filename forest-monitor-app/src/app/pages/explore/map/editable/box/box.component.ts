@@ -355,4 +355,11 @@ export class EditBoxFormComponent implements OnInit {
       this.close(true);
     }
   }
+
+  public trackByFn(index, item) {
+    if (!item) {
+      return null;
+    }
+    return item.id;
+  }
 }

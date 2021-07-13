@@ -9,7 +9,7 @@
             <mat-icon>close</mat-icon>
         </button>
 
-        <div class="content_layer" *ngFor="let l of layersTitle">
+        <div class="content_layer" *ngFor="let l of layersTitle; trackBy: trackByFn">
             <p>
                 {{ l.toUpperCase() }}
             </p>

@@ -1,9 +1,8 @@
-import {ChangeDetectorRef, Component, Inject, NgZone, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
 import {LayerService} from '../layers/layer.service';
 import * as L from 'leaflet';
 import {Map as MapLeaflet} from 'leaflet';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {FocusMonitor} from '@angular/cdk/a11y';
 import {destinationLayerIdField} from 'src/app/shared/helpers/CONSTS';
 import {DelFeatureComponent} from '../del-feature/del-feature.component';
 import {EditBoxFormComponent} from '../editable/box/box.component';
@@ -37,9 +36,7 @@ export class FeatureInfoComponent implements OnInit {
     private cdRef: ChangeDetectorRef,
     private ls: LayerService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog,
-    private focusMonitor: FocusMonitor,
-    private ngZone: NgZone) {
+    private dialog: MatDialog) {
     this.latlong = data.latlong;
     this.latlongTxt = data.latlong.lat + ', ' + data.latlong.lng;
     this.screenPosition = data.screenPosition;
@@ -230,6 +227,13 @@ export class FeatureInfoComponent implements OnInit {
       this.splitPolygon = null;
 
     }
+  }
+
+  public trackByFn(index, item) {
+    if (!item) {
+      return null;
+    }
+    return item.id;
   }
 
 }

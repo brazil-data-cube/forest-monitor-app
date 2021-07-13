@@ -140,11 +140,12 @@ export class StyleBoxComponent implements OnInit {
   }
 
   removeLayer(f) {
-    if (f['collection'] === 'sentinel-s2-l2a-cogs') {
+    const collection = f.collection ? f.collection : f.properties.collection || null;
+    if (collection === 'sentinel-s2-l2a-cogs') {
       this.store.dispatch(removeLayers([`qls_sentinel_${f.id}`]));
-    } else if (f['collection'] === 'landsat-8-l1-c1') {
+    } else if (collection === 'landsat-8-l1-c1') {
       this.store.dispatch(removeLayers([`qls_landsat_${f.id}`]));
-    } else if (f['collection'] && f['collection'].indexOf('CBERS') >= 0) {
+    } else if (collection && collection.indexOf('CBERS') >= 0) {
       this.store.dispatch(removeLayers([`qls_cbers_${f.id}`]));
     } else if (getSatellite(f) === 'Planet') {
       this.store.dispatch(removeLayers([`qls_planet_${f.id}`]));
@@ -153,5 +154,12 @@ export class StyleBoxComponent implements OnInit {
 
   closeBox() {
     this.store.dispatch(setSelectedFeatureEdit({ payload: null }));
+  }
+
+  public trackByFn(index, item) {
+    if (!item) {
+      return null;
+    }
+    return item.id;
   }
 }

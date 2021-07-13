@@ -12,4 +12,11 @@ export class OpacityComponent {
   public toggleBox() {
     this.showBox = !this.showBox;
   }
+
+  public trackByFn(index, item) {
+    if (!item) {
+      return null;
+    }
+    return item.id;
+  }
 }

@@ -160,7 +160,7 @@ export class SearchComponent implements OnInit {
             let query = `bbox=${bboxStr}`;
             query += `&polygon=${coords}`;
             query += `&collections=${collections.join(',')}`;
-            query += `&cloud_cover=${this.searchObj['cloudCover']}`;
+            // query += `&cloud_cover=${this.searchObj['cloudCover']}`;
             query += `&time=${formatDateUSA(startDate)}`;
             query += `/${formatDateUSA(lastDate)}`;
             query += `&limit=${limit}`;

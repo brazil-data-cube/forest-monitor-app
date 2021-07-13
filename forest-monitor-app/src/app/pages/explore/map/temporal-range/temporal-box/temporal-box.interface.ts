@@ -1,4 +1,4 @@
 export interface Editable {
-    class?: string;
-    viewDate?: Date;
+  class?: string;
+  viewDate?: Date;
 }
