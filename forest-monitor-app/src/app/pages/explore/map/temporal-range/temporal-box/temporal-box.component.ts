@@ -93,6 +93,11 @@ export class TemporalBoxComponent implements OnInit {
     this.start_date = formatDateUSA(event.value);
   }
 
+  lastDateEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.events.push(`${type}: ${event.value}`);
+    this.last_date = formatDateUSA(event.value);
+  }
+
   public reset() {
     const overlayers = this.ls.getOverlayers().map( l => `overlayers_${l.id}` );
     this.store.dispatch(removeLayers(overlayers));
@@ -134,7 +139,7 @@ export class TemporalBoxComponent implements OnInit {
                     CQL_FILTER: `view_date >= '${this.start_date}' && view_date <= '${this.last_date}'`
                 } as any).setZIndex(9999);
                 this.store.dispatch(setLayers([layerGroup([layer])]));
-                console.log(layer)
+
         });
      }
   }

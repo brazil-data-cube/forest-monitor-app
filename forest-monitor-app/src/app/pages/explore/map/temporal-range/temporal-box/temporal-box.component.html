@@ -13,7 +13,7 @@
       <mat-label>Start Date</mat-label>
       <input matInput
              [matDatepicker]="start_date"
-             (dateInput)="startDateEvent('input', $event)" (startDate)="startDateEvent('change', $event)">
+             (dateInput)="startDateEvent('input', $event)">
       <mat-datepicker-toggle matSuffix [for]="start_date"></mat-datepicker-toggle>
       <mat-datepicker #start_date></mat-datepicker>
     </mat-form-field>
@@ -22,7 +22,7 @@
       <mat-label>Last Date</mat-label>
       <input matInput
              [matDatepicker]="last_date"
-             (dateInput)="lastDateEvent('input', $event)" (lastDate)="lastDateEvent('change', $event)">
+             (dateInput)="lastDateEvent('input', $event)">
       <mat-datepicker-toggle matSuffix [for]="last_date"></mat-datepicker-toggle>
       <mat-datepicker #last_date></mat-datepicker>
     </mat-form-field>
