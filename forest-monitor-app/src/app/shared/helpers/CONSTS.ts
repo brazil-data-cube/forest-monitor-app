@@ -22,8 +22,7 @@ export const DETERclasses = [
 ];
 
 export const DETERclassesSPLIT = [
-  'CICATRIZ_DE_QUEIMADA', 'CS_DESORDENADO',
-  'CS_GEOMETRICO', 'DEGRADACAO'
+  'DESMATAMENTO_VEG', 'DESMATAMENTO_CR', 'MINERACAO'
 ];
 
 /**
