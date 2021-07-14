@@ -25,6 +25,11 @@ export const DETERclassesSPLIT = [
   'DESMATAMENTO_VEG', 'DESMATAMENTO_CR', 'MINERACAO'
 ];
 
+export const DETERclassesSPLITALLOWED = [
+  'CICATRIZ_DE_QUEIMADA', 'CS_DESORDENADO',
+  'CS_GEOMETRICO', 'DEGRADACAO'
+];
+
 /**
  * return UF available
  */

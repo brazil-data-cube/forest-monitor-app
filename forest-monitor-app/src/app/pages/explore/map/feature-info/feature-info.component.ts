@@ -3,7 +3,7 @@ import {LayerService} from '../layers/layer.service';
 import * as L from 'leaflet';
 import {Map as MapLeaflet} from 'leaflet';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {destinationLayerIdField} from 'src/app/shared/helpers/CONSTS';
+import {destinationLayerIdField, DETERclassesSPLIT, DETERclassesSPLITALLOWED} from 'src/app/shared/helpers/CONSTS';
 import {DelFeatureComponent} from '../del-feature/del-feature.component';
 import {EditBoxFormComponent} from '../editable/box/box.component';
 import {MatSnackBar} from '@angular/material';
@@ -23,6 +23,7 @@ export class FeatureInfoComponent implements OnInit {
   public layersData: any;
   public featureId;
   public splitPolygon: any;
+  public showSplit;
   panelOpenState = false;
   private latlong: any;
   private screenPosition: any;
@@ -86,6 +87,10 @@ export class FeatureInfoComponent implements OnInit {
             }
 
           });
+
+          const classNameIndex = properties.findIndex(value => value.name === 'classname');
+          const className = properties[classNameIndex].value;
+          this.showSplit = DETERclassesSPLITALLOWED.includes(className);
 
           const data = {
             layerId: layer.id,
