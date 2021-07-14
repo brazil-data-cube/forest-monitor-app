@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --prod --host 0.0.0.0 --disableHostCheck --port 4200",
+    "dev": "ng serve --host 0.0.0.0 --disableHostCheck --port 4200",
     "build": "ng build --prod --configuration=production",
     "lint": "ng lint",
     "doc": "npx compodoc -p tsconfig.app.json"
@@ -51,8 +52,6 @@
     "ngx-pagination": "^4.1.0",
     "ngx-spinner": "^8.0.3",
     "node-open-geocoder": "^4.0.1",
-    "primeicons": "1.0.0",
-    "primeng": "8.0.1",
     "rxjs": "6.5.2",
     "tslib": "1.10.0",
     "zone.js": "0.9.1"

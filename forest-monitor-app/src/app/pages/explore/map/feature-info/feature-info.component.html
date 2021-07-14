@@ -41,38 +41,31 @@
       <div id="accordion">
         <div class="card" *ngFor="let layerData of layersData; trackBy: trackByFn; let i = index;">
           <div class="card-header" id="heading{{i}}">
-            <h5 class="mb-0">
-              <div class="row ">
-                <div class="col-md-8">
+              <div class="row align-items-center">
+                <div class="col-md-7">
                   <button class="btn btn-link" data-toggle="collapse" attr.data-target="#collapse{{i}}"
                           attr.aria-expanded="{{ i==0 ? 'true' : 'false'}}" attr.aria-controls="collapse{{i}}">
                     {{ layerData.layerName }}
                   </button>
                 </div>
-                <div class="col-md-4">
-                  <div *ngIf="layerData.isDestinationLayer" class="row">
-                    <div class="col-md-2">
-                      <div id="editFeatureButton" (click)="showEditFeature(layerData.featureId, false, null)"
-                           title="Edit Feature Classification"></div>
+                <div class="col-md-5">
+                  <div (click)="showSplitEditFeature(layerData)" id="showSplitEditFeature" style="display: none;"></div>
+                  <div *ngIf="layerData.isDestinationLayer" class="row justify-content-center">
+                    <div class="col-md-2 no-padding">
+                      <div id="editFeatureButton" (click)="showEditFeature(layerData.featureId, false, null)" title="Edit Feature Classification"></div>
                     </div>
-                    <div (click)="showSplitEditFeature(layerData)" id="showSplitEditFeature"
-                         style="display: none;"></div>
-                    <div class="col-md-2" *ngIf="showSplit">
+                    <div class="col-md-2 no-padding" *ngIf="showSplit">
                       <div id="splitFeatureButton" (click)="showSplitFeature(layerData)" title="Split Feature"></div>
                     </div>
-                    <div class="col-md-2">
-                      <div id="deleteFeatureButton" (click)="showDeleteFeature(layerData.featureId)"
-                           title="Delete Feature"></div>
+                    <div class="col-md-2 no-padding">
+                      <div id="deleteFeatureButton" (click)="showDeleteFeature(layerData.featureId)" title="Delete Feature"></div>
                     </div>
-                    <div class="col-md-2">
-                      <div id="shapeFeatureButton"
-                           (click)="getShapefileById(layerData.layerId, layerData.featureKey, layerData.featureId)"
-                           title="Download Feature Shapefile"></div>
+                    <div class="col-md-2 no-padding">
+                      <div id="shapeFeatureButton" (click)="getShapefileById(layerData.layerId, layerData.featureKey, layerData.featureId)" title="Download Feature Shapefile"></div>
                     </div>
                   </div>
                 </div>
               </div>
-            </h5>
           </div>
 
           <div id="collapse{{i}}" class="collapse {{ i==0 ? 'show' : ''}}" attr.aria-labelledby="heading{{i}}"
