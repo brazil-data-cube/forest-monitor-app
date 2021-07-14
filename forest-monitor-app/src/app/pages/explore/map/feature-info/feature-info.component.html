@@ -57,7 +57,7 @@
                     </div>
                     <div (click)="showSplitEditFeature(layerData)" id="showSplitEditFeature"
                          style="display: none;"></div>
-                    <div class="col-md-2">
+                    <div class="col-md-2" *ngIf="showSplit">
                       <div id="splitFeatureButton" (click)="showSplitFeature(layerData)" title="Split Feature"></div>
                     </div>
                     <div class="col-md-2">
