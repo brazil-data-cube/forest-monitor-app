@@ -1,5 +1,4 @@
 import {ActivatedRoute} from '@angular/router';
-import {MonitorService} from './../monitor.service';
 import {Component, Input, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import {Map as MapLeaflet} from 'leaflet';
@@ -27,7 +26,6 @@ export class EditableComponent implements OnInit {
     private token = '';
 
     constructor(private as: AuthService,
-                private monitorService: MonitorService,
                 private route: ActivatedRoute,
                 private dialog: MatDialog) {
 
@@ -35,8 +33,6 @@ export class EditableComponent implements OnInit {
 
     ngOnInit() {
         this.checkAuth();
-       // const id = this.route.snapshot.paramMap.get('id');
-       // this.monitorService.readById(id, this.token);
     }
 
     public toggleBoxActions() {

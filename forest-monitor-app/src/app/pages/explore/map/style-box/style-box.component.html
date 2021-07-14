@@ -13,7 +13,7 @@
             <div class="box-by-band" style="border-color: red;">
                 <span class="band-title" style="color: red;">RED</span>
                 <mat-select [(value)]="style.red.band">
-                    <mat-option *ngFor="let band of bandsAvailable" [value]="band">{{ band }}</mat-option>
+                    <mat-option *ngFor="let band of bandsAvailable; trackBy: trackByFn" [value]="band">{{ band }}</mat-option>
                 </mat-select>
                 <div class="percentage">
                     <input type="number" min="0" max="100" placeholder="0" [(ngModel)]="style.red.min">
@@ -24,7 +24,7 @@
             <div class="box-by-band" style="border-color: green;">
                 <span class="band-title" style="color: green;">GREEN</span>
                 <mat-select [(value)]="style.green.band">
-                    <mat-option *ngFor="let band of bandsAvailable" [value]="band">{{ band }}</mat-option>
+                    <mat-option *ngFor="let band of bandsAvailable; trackBy: trackByFn" [value]="band">{{ band }}</mat-option>
                 </mat-select>
                 <div class="percentage">
                     <input type="number" min="0" max="100" placeholder="0" [(ngModel)]="style.green.min">
@@ -35,7 +35,7 @@
             <div class="box-by-band" style="border-color: blue;">
                 <span class="band-title" style="color: blue;">BLUE</span>
                 <mat-select [(value)]="style.blue.band">
-                    <mat-option *ngFor="let band of bandsAvailable" [value]="band">{{ band }}</mat-option>
+                    <mat-option *ngFor="let band of bandsAvailable; trackBy: trackByFn" [value]="band">{{ band }}</mat-option>
                 </mat-select>
                 <div class="percentage">
                     <input type="number" min="0" max="100" placeholder="0" [(ngModel)]="style.blue.min">

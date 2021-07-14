@@ -15,7 +15,7 @@
             nextLabel="">
         </pagination-controls>
 
-        <div *ngFor="let feature of features | paginate: { itemsPerPage: perPage, currentPage: page }"
+        <div *ngFor="let feature of features | paginate: { itemsPerPage: perPage, currentPage: page }; trackBy: trackByFn"
             [ngClass]="feature.enabled===true?'item actived':'item'">
             <div class="box">
                 <img *ngIf="!isPlanetMosaic(feature)" [src]="getThumbnail(feature)" />

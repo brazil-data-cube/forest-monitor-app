@@ -9,12 +9,9 @@ import {Component, OnInit} from '@angular/core';
 export class TemporalRangeComponent implements OnInit {
 
   showBox: boolean;
-  static showDeterTemporalRange() {
-    throw new Error('Method not implemented.');
-  }
 
   public toggleBox() {
-      this.showBox = !this.showBox;
+    this.showBox = !this.showBox;
   }
 
   ngOnInit() {

@@ -1,10 +1,10 @@
-<div class="temporal-range-btn" *ngIf="!showBox">
-  <div class="icon" (click)="toggleBox()">
-      <mat-icon>date_range</mat-icon>
+<div *ngIf="!showBox" class="temporal-range-btn">
+  <div (click)="toggleBox()" class="icon">
+    <mat-icon>date_range</mat-icon>
   </div>
 </div>
 
 <app-temporal-box
-    (toggleToEmit)="toggleBox()"
-    [show]="showBox">
+  (toggleToEmit)="toggleBox()"
+  [show]="showBox">
 </app-temporal-box>

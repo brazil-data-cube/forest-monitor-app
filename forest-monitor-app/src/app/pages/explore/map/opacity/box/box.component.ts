@@ -39,7 +39,7 @@ export class OpacityBoxComponent implements OnInit {
             this.layersTitle.push(l.name);
             if(l.name==='LIMITE MUNICIPAL'){
                 opacity =  0
-            }else{  
+            }else{
                  opacity =  10
             }
             this.layers[l.name] = {
@@ -71,4 +71,10 @@ export class OpacityBoxComponent implements OnInit {
             });
         });
     }
+  public trackByFn(index, item) {
+    if (!item) {
+      return null;
+    }
+    return item.id;
+  }
 }

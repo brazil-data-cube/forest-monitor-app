@@ -26,7 +26,7 @@
                 <mat-label>Class Name</mat-label>
                 <mat-select [(value)]="obj.class" formControlName="class" required>
                     <mat-option
-                        *ngFor="let class of classes"
+                        *ngFor="let class of classes; trackBy: trackByFn"
                         [value]="class">{{ class }}</mat-option>
                 </mat-select>
             </mat-form-field>
