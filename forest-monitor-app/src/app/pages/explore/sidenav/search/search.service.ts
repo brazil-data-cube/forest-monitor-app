@@ -23,7 +23,7 @@ export class SearchService {
         return response;
     }
 
-    public async searchPlanetItems(start_date: Date, end_date: Date, coordinates: any): Promise<any> {
+    public async searchPlanetItems(startDate: Date, endDate: Date, coordinates: any): Promise<any> {
         const url = `https://api.planet.com/data/v1/quick-search?_sort=acquired desc`;
 
         const query = {
@@ -34,8 +34,8 @@ export class SearchService {
                         type: 'DateRangeFilter',
                         field_name: 'acquired',
                         config: {
-                            gt: start_date,
-                            lte: end_date
+                            gt: startDate,
+                            lte: endDate
                         }
                     },
                     {
@@ -73,7 +73,7 @@ export class SearchService {
         return response.items;
     }
 
-    public async searchPlanet(start_date: Date, end_date: Date, bbox: string, percentCloud: number): Promise<any> {
+    public async searchPlanet(startDate: Date, endDate: Date, bbox: string, percentCloud: number): Promise<any> {
         const url = `https://api.planet.com/basemaps/v1/mosaics?api_key=${this.API_KEY}`;
 
         const response: any = await this.http.get(`${url}`).toPromise();
@@ -83,7 +83,7 @@ export class SearchService {
         for (const mosaic of response.mosaics) {
             const mosaicDate = moment(mosaic.first_acquired, 'YYYY-MM-DD');
 
-            if (mosaicDate.isSameOrAfter(moment(start_date)) && mosaicDate.isSameOrBefore(moment(end_date))) {
+            if (mosaicDate.isSameOrAfter(moment(startDate)) && mosaicDate.isSameOrBefore(moment(endDate))) {
                 const res = await this.searchPlanetMosaicQuads(mosaic.id, bbox);
 
                 if (res.length === 0) {

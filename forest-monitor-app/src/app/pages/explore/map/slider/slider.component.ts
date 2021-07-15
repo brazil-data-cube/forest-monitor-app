@@ -39,7 +39,7 @@ export class SliderComponent {
   private planetAPIKey = window['__env'].planetAPIKey;
 
   /** quantity days to group in slider period */
-  private sliderGroupDays = parseInt(window['__env'].sliderGroupDays);
+  private sliderGroupDays = parseInt(window['__env'].sliderGroupDays, 10);
 
   constructor(private store: Store<ExploreState>) {
     this.store.pipe(select('explore')).subscribe(res => {

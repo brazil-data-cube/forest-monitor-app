@@ -17,7 +17,7 @@ export class BaseLayers  {
       let strData;
       let strDataOld;
 
-      if (month > 1 && month != 2) {
+      if (month > 1 && month !== 2) {
          strMonth = month - 1 ;
          strmonthOld = month - 2;
          if (strMonth < 10 || strmonthOld < 10) {
@@ -30,10 +30,10 @@ export class BaseLayers  {
          strData = year + '-' +  strMonth;
          strDataOld = year + '-' + strmonthOld;
 
-      } else if (month == 1) {
+      } else if (month === 1) {
          strData = (year - 1) + '-' + 12 ;
          strDataOld = (year - 1) + '-' + 11 ;
-         } else if (month == 2) {
+         } else if (month === 2) {
          strMonth = month - 1 ;
          strData = year + '-' +   '0' + strMonth;
          strDataOld = (year - 1) + '-' + 12 ;

@@ -177,7 +177,7 @@ export class SearchComponent implements OnInit {
               lastDate
             ]));
 
-            this.store.dispatch(setFeatures(output.features.filter(f => f.type.toLowerCase() == 'feature')));
+            this.store.dispatch(setFeatures(output.features.filter(f => f.type.toLowerCase() === 'feature')));
 
           } else {
             this.store.dispatch(setFeatures([]));

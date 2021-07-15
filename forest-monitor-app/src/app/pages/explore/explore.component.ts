@@ -78,10 +78,10 @@ export class ExploreComponent implements OnInit, AfterViewInit {
     this.innerHeight = window.innerHeight - this.toolbarHeight;
   }
 
-  	/**
-	 * 	Check if auth token is still valid
-	 */
-	public async checkAuth() {
+  /**
+   * Check if auth token is still valid
+   */
+  public async checkAuth() {
     try {
       const response = await this.as.token(`${window['__env'].appName}:manage:POST`);
     } catch (err) {

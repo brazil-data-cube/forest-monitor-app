@@ -27,7 +27,7 @@
 
             <mat-checkbox
                 [(ngModel)]="feature.editable"
-                (change)="changeImgEdit($event, feature)"
+                (change)="changeImgEdit($event, feature.id)"
                 *ngIf="feature.enabled && !isPlanet(feature)">
             </mat-checkbox>
 

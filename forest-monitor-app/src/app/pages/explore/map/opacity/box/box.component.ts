@@ -34,16 +34,16 @@ export class OpacityBoxComponent implements OnInit {
     }
 
     public mountListLayers() {
-        let opacity
+        let opacity;
         this.ls.getOverlayers().forEach( (l: BdcOverlayer) => {
             this.layersTitle.push(l.name);
-            if(l.name==='LIMITE MUNICIPAL'){
-                opacity =  0
-            }else{
-                 opacity =  10
+            if (l.name === 'LIMITE MUNICIPAL') {
+                opacity = 0;
+            } else {
+                 opacity = 10;
             }
             this.layers[l.name] = {
-                opacity: opacity
+                opacity
             };
         });
         this.updateOpacityLayers();

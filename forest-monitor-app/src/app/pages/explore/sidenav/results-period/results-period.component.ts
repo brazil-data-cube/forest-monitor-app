@@ -172,7 +172,7 @@ export class ResultsPeriodComponent {
       }
 
       const newFeatures = this.features.map( feature => {
-        if (feature.id == f.id) {
+        if (feature.id === f.id) {
           feature['enabled'] = true;
         }
         return feature;
@@ -213,13 +213,13 @@ export class ResultsPeriodComponent {
     return getSensor(feature);
   }
 
-  public changeImgEdit(event, feature) {
+  public changeImgEdit(event, featureId) {
     this.store.dispatch(removeGroupLayer({
       key: 'attribution',
       prefix: 'polygon_scene_selected'
     }));
 
-    const fIdSelected = event.checked ? feature['id'] : '';
+    const fIdSelected = event.checked ? featureId : '';
     const newFeatures = this.features.map( feature => {
       if (feature.id === fIdSelected) {
         feature['editable'] = true;

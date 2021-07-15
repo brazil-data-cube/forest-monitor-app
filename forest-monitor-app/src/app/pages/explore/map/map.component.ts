@@ -244,17 +244,16 @@ export class MapComponent implements OnInit {
     }).addTo(this.map);
   }
 
- /**
+  /**
    * search area by lat and lon
    */
-
-   private setCoordinatesLatLng(){
-    const _geocoderType = (L.Control as any).Geocoder.latLng(1000);
+   private setCoordinatesLatLng() {
+    const geocoderType = (L.Control as any).Geocoder.latLng(1000);
     (L.Control as any).geocoder({
       position: 'topleft',
       placeholder: 'Ex: -7.59122,-59.34494',
       defaultMarkGeocode: false,
-      geocoder: _geocoderType
+      geocoder: geocoderType
     }).on('markgeocode', e => {
       this.map.setView(e.geocode.center, 14);
      }).addTo(this.map);

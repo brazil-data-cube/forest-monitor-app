@@ -1,4 +1,3 @@
-import {temporalInterface} from './temporal.interface';
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Store} from '@ngrx/store';
 import * as L from 'leaflet';
@@ -37,11 +36,10 @@ export class TemporalBoxComponent implements OnInit {
   public rangeTemporal: Date[];
   public layersTitle = [];
   public layers = {};
-  public dateForm: FormGroup;
   public id = '1';
   public token = null;
-  public start_date: any;
-  public last_date: any;
+  public startDate: any;
+  public lastDate: any;
   events: string[] = [];
   /** base url of geoserver */
   private urlGeoserver = window['__env'].urlGeoserver;
@@ -72,12 +70,12 @@ export class TemporalBoxComponent implements OnInit {
 
   startDateEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     this.events.push(`${type}: ${event.value}`);
-    this.start_date = formatDateUSA(event.value);
+    this.startDate = formatDateUSA(event.value);
   }
 
   lastDateEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     this.events.push(`${type}: ${event.value}`);
-    this.last_date = formatDateUSA(event.value);
+    this.lastDate = formatDateUSA(event.value);
   }
 
   public reset() {
@@ -118,7 +116,7 @@ export class TemporalBoxComponent implements OnInit {
           transparent: true,
           className: `${className}`,
           crs: L.CRS.EPSG4326,
-          CQL_FILTER: `view_date >= '${this.start_date}' && view_date <= '${this.last_date}'`
+          CQL_FILTER: `view_date >= '${this.startDate}' && view_date <= '${this.lastDate}'`
         } as any).setZIndex(9999);
         this.store.dispatch(setLayers([layerGroup([layer])]));
       });

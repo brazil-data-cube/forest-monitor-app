@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, Input, OnInit} from '@angular/core';
 import {LayerService} from '../layers/layer.service';
 import * as L from 'leaflet';
 import {Map as MapLeaflet} from 'leaflet';
@@ -8,7 +8,7 @@ import {DelFeatureComponent} from '../del-feature/del-feature.component';
 import {EditBoxFormComponent} from '../editable/box/box.component';
 import {MatSnackBar} from '@angular/material';
 
-declare var splitGeometryDone: Function;
+declare var splitGeometryDone;
 declare var splitGeometry: any;
 declare var splitFeatureId: any;
 
@@ -24,7 +24,6 @@ export class FeatureInfoComponent implements OnInit {
   public featureId;
   public splitPolygon: any;
   public showSplit;
-  panelOpenState = false;
   private latlong: any;
   private screenPosition: any;
   private drawControl: any;
@@ -57,8 +56,9 @@ export class FeatureInfoComponent implements OnInit {
 
     try {
       const overlayers = this.ls.getOverlayers();
+      const overlayersLength = overlayers.length;
       // get infos Feature by layer (From all Layers)
-      for (let i = overlayers.length - 1; i > -1; i--) {
+      for (let i = overlayersLength - 1; i > -1; i--) {
         const layer = overlayers[i];
         const response = await this.ls.getInfoByWMS(
           layer.id, this.map.getBounds().toBBoxString(), point.x, point.y, size.y, size.x);
@@ -82,7 +82,7 @@ export class FeatureInfoComponent implements OnInit {
             };
             properties.push(property);
 
-            if (key == destinationLayerIdField) {
+            if (key === destinationLayerIdField) {
               featureId = response.features[0].properties[key];
             }
 
@@ -123,7 +123,7 @@ export class FeatureInfoComponent implements OnInit {
         }
       });
     delFeature.afterClosed().subscribe(result => {
-      if (result == true) {
+      if (result === true) {
         this.close();
       }
     });
@@ -138,7 +138,7 @@ export class FeatureInfoComponent implements OnInit {
   showSplitFeature(featureData: any) {
     this.zoomToFeature(featureData.geom);
 
-    this.enableSplitEditing(featureData.geom, featureData.featureId);
+    this.enableSplitEditing(featureData.featureId);
 
     const dialogPosition = {left: `10px`};
     this.dialogRef.updatePosition(dialogPosition);
@@ -146,10 +146,10 @@ export class FeatureInfoComponent implements OnInit {
 
   /** get shapefile */
   getShapefileById(layerId: any, featureKey: any, featureId: any) {
-    const cql_filter = `${featureKey}=${featureId}`;
+    const cqlFilter = `${featureKey}=${featureId}`;
     const outputFilename = `${layerId}-${featureId}.zip`;
 
-    const url = this.ls.getFeaturesDownloadURL(layerId, outputFilename, cql_filter);
+    const url = this.ls.getFeaturesDownloadURL(layerId, outputFilename, cqlFilter);
 
     this.ls.getShapefileById(url).subscribe((res: any) => {
       const file = new Blob([res], {
@@ -198,12 +198,10 @@ export class FeatureInfoComponent implements OnInit {
   }
 
   close() {
-
     this.dialogRef.close();
   }
 
-  public enableSplitEditing(originalGeoJSON: any, featureId: any) {
-
+  public enableSplitEditing(featureId: any) {
     if (!this.splitPolygon) {
       this.splitPolygon = new L.Draw.Polygon(this.map, this.drawControl.options.polygon);
 
@@ -211,10 +209,7 @@ export class FeatureInfoComponent implements OnInit {
 
       splitFeatureId = featureId;
 
-      this.map.on(L.Draw.Event.CREATED, function(e) {
-        splitGeometryDone(e);
-      });
-
+      this.map.on(L.Draw.Event.CREATED, (e) => splitGeometryDone(e));
     }
   }
 
@@ -222,16 +217,6 @@ export class FeatureInfoComponent implements OnInit {
     const featureId = layerData.featureId;
     const sourceGeom = layerData.geom;
     this.showEditFeature(featureId, true, splitGeometry, sourceGeom);
-  }
-
-  public disableSplitEditing() {
-
-    if (this.splitPolygon) {
-      this.map.off(L.Draw.Event.CREATED);
-      this.splitPolygon.disable();
-      this.splitPolygon = null;
-
-    }
   }
 
   public trackByFn(index, item) {

@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --prod --host 0.0.0.0 --disableHostCheck --port 4200",
-    "dev": "ng serve --host 0.0.0.0 --disableHostCheck --port 4200",
+    "dev": "ng serve --configuration=development --host 0.0.0.0 --disableHostCheck --port 4200",
     "build": "ng build --prod --configuration=production",
     "lint": "ng lint",
     "doc": "npx compodoc -p tsconfig.app.json"

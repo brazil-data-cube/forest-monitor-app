@@ -41,15 +41,15 @@ export class ToolbarComponent {
   }
 
   /**
-	 * Logout in application
-	 */
-	logout() {
-		this.logged = false;
-		this.store.dispatch(Logout());
-		this.snackBar.open('Logout Successfully!', '', {
-			duration: 2000,
-			verticalPosition: 'top',
-			panelClass: 'app_snack-bar-success'
-		});
-  	}
+   *  Logout in application
+   */
+  logout() {
+    this.logged = false;
+    this.store.dispatch(Logout());
+    this.snackBar.open('Logout Successfully!', '', {
+      duration: 2000,
+      verticalPosition: 'top',
+      panelClass: 'app_snack-bar-success'
+    });
+  }
 }
