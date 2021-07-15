@@ -22,7 +22,7 @@
 
         .dialog-content {
             padding: 2px;
-            border: 0px solid #CCC;
+            border: 0 solid #CCC;
             margin: 10px 5px;
 
             p {
@@ -46,7 +46,7 @@
             text-align: left;
         }
 
-     
+
     }
 }
 .layer-header-row
@@ -67,14 +67,14 @@
     margin-top: -10px !important;
 
 }
-.mat-button-focus-overlay { 
-    background-color: transparent!important; 
+.mat-button-focus-overlay {
+    background-color: transparent!important;
 }
 
 button:focus {
     outline: none !important;
-    border: 0px !important;
-    background: none !important; 
+    border: 0 !important;
+    background: none !important;
     border-radius: 0%;
     line-height: 40px;
 }

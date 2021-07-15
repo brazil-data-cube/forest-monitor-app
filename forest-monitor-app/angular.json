@@ -36,9 +36,7 @@
               "src/assets/plugins/Leaflet.Coordinates/Leaflet.Coordinates-0.1.5.ie.css",
               "node_modules/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css"
             ],
-            "scripts": [
-              "src/app/pages/explore/map/feature-info/feature-info.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {

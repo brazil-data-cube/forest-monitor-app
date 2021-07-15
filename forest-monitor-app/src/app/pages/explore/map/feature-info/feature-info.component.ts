@@ -1,16 +1,12 @@
-import {ChangeDetectorRef, Component, Inject, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
 import {LayerService} from '../layers/layer.service';
 import * as L from 'leaflet';
 import {Map as MapLeaflet} from 'leaflet';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {destinationLayerIdField, DETERclassesSPLIT, DETERclassesSPLITALLOWED} from 'src/app/shared/helpers/CONSTS';
+import {destinationLayerIdField, DETERclassesSPLITALLOWED} from 'src/app/shared/helpers/CONSTS';
 import {DelFeatureComponent} from '../del-feature/del-feature.component';
 import {EditBoxFormComponent} from '../editable/box/box.component';
 import {MatSnackBar} from '@angular/material';
-
-declare var splitGeometryDone;
-declare var splitGeometry: any;
-declare var splitFeatureId: any;
 
 @Component({
   selector: 'app-feature-info',
@@ -29,6 +25,8 @@ export class FeatureInfoComponent implements OnInit {
   private drawControl: any;
   /** pointer to reference map */
   private map: MapLeaflet;
+  private splitFeatureId: any;
+  private splitGeometry: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -207,16 +205,22 @@ export class FeatureInfoComponent implements OnInit {
 
       this.splitPolygon.enable();
 
-      splitFeatureId = featureId;
+      this.splitFeatureId = featureId;
 
-      this.map.on(L.Draw.Event.CREATED, (e) => splitGeometryDone(e));
+      this.map.on(L.Draw.Event.CREATED, (e) => {
+        this.splitGeometry = e.layer.toGeoJSON();
+
+        if (document.getElementById('showSplitEditFeature')) {
+          document.getElementById('showSplitEditFeature').click();
+        }
+      });
     }
   }
 
   public showSplitEditFeature(layerData: any) {
     const featureId = layerData.featureId;
     const sourceGeom = layerData.geom;
-    this.showEditFeature(featureId, true, splitGeometry, sourceGeom);
+    this.showEditFeature(featureId, true, this.splitGeometry, sourceGeom);
   }
 
   public trackByFn(index, item) {
