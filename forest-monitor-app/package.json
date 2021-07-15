@@ -48,7 +48,6 @@
     "moment": "2.24.0",
     "ng2-charts": "^2.2.4",
     "ng5-slider": "^1.2.4",
-    "ngx-mask": "^11.1.4",
     "ngx-pagination": "^4.1.0",
     "ngx-spinner": "^8.0.3",
     "node-open-geocoder": "^4.0.1",
