@@ -48,6 +48,7 @@ export class FeatureInfoComponent implements OnInit {
 
   async getFeaturesInfo() {
     const size = this.map.getSize();
+    this.showSplit = false;
 
     try {
       const overlayers = this.ls.getOverlayers();
@@ -82,8 +83,8 @@ export class FeatureInfoComponent implements OnInit {
             }
 
           });
-          this.showSplit = false;
-          if (layer.destinationLayer) {
+
+          if (!this.showSplit && layer.destinationLayer) {
             const classNameIndex = properties.findIndex(value => value.name === 'classname');
             if (classNameIndex && classNameIndex !== -1) {
               const className = properties[classNameIndex].value;
