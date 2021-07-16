@@ -1,7 +1,17 @@
 import {ChangeDetectorRef, Component, Input, NgZone, OnInit} from '@angular/core';
 
 import * as L from 'leaflet';
-import {Control, Draw, latLng, LatLngBoundsExpression, Layer, Map as MapLeaflet, MapOptions, rectangle} from 'leaflet';
+import {
+  Control,
+  Draw,
+  latLng,
+  LatLngBoundsExpression,
+  Layer,
+  LeafletMouseEvent,
+  Map as MapLeaflet,
+  MapOptions,
+  rectangle
+} from 'leaflet';
 import 'leaflet.fullscreen/Control.FullScreen.js';
 import 'src/assets/plugins/Leaflet.Coordinates/Leaflet.Coordinates-0.1.5.min.js';
 import 'esri-leaflet/dist/esri-leaflet.js';
@@ -196,10 +206,11 @@ export class MapComponent implements OnInit {
    */
   private setViewInfo() {
     // Add context menu event
-    this.map.on('contextmenu', async evt => {
-
+    this.map.on('contextmenu', async (evt: LeafletMouseEvent) => {
       // Opening dialog with get feature info from layers
       this.ngZone.run(() => {
+        const containerPoint = evt.containerPoint;
+        const latlongTxt = evt.latlng.lat + ', ' + evt.latlng.lng;
         this.featureInfoDialog = this.dialog.open(FeatureInfoComponent, {
           width: '550px',
           height: '550px',
@@ -207,8 +218,8 @@ export class MapComponent implements OnInit {
           disableClose: false,
           closeOnNavigation: true,
           data: {
-            latlong: evt['latlng'],
-            screenPosition: evt['containerPoint'],
+            latlongTxt,
+            containerPoint,
             map: this.map,
             drawControl: this.drawControl
           }

@@ -123,8 +123,11 @@ export class SearchComponent implements OnInit {
           .map(sat => collectionKeyByCollection[sat]);
 
         if (collections.length <= 0) {
-          console.log('select satellite');
-
+          this.snackBar.open('Select a satellite', '', {
+            duration: 5000,
+            verticalPosition: 'top',
+            panelClass: 'app_snack-bar-error'
+          });
         } else {
           const startDate = new Date(this.searchObj['start_date']);
           const lastDate = new Date(this.searchObj['last_date']);

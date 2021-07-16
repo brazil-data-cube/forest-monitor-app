@@ -20,8 +20,7 @@ export class FeatureInfoComponent implements OnInit {
   public featureId;
   public splitPolygon: any;
   public showSplit;
-  private latlong: any;
-  private screenPosition: any;
+  private containerPoint: any;
   private drawControl: any;
   /** pointer to reference map */
   private map: MapLeaflet;
@@ -35,9 +34,8 @@ export class FeatureInfoComponent implements OnInit {
     private ls: LayerService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog) {
-    this.latlong = data.latlong;
-    this.latlongTxt = data.latlong.lat + ', ' + data.latlong.lng;
-    this.screenPosition = data.screenPosition;
+    this.latlongTxt = data.latlongTxt;
+    this.containerPoint = data.containerPoint;
     this.map = data.map;
     this.drawControl = data.drawControl;
     this.layersData = [];
@@ -49,7 +47,6 @@ export class FeatureInfoComponent implements OnInit {
   }
 
   async getFeaturesInfo() {
-    const point = this.map.latLngToContainerPoint(this.latlong);
     const size = this.map.getSize();
 
     try {
@@ -59,7 +56,7 @@ export class FeatureInfoComponent implements OnInit {
       for (let i = overlayersLength - 1; i > -1; i--) {
         const layer = overlayers[i];
         const response = await this.ls.getInfoByWMS(
-          layer.id, this.map.getBounds().toBBoxString(), point.x, point.y, size.y, size.x);
+          layer.id, this.map.getBounds().toBBoxString(), this.containerPoint.x, this.containerPoint.y, size.y, size.x);
 
         if (response.features.length > 0) {
 
@@ -85,10 +82,14 @@ export class FeatureInfoComponent implements OnInit {
             }
 
           });
-
-          const classNameIndex = properties.findIndex(value => value.name === 'classname');
-          const className = properties[classNameIndex].value;
-          this.showSplit = DETERclassesSPLITALLOWED.includes(className);
+          this.showSplit = false;
+          if (layer.destinationLayer) {
+            const classNameIndex = properties.findIndex(value => value.name === 'classname');
+            if (classNameIndex && classNameIndex !== -1) {
+              const className = properties[classNameIndex].value;
+              this.showSplit = DETERclassesSPLITALLOWED.includes(className);
+            }
+          }
 
           const data = {
             layerId: layer.id,
