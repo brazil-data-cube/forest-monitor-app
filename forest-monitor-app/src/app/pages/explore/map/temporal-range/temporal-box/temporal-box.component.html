@@ -22,10 +22,12 @@
       <mat-label>Last Date</mat-label>
       <input (dateInput)="lastDateEvent('input', $event)"
              [matDatepicker]="last_date"
+             [max]="todayDate"
              matInput>
       <mat-datepicker-toggle [for]="last_date" matSuffix></mat-datepicker-toggle>
       <mat-datepicker #last_date></mat-datepicker>
     </mat-form-field>
+
     <div style="display: flex;">
       <button (click)="reset()" appearance="fill"
               color="accent"
