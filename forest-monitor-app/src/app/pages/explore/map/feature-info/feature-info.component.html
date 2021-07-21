@@ -76,7 +76,7 @@
                   <th scope="col" scope="row"> Property</th>
                   <th scope="col"> Value</th>
                 </tr>
-                <tr *ngFor="let featureProperty of layerData.featureProperties; trackBy: trackByFn">
+                <tr class="word-wrap" *ngFor="let featureProperty of layerData.featureProperties; trackBy: trackByFn">
 
                   <td scope="row"> {{featureProperty.name}} </td>
                   <td> {{featureProperty.value}} </td>

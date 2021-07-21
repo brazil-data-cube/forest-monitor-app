@@ -7,6 +7,7 @@ import {destinationLayerIdField, DETERclassesSPLITALLOWED} from 'src/app/shared/
 import {DelFeatureComponent} from '../del-feature/del-feature.component';
 import {EditBoxFormComponent} from '../editable/box/box.component';
 import {MatSnackBar} from '@angular/material';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-feature-info',
@@ -56,10 +57,17 @@ export class FeatureInfoComponent implements OnInit {
       // get infos Feature by layer (From all Layers)
       for (let i = overlayersLength - 1; i > -1; i--) {
         const layer = overlayers[i];
-        const response = await this.ls.getInfoByWMS(
-          layer.id, this.map.getBounds().toBBoxString(), this.containerPoint.x, this.containerPoint.y, size.y, size.x);
 
-        if (response.features.length > 0) {
+        let response = null;
+        try {
+          response = await this.ls.getInfoByWMS(layer.id, this.map.getBounds().toBBoxString(), this.containerPoint.x, this.containerPoint.y, size.y, size.x);
+        } catch (err) {
+          if (!environment.production) {
+            console.error(`${layer.id} não encontrado`);
+          }
+        }
+
+        if (response && response.features.length > 0) {
 
           let featureId = null;
           const keys = Object.keys(response.features[0].properties);
