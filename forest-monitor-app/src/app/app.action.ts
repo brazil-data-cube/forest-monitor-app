@@ -1,4 +1,4 @@
-import { createAction } from '@ngrx/store';
+import {createAction} from '@ngrx/store';
 
 /**
  * set loading as true

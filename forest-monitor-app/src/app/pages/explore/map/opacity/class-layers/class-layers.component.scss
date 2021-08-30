@@ -1,0 +1,68 @@
+.opacity-class {
+    position: absolute;
+    z-index: 999;
+    top: 95px;
+    border-radius: 5px;
+    right: 65px;
+    width: 160px;
+    height: 480px;
+
+    background: #FFF;
+    border: 2px solid rgba(#000, 0.2);
+
+    .contentC {
+        .btn-close {
+            position: absolute;
+            top: -15px;
+            right: -5px;
+
+            .mat-icon {
+                background: #FFF;
+                border: 1px solid #CCC;
+                margin-top: -10px;
+            }
+        }
+
+        header {
+            padding: 0 15px;
+            margin: -10px 0 0 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 0.8em;
+            margin-top: 4px;
+        }
+
+        .content_layer {
+            padding: 5px ;
+            border: 3px solid #CCC;
+            margin: 10px 5px;
+
+            p {
+                margin: -15px 0 0 0;
+                padding: 0;
+                background: #FFF;
+                font-size: 0.7em!important;
+            }
+
+            .mat-slider-horizontal {
+                min-width: 135px !important;
+                margin: 0px !important;
+                margin-top: -20px !important;
+                height: 16px !important;
+            }
+            
+        }
+
+        button {
+            display: block;
+            margin: 10px auto;
+            font-weight: bold;
+        }
+    }
+}
+#box{
+    margin: 10px 0 0 50px;
+    padding: 5px 10px;
+    position: absolute;
+    z-index: 1;
+    font-size: 12px;
+}

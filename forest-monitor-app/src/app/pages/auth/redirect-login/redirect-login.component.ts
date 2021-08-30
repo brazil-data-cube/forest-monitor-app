@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.state';
-import { Login } from '../auth.action';
-import { ActivatedRoute, Router } from '@angular/router';
-import { getCookie } from 'src/app/shared/helpers/Cookie';
+import {Component, OnInit} from '@angular/core';
+import {MatSnackBar} from '@angular/material';
+import {Store} from '@ngrx/store';
+import {AppState} from 'src/app/app.state';
+import {Login} from '../auth.action';
+import {ActivatedRoute, Router} from '@angular/router';
 
 /**
  * redirect login page component

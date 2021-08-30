@@ -1,4 +1,4 @@
-import { Layer } from 'leaflet';
+import {Layer} from 'leaflet';
 
 /**
  * Language
@@ -13,6 +13,17 @@ export interface BdcLayer {
     enabled: boolean;
     /** tileLayer in leaflet */
     layer: Layer;
+}
+
+/**interface of class of geoserver */
+export interface BdcClassLayer {
+    enable: boolean;
+    name: string;
+    filter: boolean;
+    layer: string;
+    style: string;
+
+
 }
 
 export interface BdcOverlayer {

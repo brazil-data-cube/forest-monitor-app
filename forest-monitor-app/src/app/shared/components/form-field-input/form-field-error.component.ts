@@ -1,5 +1,5 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { ValidationErrors } from '@angular/forms';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ValidationErrors} from '@angular/forms';
 
 /**
  * Field Errors

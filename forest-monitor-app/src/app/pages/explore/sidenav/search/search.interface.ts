@@ -5,7 +5,7 @@ export interface Search {
         west?: number;
         east?: number;
         south?: number;
-    },
+    };
     cloudCover?: number;
     start_date?: Date;
     last_date?: Date;
