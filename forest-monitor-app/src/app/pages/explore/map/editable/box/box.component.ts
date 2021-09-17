@@ -73,13 +73,13 @@ export class EditBoxFormComponent implements OnInit {
         this.satsens = [];
         this.features.forEach(feat => {
           if (feat['id'].indexOf('CBERS') >= 0 && feat['id'].indexOf('MUX') >= 0) {
-            if (this.satsens.indexOf('CBERS-4:MUX') < 0) {
-              this.satsens.push('CBERS-4:MUX');
+            if (this.satsens.indexOf('CBERS-4A:MUX') < 0) {
+              this.satsens.push('CBERS-4A:MUX');
             }
 
           } else if (feat['id'].indexOf('CBERS') >= 0 && feat['id'].indexOf('WFI') >= 0) {
-            if (this.satsens.indexOf('CBERS-4:WFI') < 0) {
-              this.satsens.push('CBERS-4:WFI');
+            if (this.satsens.indexOf('CBERS-4A:WFI') < 0) {
+              this.satsens.push('CBERS-4A:WFI');
             }
 
           } else if (feat['id'].toLowerCase().indexOf('lc8') >= 0) {

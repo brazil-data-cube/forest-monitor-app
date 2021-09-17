@@ -12,6 +12,7 @@ import {defaultRGBBands, getPathRow, getSatellite, getSensor} from 'src/app/shar
 import 'src/assets/plugins/Leaflet.TileFilter/leaflet-tilefilter.js';
 import * as moment from 'moment';
 import * as L from 'leaflet';
+import { latLngBounds } from 'leaflet';
 
 /**
  * Display Results/Features by Period
@@ -153,17 +154,23 @@ export class ResultsPeriodComponent {
 
           const sceneId = f['id'];
           if (sceneId.indexOf('MUX') >= 0) {
-            const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
+            const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}`;
+            const bbox = f['bbox'];
+            const bounds = L.latLngBounds([bbox[1], bbox[0]], [bbox[3], bbox[2]]);
             const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
               className: `qls_cbers_${f.id}`,
-              filter: []
+              filter: [],
+              bounds
             });
             this.store.dispatch(setLayers([layerTile]));
           } else {
-            const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
+            const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}`;
+            const bbox = f['bbox'];
+            const bounds = L.latLngBounds([bbox[1], bbox[0]], [bbox[3], bbox[2]]);
             const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
               className: `qls_cbers_${f.id}`,
-              filter: []
+              filter: [],
+              bounds
             });
             this.store.dispatch(setLayers([layerTile]));
           }

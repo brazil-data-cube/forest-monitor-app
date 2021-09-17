@@ -85,17 +85,41 @@ export class StyleBoxComponent implements OnInit {
     } else if (collection.indexOf('CBERS') >= 0) {
       const sceneId = this.selectedFeature.id;
       if (sceneId.indexOf('MUX') >= 0) {
-        const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
-        const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
+        const tileLink = this.selectedFeature['links'][0]['href'];
+        const params = `url=${tileLink}&assets=${bands}`;
+        // const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
+        // const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
+        // const bounds = [[-3.8204080831949407, -59.91943359375001], [-11.372338792141125, -69.10400390625001]];
+        const bbox = this.selectedFeature['bbox'];
+        const bounds = [
+          [bbox[0],
+            bbox[1]],
+          [bbox[2],
+            bbox[3]]
+        ];
+        const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/{z}/{x}/{y}.png?${params}`, {
           className: `qls_cbers_${this.selectedFeature.id}`,
-          filter: []
+          filter: [],
+          bounds
         });
         this.store.dispatch(setLayers([layerTile]));
       } else {
-        const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
-        const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
+        const tileLink = this.selectedFeature['links'][0]['href'];
+        const params = `url=${tileLink}&assets=${bands}`;
+        // const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
+        // const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
+        // const bounds = [[-3.8204080831949407, -59.91943359375001], [-11.372338792141125, -69.10400390625001]];
+        const bbox = this.selectedFeature['bbox'];
+        const bounds = [
+          [bbox[0],
+            bbox[1]],
+          [bbox[2],
+            bbox[3]]
+        ];
+        const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/{z}/{x}/{y}.png?${params}`, {
           className: `qls_cbers_${this.selectedFeature.id}`,
-          filter: []
+          filter: [],
+          bounds
         });
         this.store.dispatch(setLayers([layerTile]));
       }

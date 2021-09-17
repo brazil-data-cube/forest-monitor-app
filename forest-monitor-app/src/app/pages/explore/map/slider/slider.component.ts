@@ -180,17 +180,41 @@ export class SliderComponent {
 
               const sceneId = f['id'];
               if (sceneId.indexOf('MUX') >= 0) {
-                const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
-                const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
+                const tileLink = f['links'][0]['href'];
+                const params = `url=${tileLink}&assets=${bands}`;
+                // const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
+                // const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
+                // const bounds = [[-3.8204080831949407, -59.91943359375001], [-11.372338792141125, -69.10400390625001]];
+                const bbox = f['bbox'];
+                const bounds = [
+                  [bbox[0],
+                  bbox[1]],
+                  [bbox[2],
+                  bbox[3]]
+                ];
+                const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/{z}/{x}/{y}.png?${params}`, {
                   className: `qls_cbers_${f.id}`,
-                  filter: []
+                  filter: [],
+                  bounds
                 });
                 this.store.dispatch(setLayers([layerTile]));
               } else {
-                const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
-                const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
+                const tileLink = f['links'][0]['href'];
+                const params = `url=${tileLink}&assets=${bands}`;
+                // const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
+                // const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
+                // const bounds = [[-3.8204080831949407, -59.91943359375001], [-11.372338792141125, -69.10400390625001]];
+                const bbox = f['bbox'];
+                const bounds = [
+                  [bbox[0],
+                  bbox[1]],
+                  [bbox[2],
+                  bbox[3]]
+                ];
+                const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/{z}/{x}/{y}.png?${params}`, {
                   className: `qls_cbers_${f.id}`,
-                  filter: []
+                  filter: [],
+                  bounds
                 });
                 this.store.dispatch(setLayers([layerTile]));
               }
