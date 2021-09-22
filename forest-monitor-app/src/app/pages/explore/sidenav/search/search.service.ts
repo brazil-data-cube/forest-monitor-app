@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 
 /** Service to search items in STAC */
@@ -19,8 +19,7 @@ export class SearchService {
      */
     public async searchSTAC(query: string): Promise<any> {
         const urlSuffix = `/stac-compose/search?${query}`;
-        const response = await this.http.get(`${this.urlForestAPI}${urlSuffix}`).toPromise();
-        return response;
+        return await this.http.get(`${ this.urlForestAPI }${ urlSuffix }`).toPromise();
     }
 
     public async searchPlanetItems(startDate: Date, endDate: Date, coordinates: any): Promise<any> {
@@ -52,12 +51,11 @@ export class SearchService {
             item_types: ['REOrthoTile', 'PSScene4Band', 'SkySatCollect']
         };
 
-        const response = await this.http.post(`${url}`, query, {
-            headers: {
-                Authorization: `api-key ${this.API_KEY}`
-            }
+        return await this.http.post(`${ url }`, query, {
+          headers: {
+            Authorization: `api-key ${ this.API_KEY }`
+          }
         }).toPromise();
-        return response;
     }
 
     public async searchPlanetMosaicQuads(mosaicId: string, bbox: string) {

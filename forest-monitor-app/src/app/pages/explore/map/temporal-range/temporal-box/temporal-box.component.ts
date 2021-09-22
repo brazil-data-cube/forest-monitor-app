@@ -40,7 +40,7 @@ export class TemporalBoxComponent implements OnInit {
   public token = null;
   public startDate: any;
   public lastDate: any;
-  public todayDate = new Date()
+  public todayDate = new Date();
   events: string[] = [];
   /** base url of geoserver */
   private urlGeoserver = window['__env'].urlGeoserver;

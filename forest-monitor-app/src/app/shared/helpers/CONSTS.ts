@@ -1,15 +1,16 @@
 /**
  * return sattelite/sensor
  */
-export const satsens = ['CBERS-4A:WFI', 'CBERS-4A:MUX', 'SENTINEL-2:MSI', 'LANDSAT-8:OLI'];
-
+// export const satsens = ['CBERS-4A:WFI', 'CBERS-4A:MUX', 'SENTINEL-2:MSI', 'LANDSAT-8:OLI'];
+export const satsens = ['CBERS-4A:MUX', 'SENTINEL-2:MSI', 'LANDSAT-8:OLI'];
 /**
  * return collection key by collection
  */
 export const collectionKeyByCollection = {
   landsat: 'landsat-8-l1-c1',
   sentinel: 'sentinel-s2-l2a-cogs',
-  cbers: ['CBERS4A-MUX', 'CBERS4A-AWFI', 'CBERS4-MUX', 'CBERS4-AWFI'],
+  // cbers: ['CBERS4A-MUX', 'CBERS4A-AWFI', 'CBERS4-MUX', 'CBERS4-AWFI'],
+  cbers: ['CBERS4A-MUX', 'CBERS4-MUX'],
   planet: 'global_monthly'
 };
 
@@ -111,30 +112,30 @@ export const defaultRGBBands = {
     green: '8',
     blue: '7'
   },
-  'CBERS4A-AWFI': {
-    red: '14',
-    green: '16',
-    blue: '15'
-  },
+  // 'CBERS4A-AWFI': {
+  //   red: '14',
+  //   green: '16',
+  //   blue: '15'
+  // },
   'CBERS4-MUX': {
     red: '6',
     green: '8',
     blue: '7'
   },
-  'CBERS4-AWFI': {
-    red: '14',
-    green: '16',
-    blue: '15'
-  }
+  // 'CBERS4-AWFI': {
+  //   red: '14',
+  //   green: '16',
+  //   blue: '15'
+  // }
 };
 
 export const bandsBySensor = {
   'sentinel-s2-l2a-cogs': ['01', '02', '03', '04', '05', '06', '07', '08', '8A', '09', '10', '11', '12'],
   'landsat-8-l1-c1': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', 'QA'],
   'CBERS4A-MUX': ['5', '6', '7', '8'],
-  'CBERS4A-AWFI': ['13', '14', '15', '16'],
+  // 'CBERS4A-AWFI': ['13', '14', '15', '16'],
   'CBERS4-MUX': ['5', '6', '7', '8'],
-  'CBERS4-AWFI': ['13', '14', '15', '16']
+  // 'CBERS4-AWFI': ['13', '14', '15', '16']
 };
 export const destinationLayerIdField = 'id';
 
