@@ -25,7 +25,7 @@ export class BaseLayers  {
             strmonthOld = '0' + strmonthOld;
          } else {
             strMonth = strMonth.toString();
-            strmonthOld = strmonthOld.toSttring();
+            strmonthOld = strmonthOld.toString();
          }
          strData = year + '-' +  strMonth;
          strDataOld = year + '-' + strmonthOld;
