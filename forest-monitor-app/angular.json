@@ -34,12 +34,9 @@
               "node_modules/leaflet.fullscreen/Control.FullScreen.css",
               "src/assets/plugins/Leaflet.Coordinates/Leaflet.Coordinates-0.1.5.css",
               "src/assets/plugins/Leaflet.Coordinates/Leaflet.Coordinates-0.1.5.ie.css",
-              "node_modules/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css",
-              "node_modules/primeicons/primeicons.css"
+              "node_modules/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css"
             ],
-            "scripts": [
-              "src/app/pages/explore/map/feature-info/feature-info.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -52,13 +49,38 @@
               "baseHref": "",
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": true,
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "development": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.prod.ts",
+                  "with": "src/environments/environment.ts"
+                }
+              ],
+              "baseHref": "",
+              "optimization": false,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "extractCss": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": false,
+              "vendorChunk": false,
+              "buildOptimizer": false,
               "budgets": [
                 {
                   "type": "initial",
@@ -77,6 +99,9 @@
           "configurations": {
             "production": {
               "browserTarget": "portal:build:production"
+            },
+            "development": {
+              "browserTarget": "portal:build:development"
             }
           }
         },

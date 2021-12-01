@@ -63,7 +63,7 @@ export class StyleBoxComponent implements OnInit {
     const collection = this.selectedFeature['properties']['collection'] || this.selectedFeature['collection'];
     const bands = style['bands'] || Object.values(defaultRGBBands[collection]).join(',');
 
-    if (collection === 'sentinel-2-l1c') {
+    if (collection === 'sentinel-s2-l2a-cogs') {
       const infosFeature = this.selectedFeature.id.split('_');
       const sceneId = `${infosFeature[0]}_tile_${infosFeature[2]}_${infosFeature[1]}_${infosFeature[3]}`;
       const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
@@ -73,7 +73,7 @@ export class StyleBoxComponent implements OnInit {
       });
       this.store.dispatch(setLayers([layerTile]));
 
-    } else if (collection === 'landsat-8-l1') {
+    } else if (collection === 'landsat-8-l1-c1') {
       const sceneId = this.selectedFeature['properties']['landsat:product_id'];
       const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
       const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaLANDSAT}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
@@ -85,17 +85,41 @@ export class StyleBoxComponent implements OnInit {
     } else if (collection.indexOf('CBERS') >= 0) {
       const sceneId = this.selectedFeature.id;
       if (sceneId.indexOf('MUX') >= 0) {
-        const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
-        const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
+        const tileLink = this.selectedFeature['links'][0]['href'];
+        const params = `url=${tileLink}&assets=${bands}`;
+        // const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
+        // const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
+        // const bounds = [[-3.8204080831949407, -59.91943359375001], [-11.372338792141125, -69.10400390625001]];
+        const bbox = this.selectedFeature['bbox'];
+        const bounds = [
+          [bbox[0],
+            bbox[1]],
+          [bbox[2],
+            bbox[3]]
+        ];
+        const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/{z}/{x}/{y}.png?${params}`, {
           className: `qls_cbers_${this.selectedFeature.id}`,
-          filter: []
+          filter: [],
+          bounds
         });
         this.store.dispatch(setLayers([layerTile]));
       } else {
-        const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
-        const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
+        const tileLink = this.selectedFeature['links'][0]['href'];
+        const params = `url=${tileLink}&assets=${bands}`;
+        // const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
+        // const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
+        // const bounds = [[-3.8204080831949407, -59.91943359375001], [-11.372338792141125, -69.10400390625001]];
+        const bbox = this.selectedFeature['bbox'];
+        const bounds = [
+          [bbox[0],
+            bbox[1]],
+          [bbox[2],
+            bbox[3]]
+        ];
+        const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/{z}/{x}/{y}.png?${params}`, {
           className: `qls_cbers_${this.selectedFeature.id}`,
-          filter: []
+          filter: [],
+          bounds
         });
         this.store.dispatch(setLayers([layerTile]));
       }
@@ -140,11 +164,12 @@ export class StyleBoxComponent implements OnInit {
   }
 
   removeLayer(f) {
-    if (f['properties']['collection'] === 'sentinel-2-l1c') {
+    const collection = f.collection ? f.collection : f.properties.collection || null;
+    if (collection === 'sentinel-s2-l2a-cogs') {
       this.store.dispatch(removeLayers([`qls_sentinel_${f.id}`]));
-    } else if (f['properties']['collection'] === 'landsat-8-l1') {
+    } else if (collection === 'landsat-8-l1-c1') {
       this.store.dispatch(removeLayers([`qls_landsat_${f.id}`]));
-    } else if (f['collection'] && f['collection'].indexOf('CBERS') >= 0) {
+    } else if (collection && collection.indexOf('CBERS') >= 0) {
       this.store.dispatch(removeLayers([`qls_cbers_${f.id}`]));
     } else if (getSatellite(f) === 'Planet') {
       this.store.dispatch(removeLayers([`qls_planet_${f.id}`]));
@@ -153,5 +178,12 @@ export class StyleBoxComponent implements OnInit {
 
   closeBox() {
     this.store.dispatch(setSelectedFeatureEdit({ payload: null }));
+  }
+
+  public trackByFn(index, item) {
+    if (!item) {
+      return null;
+    }
+    return item.id;
   }
 }

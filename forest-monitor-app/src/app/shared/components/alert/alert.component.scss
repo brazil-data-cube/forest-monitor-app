@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     padding: 10px 15px;
-    border-radius: 7.5px; 
+    border-radius: 7.5px;
 
     .mat-icon {
         margin-right: 10px;
@@ -12,7 +12,7 @@
         background: rgba(255, 0, 0, 0.3);
     }
 
-    &.warining {
+    &.warning {
         background: rgba(255, 255, 0, 0.3);
     }
 }

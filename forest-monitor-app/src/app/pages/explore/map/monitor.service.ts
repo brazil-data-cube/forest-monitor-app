@@ -36,7 +36,6 @@ export class MonitorService {
 
   public async del(id: object, token: string): Promise<any> {
     const urlSuffix = `/monitor/delete/${id}`;
-    console.log(urlSuffix);
 
     const response = await this.http.delete(`${this.urlForestAPI}${urlSuffix}`, {
       headers: {

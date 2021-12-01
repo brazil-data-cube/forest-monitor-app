@@ -73,5 +73,12 @@ export class ClassLayesrComponent implements OnInit {
         });
     }
 
+  public trackByFn(index, item) {
+    if (!item) {
+      return null;
+    }
+    return item.id;
+  }
+
 }
 

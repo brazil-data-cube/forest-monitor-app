@@ -47,8 +47,7 @@ export class LayerService {
     const basePath = `/${this.workspaceGeoserver}/wms?REQUEST=GetFeatureInfo&SERVICE=WMS&SRS=EPSG:4326&VERSION=1.1.1`;
     let urlSuffix = `${basePath}&BBOX=${bbox}&HEIGHT=${height}&WIDTH=${width}`;
     urlSuffix += `&LAYERS=${this.workspaceGeoserver}:${layer}&QUERY_LAYERS=${this.workspaceGeoserver}:${layer}&INFO_FORMAT=application/json&X=${x}&Y=${y}`;
-    const response = await this.http.get(`${this.urlGeoserver}${urlSuffix}`).toPromise();
-    return response;
+    return await this.http.get(`${this.urlGeoserver}${urlSuffix}`).toPromise();
   }
 
   /**
@@ -57,8 +56,10 @@ export class LayerService {
   public getOverlayerById(layerId): BdcOverlayer {
     let layer = null;
 
-    for (let i = 0, len = this.getOverlayers().length; i < len; i++) {
-      if (this.getOverlayers()[i].id == layerId) {
+    const overlayers = this.getOverlayers();
+    const overlayersLength = overlayers.length;
+    for (let i = 0; i < overlayersLength; i++) {
+      if (this.getOverlayers()[i].id === layerId) {
         layer = this.getOverlayers()[i];
         break;
       }
@@ -73,9 +74,10 @@ export class LayerService {
    */
   public getDestinationOverlayer(): BdcOverlayer {
     let layer = null;
-
-    for (let i = 0, len = this.getOverlayers().length; i < len; i++) {
-      if (this.getOverlayers()[i].destinationLayer == true) {
+    const overlayers = this.getOverlayers();
+    const overlayersLength = overlayers.length;
+    for (let i = 0; i < overlayersLength; i++) {
+      if (this.getOverlayers()[i].destinationLayer === true) {
         layer = this.getOverlayers()[i];
         break;
       }

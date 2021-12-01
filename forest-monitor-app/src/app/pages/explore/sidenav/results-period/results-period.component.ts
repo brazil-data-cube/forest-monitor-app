@@ -130,7 +130,7 @@ export class ResultsPeriodComponent {
         const collection = f['properties']['collection'] || f['collection'];
         const bands = style['bands'] || Object.values(defaultRGBBands[collection]).join(',');
 
-        if (collection === 'sentinel-2-l1c') {
+        if (collection === 'sentinel-s2-l2a-cogs') {
           const infosFeature = f.id.split('_');
           const sceneId = `${infosFeature[0]}_tile_${infosFeature[2]}_${infosFeature[1]}_${infosFeature[3]}`;
           const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
@@ -140,8 +140,8 @@ export class ResultsPeriodComponent {
           });
           this.store.dispatch(setLayers([layerTile]));
 
-        } else if (collection === 'landsat-8-l1') {
-          const sceneId = f['properties']['landsat:product_id'];
+        } else if (collection === 'landsat-8-l1-c1') {
+          const sceneId = f.id;
           const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
           const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaLANDSAT}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
             className: `qls_landsat_${f.id}`,
@@ -152,27 +152,20 @@ export class ResultsPeriodComponent {
         } else if (collection.indexOf('CBERS') >= 0) {
 
           const sceneId = f['id'];
-          if (sceneId.indexOf('MUX') >= 0) {
-            const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
-            const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
-              className: `qls_cbers_${f.id}`,
-              filter: []
-            });
-            this.store.dispatch(setLayers([layerTile]));
-          } else {
-            const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
-            const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
-              className: `qls_cbers_${f.id}`,
-              filter: []
-            });
-            this.store.dispatch(setLayers([layerTile]));
-          }
-
+          const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}`;
+          const bbox = f['bbox'];
+          const bounds = L.latLngBounds([bbox[1], bbox[0]], [bbox[3], bbox[2]]);
+          const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaCBERS}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
+            className: `qls_cbers_${f.id}`,
+            filter: [],
+            bounds
+          });
+          this.store.dispatch(setLayers([layerTile]));
         }
       }
 
       const newFeatures = this.features.map( feature => {
-        if (feature.id == f.id) {
+        if (feature.id === f.id) {
           feature['enabled'] = true;
         }
         return feature;
@@ -182,21 +175,22 @@ export class ResultsPeriodComponent {
     } else {
       // DISABLED
       const newFeatures = this.features.map( feature => {
-        if (feature.id == f.id) {
+        if (feature.id === f.id) {
           feature['enabled'] = false;
         }
         return feature;
       });
       this.store.dispatch(setFeaturesPeriod(newFeatures));
-
-      if (f['properties']['collection'] === 'sentinel-2-l1c') {
+      const collection = f['properties']['collection'] || f['collection'];
+      if (collection === 'sentinel-s2-l2a-cogs') {
         this.store.dispatch(removeLayers([`qls_sentinel_${f.id}`]));
-      } else if (f['properties']['collection'] === 'landsat-8-l1') {
+      } else if (collection === 'landsat-8-l1-c1') {
         this.store.dispatch(removeLayers([`qls_landsat_${f.id}`]));
-      } else if (f['collection'] && f['collection'].indexOf('CBERS') >= 0) {
+      } else if (collection && collection.indexOf('CBERS') >= 0) {
         this.store.dispatch(removeLayers([`qls_cbers_${f.id}`]));
       } else if (this.isPlanet(f)) {
         this.store.dispatch(removeLayers([`qls_planet_${f.id}`]));
+        // tslint:disable-next-line:no-unused-expression
       }
     }
   }
@@ -213,13 +207,13 @@ export class ResultsPeriodComponent {
     return getSensor(feature);
   }
 
-  public changeImgEdit(event, feature) {
+  public changeImgEdit(event, featureId) {
     this.store.dispatch(removeGroupLayer({
       key: 'attribution',
       prefix: 'polygon_scene_selected'
     }));
 
-    const fIdSelected = event.checked ? feature['id'] : '';
+    const fIdSelected = event.checked ? featureId : '';
     const newFeatures = this.features.map( feature => {
       if (feature.id === fIdSelected) {
         feature['editable'] = true;
@@ -248,5 +242,12 @@ export class ResultsPeriodComponent {
 
   public openStyleBox($event, feature) {
     this.store.dispatch(setSelectedFeatureEdit({ payload: feature }));
+  }
+
+  public trackByFn(index, item) {
+    if (!item) {
+      return null;
+    }
+    return item.id;
   }
 }

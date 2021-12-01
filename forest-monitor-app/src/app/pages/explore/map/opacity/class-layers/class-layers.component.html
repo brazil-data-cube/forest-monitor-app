@@ -1,15 +1,15 @@
 <div class="opacity-class" *ngIf="showBox" cdkDrag>
-  
+
     <div class="contentC">
         <header cdkDragHandle>
             <h1>Opacity Class</h1>
         </header>
-  
+
         <button class="btn-close" mat-icon-button (click)="toggleBoxC()">
             <mat-icon>close</mat-icon>
         </button>
-  
-        <div class="content_layer" *ngFor="let l of classDeter">
+
+        <div class="content_layer" *ngFor="let l of classDeter; trackBy: trackByFn">
             <p>
                 {{ l.toUpperCase() }}
             </p>
@@ -19,7 +19,7 @@
                 [(ngModel)]="classD[l]['opacity']">
             </mat-slider>
         </div>
-  
+
         <button
             mat-stroked-button
             color="accent"

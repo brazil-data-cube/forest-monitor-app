@@ -15,7 +15,9 @@ export interface BdcLayer {
     layer: Layer;
 }
 
-/**interface of class of geoserver */
+/**
+ * interface of class of geoserver
+ */
 export interface BdcClassLayer {
     enable: boolean;
     name: string;

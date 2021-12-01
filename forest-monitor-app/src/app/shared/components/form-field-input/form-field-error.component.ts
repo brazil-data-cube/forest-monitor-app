@@ -6,7 +6,7 @@ import {ValidationErrors} from '@angular/forms';
  * component to display errors and valid fileds in forms
  */
 @Component({
-  selector: 'form-field-error',
+  selector: 'app-form-field-error',
   templateUrl: './form-field-error.component.html',
   styleUrls: ['./form-field-error.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

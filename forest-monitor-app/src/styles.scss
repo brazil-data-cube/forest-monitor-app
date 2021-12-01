@@ -33,7 +33,7 @@ body {
 .leaflet-control-container .leaflet-control-coordinates .label {
     border-radius: 5px;
     background: rgba(#FFF, 0.5);
-    margin: 0px;
+    margin: 0;
 
     .labelFirst {
         padding: 20px 7.5px;
@@ -84,7 +84,7 @@ body {
 
 .mat-drawer-side {
     border-right: none;
-    box-shadow: 3px 0px 6px rgba(#000, 0.2);
+    box-shadow: 3px 0 6px rgba(#000, 0.2);
 }
 .mat-drawer {
     overflow-y: hidden !important;
@@ -119,8 +119,8 @@ body {
 }
 
 .mat-accordion .mat-expansion-panel:first-of-type {
-    border-top-right-radius: 0px !important;
-    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0 !important;
+    border-top-left-radius: 0 !important;
 }
 
 .mat-form-field-appearance-fill .mat-form-field-flex {
@@ -229,8 +229,8 @@ table.view_info-table {
    height: 5px !important;
  }
  ::-webkit-scrollbar-button {
-   width: 0px !important;
-   height: 0px !important;
+   width: 0 !important;
+   height: 0 !important;
  }
  ::-webkit-scrollbar-thumb {
    background: #666666 !important;
@@ -299,7 +299,7 @@ color: #fff !important;
 
 label
 {
-    margin-bottom: 0px !important;
+    margin-bottom: 0 !important;
 }
 .ng5-slider .ng5-slider-bubble {
     font-size: 14px  !important;

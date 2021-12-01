@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 
 echo ""
 echo "---=== Starting APP Configuration ===--- "
@@ -140,4 +140,11 @@ echo ""
 echo "---=== Runing APP ===--- "
 echo ""
 
-npm start -- --deployUrl /$BASE_PATH/ --base-href /$BASE_PATH/
+env=$1
+if [ "$env" == 'development' ]; then
+  npm run dev -- --deployUrl /$BASE_PATH/ --base-href /$BASE_PATH/
+else
+  npm start -- --deployUrl /$BASE_PATH/ --base-href /$BASE_PATH/
+fi
+
+
