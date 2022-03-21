@@ -1,39 +1,46 @@
-<div class="temporal-box" *ngIf="showBox" cdkDrag>
+<div *ngIf="showBox" cdkDrag class="temporal-box">
   <div class="content">
     <header cdkDragHandle>
       <h1>Temporal Range</h1>
     </header>
 
-    <button class="btn-close" mat-icon-button (click)="toggleBox()">
+    <button (click)="toggleBox()" class="btn-close" mat-icon-button>
       <mat-icon>close</mat-icon>
     </button>
 
-    <div style="display: flex;"></div>
+
     <mat-form-field appearance="fill" style="width: 40%; margin-left: 4%;">
       <mat-label>Start Date</mat-label>
-      <input matInput
+      <input (dateInput)="startDateEvent('input', $event)"
              [matDatepicker]="start_date"
-             mask="00/00/000"
-             name="start_date"
-             (dateInput)="startDateEvent('input', $event)" (startDate)="startDateEvent('change', $event)">
-      <mat-datepicker-toggle matSuffix [for]="start_date"></mat-datepicker-toggle>
+             matInput>
+      <mat-datepicker-toggle [for]="start_date" matSuffix></mat-datepicker-toggle>
       <mat-datepicker #start_date></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field appearance="fill" style="width: 40%; margin-left: 8%;">
       <mat-label>Last Date</mat-label>
-      <input matInput
+      <input (dateInput)="lastDateEvent('input', $event)"
              [matDatepicker]="last_date"
-             (dateInput)="lastDateEvent('input', $event)" (lastDate)="lastDateEvent('change', $event)">
-      <mat-datepicker-toggle matSuffix [for]="last_date"></mat-datepicker-toggle>
+             [max]="todayDate"
+             matInput>
+      <mat-datepicker-toggle [for]="last_date" matSuffix></mat-datepicker-toggle>
       <mat-datepicker #last_date></mat-datepicker>
     </mat-form-field>
 
-    <button
-      mat-stroked-button
-      color="accent"
-      (click)="updateOpacityLayers()">Update
-    </button>
+    <div style="display: flex;">
+      <button (click)="reset()" appearance="fill"
+              color="accent"
+              mat-stroked-button
+              style="width: 40%; margin-left: 4%;">Reset
+      </button>
+
+      <button (click)="updateOpacityLayers()" appearance="fill"
+              color="accent"
+              mat-stroked-button
+              style="width: 40%; margin-right: 8%;">Update
+      </button>
+    </div>
   </div>
 </div>
 

@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 
 /** Service to search items in STAC */
@@ -19,11 +19,10 @@ export class SearchService {
      */
     public async searchSTAC(query: string): Promise<any> {
         const urlSuffix = `/stac-compose/search?${query}`;
-        const response = await this.http.get(`${this.urlForestAPI}${urlSuffix}`).toPromise();
-        return response;
+        return await this.http.get(`${ this.urlForestAPI }${ urlSuffix }`).toPromise();
     }
 
-    public async searchPlanetItems(start_date: Date, end_date: Date, coordinates: any): Promise<any> {
+    public async searchPlanetItems(startDate: Date, endDate: Date, coordinates: any): Promise<any> {
         const url = `https://api.planet.com/data/v1/quick-search?_sort=acquired desc`;
 
         const query = {
@@ -34,8 +33,8 @@ export class SearchService {
                         type: 'DateRangeFilter',
                         field_name: 'acquired',
                         config: {
-                            gt: start_date,
-                            lte: end_date
+                            gt: startDate,
+                            lte: endDate
                         }
                     },
                     {
@@ -43,7 +42,7 @@ export class SearchService {
                         field_name: 'geometry',
                         config: {
                             type: 'Polygon',
-                            coordinates: coordinates
+                            coordinates
                         }
                     }
                 ]
@@ -52,12 +51,11 @@ export class SearchService {
             item_types: ['REOrthoTile', 'PSScene4Band', 'SkySatCollect']
         };
 
-        const response = await this.http.post(`${url}`, query, {
-            headers: {
-                Authorization: `api-key ${this.API_KEY}`
-            }
+        return await this.http.post(`${ url }`, query, {
+          headers: {
+            Authorization: `api-key ${ this.API_KEY }`
+          }
         }).toPromise();
-        return response;
     }
 
     public async searchPlanetMosaicQuads(mosaicId: string, bbox: string) {
@@ -73,7 +71,7 @@ export class SearchService {
         return response.items;
     }
 
-    public async searchPlanet(start_date: Date, end_date: Date, bbox: string, percentCloud: number): Promise<any> {
+    public async searchPlanet(startDate: Date, endDate: Date, bbox: string, percentCloud: number): Promise<any> {
         const url = `https://api.planet.com/basemaps/v1/mosaics?api_key=${this.API_KEY}`;
 
         const response: any = await this.http.get(`${url}`).toPromise();
@@ -83,7 +81,7 @@ export class SearchService {
         for (const mosaic of response.mosaics) {
             const mosaicDate = moment(mosaic.first_acquired, 'YYYY-MM-DD');
 
-            if (mosaicDate.isSameOrAfter(moment(start_date)) && mosaicDate.isSameOrBefore(moment(end_date))) {
+            if (mosaicDate.isSameOrAfter(moment(startDate)) && mosaicDate.isSameOrBefore(moment(endDate))) {
                 const res = await this.searchPlanetMosaicQuads(mosaic.id, bbox);
 
                 if (res.length === 0) {

@@ -5,7 +5,7 @@ export interface ExploreState {
     /** all selected features */
     readonly features: object[];
     /** selected features/items in the period */
-    readonly featuresPeriod: Object[];
+    readonly featuresPeriod: object[];
     /** layers visible in the map */
     readonly layers: Layer[];
     /** list of layers to remove in the map */

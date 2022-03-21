@@ -37,18 +37,15 @@ export class AuthService {
         document.location.href = basePath;
     }
 
-    	/**
-	 * 	Check if auth token is still valid
-	 */
-	public async checkAuthPost() {
+  /**
+   * Check if auth token is still valid
+   */
+  public async checkAuthPost() {
         try {
-
           const response = await this.token(`${this.applicationName}:manage:POST`);
-
         } catch (err) {
             return false;
         }
         return true;
     }
-
 }

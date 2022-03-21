@@ -4,6 +4,7 @@
 declare var require: any;
 export const environment = {
   /** environment */
-  production: true,
-  version: require('../../package.json').version
+  production: false,
+  version: require('../../package.json').version,
+  BUILD_TYPE: 'development'
 };

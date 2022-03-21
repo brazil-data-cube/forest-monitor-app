@@ -1,15 +1,15 @@
 .container-slider {
     z-index: 999;
     position: absolute;
-    padding: 0px 12px 4px 10px;
+    padding: 0 12px 4px 10px;
     bottom: 65px;
     left: 5%;
     right: 5%;
     background: rgba(#FFF, 1);
     border-radius: 9px;
     height: 40px;
-    
-   
+
+
 }
 ::ng-deep {
     .ng5-slider-active:after {

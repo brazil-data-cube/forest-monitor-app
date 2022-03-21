@@ -1,17 +1,13 @@
-import {ChangeDetectorRef, Component, Inject, NgZone, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
 import {LayerService} from '../layers/layer.service';
 import * as L from 'leaflet';
 import {Map as MapLeaflet} from 'leaflet';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {FocusMonitor} from '@angular/cdk/a11y';
-import {destinationLayerIdField} from 'src/app/shared/helpers/CONSTS';
+import {destinationLayerIdField, DETERclassesSPLITALLOWED} from 'src/app/shared/helpers/CONSTS';
 import {DelFeatureComponent} from '../del-feature/del-feature.component';
 import {EditBoxFormComponent} from '../editable/box/box.component';
 import {MatSnackBar} from '@angular/material';
-
-declare var splitGeometryDone: Function;
-declare var splitGeometry: any;
-declare var splitFeatureId: any;
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-feature-info',
@@ -24,12 +20,13 @@ export class FeatureInfoComponent implements OnInit {
   public layersData: any;
   public featureId;
   public splitPolygon: any;
-  panelOpenState = false;
-  private latlong: any;
-  private screenPosition: any;
+  public showSplit;
+  private containerPoint: any;
   private drawControl: any;
   /** pointer to reference map */
   private map: MapLeaflet;
+  private splitFeatureId: any;
+  private splitGeometry: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -37,12 +34,9 @@ export class FeatureInfoComponent implements OnInit {
     private cdRef: ChangeDetectorRef,
     private ls: LayerService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog,
-    private focusMonitor: FocusMonitor,
-    private ngZone: NgZone) {
-    this.latlong = data.latlong;
-    this.latlongTxt = data.latlong.lat + ', ' + data.latlong.lng;
-    this.screenPosition = data.screenPosition;
+    private dialog: MatDialog) {
+    this.latlongTxt = data.latlongTxt;
+    this.containerPoint = data.containerPoint;
     this.map = data.map;
     this.drawControl = data.drawControl;
     this.layersData = [];
@@ -54,18 +48,26 @@ export class FeatureInfoComponent implements OnInit {
   }
 
   async getFeaturesInfo() {
-    const point = this.map.latLngToContainerPoint(this.latlong);
     const size = this.map.getSize();
+    this.showSplit = false;
 
     try {
       const overlayers = this.ls.getOverlayers();
+      const overlayersLength = overlayers.length;
       // get infos Feature by layer (From all Layers)
-      for (let i = overlayers.length - 1; i > -1; i--) {
+      for (let i = overlayersLength - 1; i > -1; i--) {
         const layer = overlayers[i];
-        const response = await this.ls.getInfoByWMS(
-          layer.id, this.map.getBounds().toBBoxString(), point.x, point.y, size.y, size.x);
 
-        if (response.features.length > 0) {
+        let response = null;
+        try {
+          response = await this.ls.getInfoByWMS(layer.id, this.map.getBounds().toBBoxString(), this.containerPoint.x, this.containerPoint.y, size.y, size.x);
+        } catch (err) {
+          if (!environment.production) {
+            console.error(`${layer.id} não encontrado`);
+          }
+        }
+
+        if (response && response.features.length > 0) {
 
           let featureId = null;
           const keys = Object.keys(response.features[0].properties);
@@ -84,11 +86,19 @@ export class FeatureInfoComponent implements OnInit {
             };
             properties.push(property);
 
-            if (key == destinationLayerIdField) {
+            if (key === destinationLayerIdField) {
               featureId = response.features[0].properties[key];
             }
 
           });
+
+          if (!this.showSplit && layer.destinationLayer) {
+            const classNameIndex = properties.findIndex(value => value.name === 'classname');
+            if (classNameIndex && classNameIndex !== -1) {
+              const className = properties[classNameIndex].value;
+              this.showSplit = DETERclassesSPLITALLOWED.includes(className);
+            }
+          }
 
           const data = {
             layerId: layer.id,
@@ -121,7 +131,7 @@ export class FeatureInfoComponent implements OnInit {
         }
       });
     delFeature.afterClosed().subscribe(result => {
-      if (result == true) {
+      if (result === true) {
         this.close();
       }
     });
@@ -136,7 +146,7 @@ export class FeatureInfoComponent implements OnInit {
   showSplitFeature(featureData: any) {
     this.zoomToFeature(featureData.geom);
 
-    this.enableSplitEditing(featureData.geom, featureData.featureId);
+    this.enableSplitEditing(featureData.featureId);
 
     const dialogPosition = {left: `10px`};
     this.dialogRef.updatePosition(dialogPosition);
@@ -144,10 +154,10 @@ export class FeatureInfoComponent implements OnInit {
 
   /** get shapefile */
   getShapefileById(layerId: any, featureKey: any, featureId: any) {
-    const cql_filter = `${featureKey}=${featureId}`;
+    const cqlFilter = `${featureKey}=${featureId}`;
     const outputFilename = `${layerId}-${featureId}.zip`;
 
-    const url = this.ls.getFeaturesDownloadURL(layerId, outputFilename, cql_filter);
+    const url = this.ls.getFeaturesDownloadURL(layerId, outputFilename, cqlFilter);
 
     this.ls.getShapefileById(url).subscribe((res: any) => {
       const file = new Blob([res], {
@@ -196,40 +206,38 @@ export class FeatureInfoComponent implements OnInit {
   }
 
   close() {
-
     this.dialogRef.close();
   }
 
-  public enableSplitEditing(originalGeoJSON: any, featureId: any) {
-
+  public enableSplitEditing(featureId: any) {
     if (!this.splitPolygon) {
       this.splitPolygon = new L.Draw.Polygon(this.map, this.drawControl.options.polygon);
 
       this.splitPolygon.enable();
 
-      splitFeatureId = featureId;
+      this.splitFeatureId = featureId;
 
-      this.map.on(L.Draw.Event.CREATED, function(e) {
-        splitGeometryDone(e);
+      this.map.on(L.Draw.Event.CREATED, (e) => {
+        this.splitGeometry = e.layer.toGeoJSON();
+
+        if (document.getElementById('showSplitEditFeature')) {
+          document.getElementById('showSplitEditFeature').click();
+        }
       });
-
     }
   }
 
   public showSplitEditFeature(layerData: any) {
     const featureId = layerData.featureId;
     const sourceGeom = layerData.geom;
-    this.showEditFeature(featureId, true, splitGeometry, sourceGeom);
+    this.showEditFeature(featureId, true, this.splitGeometry, sourceGeom);
   }
 
-  public disableSplitEditing() {
-
-    if (this.splitPolygon) {
-      this.map.off(L.Draw.Event.CREATED);
-      this.splitPolygon.disable();
-      this.splitPolygon = null;
-
+  public trackByFn(index, item) {
+    if (!item) {
+      return null;
     }
+    return item.id;
   }
 
 }
