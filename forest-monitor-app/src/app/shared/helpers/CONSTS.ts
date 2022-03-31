@@ -19,7 +19,7 @@ export const collectionKeyByCollection = {
  */
 export const DETERclasses = [
   'CICATRIZ_DE_QUEIMADA', 'DESMATAMENTO_VEG', 'CS_DESORDENADO', 'DESMATAMENTO_CR',
-  'CS_GEOMETRICO', 'DEGRADACAO', 'MINERACAO', 'CORTE_SELETIVO'
+  'CS_GEOMETRICO', 'DEGRADACAO', 'MINERACAO'
 ];
 
 export const DETERclassesSPLIT = [
