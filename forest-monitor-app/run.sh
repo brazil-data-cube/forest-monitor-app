@@ -144,7 +144,7 @@ env=$1
 if [ "$env" == 'development' ]; then
   npm run dev -- --deployUrl /$BASE_PATH/ --base-href /$BASE_PATH/
 else
-  npm start -- --deployUrl /$BASE_PATH/ --base-href /$BASE_PATH/
+  npm run start -- --deployUrl /$BASE_PATH/ --base-href /$BASE_PATH/
 fi
 
 
