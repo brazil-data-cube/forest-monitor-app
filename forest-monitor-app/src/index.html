@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Forest Monitor</title>  
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  <script src="assets/env.js"></script>
+  <script type='text/javascript'>
+     var base = document.location.pathname.split('/')[1];
+     document.write('<link rel="shortcut icon" href="/' + base + '/assets/images/favicon.png" />');
+     
+     var script = document.createElement('script');
+     script.src = "/"+ base +"/assets/env.js";
+
+     document.head.append(script);
+  </script>
+
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>

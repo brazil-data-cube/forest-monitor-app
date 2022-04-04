@@ -1,0 +1,25 @@
+@import 'src/assets/styles/sidenav-base.scss';
+
+header {
+    background: var(--mainBgPrimary);
+    border-radius: 0 !important;
+    border: none;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    color: #FFF;
+    font-weight: 400;
+    padding: 25px;
+    box-shadow: 1px 0 10px rgba(#000, 0.5);
+
+    .mat-icon {
+        margin-right: 10px;
+    }
+}
+
+.bannernav {
+    background-color: #2196f3;
+    height: 200px !important;
+    margin: 0 auto;
+}
+

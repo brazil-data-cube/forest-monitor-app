@@ -1,0 +1,29 @@
+<div class="opacity-box" *ngIf="showBox" cdkDrag>
+
+    <div class="content">
+        <header cdkDragHandle>
+            <h1>Opacity</h1>
+        </header>
+
+        <button class="btn-close" mat-icon-button (click)="toggleBox()">
+            <mat-icon>close</mat-icon>
+        </button>
+
+        <div class="content_layer" *ngFor="let l of layersTitle; trackBy: trackByFn">
+            <p>
+                {{ l.toUpperCase() }}
+            </p>
+            <mat-slider
+                [max]="10"
+                [min]="0"
+                [(ngModel)]="layers[l]['opacity']">
+            </mat-slider>
+        </div>
+
+        <button
+            mat-stroked-button
+            color="accent"
+            (click)="updateOpacityLayers()">Update
+        </button>
+    </div>
+</div>

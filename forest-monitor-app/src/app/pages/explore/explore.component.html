@@ -1,0 +1,26 @@
+<section class="explore" style="min-width: 470px;">
+    <mat-drawer-container autosize [hasBackdrop]="innerWidth <= 1024">
+        <!-- NAVIGATION -->
+        <mat-drawer
+            #sidenav
+            class="sidenav"
+            mode="side"
+            [opened]="true"
+        >
+            <app-sidenav></app-sidenav>
+        </mat-drawer>
+
+        <!-- CONTENT -->
+        <section>
+            <div #toolbar>
+                <app-toolbar
+                    (toggleToEmit)="toggleDrawer()"
+                ></app-toolbar>
+            </div>
+
+            <app-base-map
+                [height]="innerHeight"
+            ></app-base-map>
+        </section>
+    </mat-drawer-container>
+</section>

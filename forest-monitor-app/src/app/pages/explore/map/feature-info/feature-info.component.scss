@@ -1,0 +1,187 @@
+.mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+
+.feature-info-div {
+
+    .layer-content {
+        .btn-close {
+            top: -10px;
+            right: -5px;
+
+            .mat-icon {
+                background: #FFF;
+                border: 1px solid #CCC;
+                margin-top: -10px;
+            }
+        }
+
+        header {
+            padding: 0 15px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 0.9em;
+        }
+
+        #latlng{
+            font-weight: bolder;
+            padding: 0 15px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 0.9em;
+        }
+
+        .feature-content {
+            padding: 2px;
+            border: 3px solid #CCC;
+            margin: 10px 5px;
+
+            p {
+                margin: -15px 0 0 0;
+                padding: 0;
+                background: #FFF;
+                font-size: 0.9em!important;
+            }
+
+            .mat-slider-horizontal {
+                min-width: 140px !important;
+                margin: 0 !important;
+                height: 36px !important;
+            }
+        }
+
+        button {
+            display: block;
+            font-weight: bold;
+            width: 100%;
+            text-align: left;
+        }
+
+
+    }
+}
+.layer-header-row
+{
+    border-bottom: 1px solid grey;
+}
+#editFeatureButton
+{
+    background-image: linear-gradient(transparent,transparent),url('../../../../../assets/images/spritesheet.svg');
+    background-position: -180px -1px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    background-repeat: no-repeat;
+    background-size: 400px 30px;
+    background-clip: padding-box;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+
+}
+
+#deleteFeatureButton
+{
+    background-image: linear-gradient(transparent,transparent),url('../../../../../assets/images/spritesheet.svg');
+    background-position: -219px -1px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    background-repeat: no-repeat;
+    background-size: 400px 30px;
+    background-clip: padding-box;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+
+}
+
+#shapeFeatureButton
+{
+    background-image: linear-gradient(transparent,transparent),url('../../../../../assets/images/download.svg');
+    background-position: 3px 5px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    background-repeat: no-repeat;
+    background-size: 35px 17px;
+    background-clip: padding-box;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0.7;
+
+}
+#splitFeatureButton
+{
+    background-image: linear-gradient(transparent,transparent),url('../../../../../assets/images/spritesheet.svg');
+    background-position: -370px -1px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    background-repeat: no-repeat;
+    background-size: 400px 30px;
+    background-clip: padding-box;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+
+}
+
+.feature-info-close-button
+{
+    text-align: right !important;
+    height: 24px  !important;
+    width: 24px  !important;
+    line-height: 30px !important;
+}
+.feature-info-close-button div
+{
+    height: 24px  !important;
+    width: 24px  !important;
+    margin-top: -10px !important;
+
+}
+.mat-button-focus-overlay {
+    background-color: transparent!important;
+}
+
+button:focus {
+    outline: none !important;
+    border: 0 !important;
+    background: none !important;
+    border-radius: 0%;
+    line-height: 40px;
+}
+#copyToClipboardIcon
+{
+    cursor: pointer;
+    font-size: 17px;
+
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.no-padding {
+  padding: 5px 0;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.word-wrap {
+  word-wrap: anywhere;
+}

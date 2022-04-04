@@ -1,0 +1,15 @@
+
+<div class="opacity-btnC" *ngIf="!showBox">   
+    <div class="iconC" (click)="toggleBoxC()">
+        <mat-icon>brightness_low</mat-icon>
+    </div>    
+    
+</div>
+
+<app-class-layers
+    (toggleToEmit)="toggleBoxC()"
+    [show]="showBox">
+</app-class-layers>
+    
+
+

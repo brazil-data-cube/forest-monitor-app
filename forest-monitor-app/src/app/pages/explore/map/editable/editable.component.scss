@@ -1,0 +1,56 @@
+.btn-edit {
+    position: absolute;
+    border: 2px solid rgba(#000, 0.2);
+    left: 10px;
+    top: 233px;
+    z-index: 9999;
+    border-radius: 2.5px;
+    cursor: pointer;
+
+    .mat-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        background: #FFF;
+        border-radius: 2.5px;
+
+        &:hover {
+            background: #EEE;
+        }
+    }
+}
+
+.actions {
+    z-index: 9999;
+    position: absolute;
+    left: 44px;
+    margin-left: -2px;
+    top: 233px;
+    display: flex;
+    align-items: center;
+    background: #919187;
+    border-radius: 0 5px 5px 0;
+    height: 30px;
+    margin-top: 2px;
+
+    button {
+        background: none;
+        border: none;
+        border-right: 1px solid #CCC;
+        color: #FFF;
+        height: 100%;
+        padding: 0 10px;
+        cursor: pointer;
+
+        &:last-child {
+            border-right: none;
+            border-radius: 0 5px 5px 0;
+        }
+
+        &:hover, .active {
+            background: #666;
+        }
+    }
+}

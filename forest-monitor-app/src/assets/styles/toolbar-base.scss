@@ -1,0 +1,27 @@
+.mat-toolbar {
+    background: #FFF !important;
+}
+
+.tol_container {
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 3px 6px rgba(#000, 0.16);
+    z-index: 999;
+    background: #FFF;
+
+    .tol_cont-title {
+        display: flex;
+        align-items: center;
+
+        .title_btn-toggle {
+            padding: 8px 10px 0 10px;
+            border-radius: 50%;
+            margin-right: 10px;
+            cursor: pointer;
+
+            &:hover {
+                background: rgba(#000, 0.1);
+            }
+        }
+    }
+}

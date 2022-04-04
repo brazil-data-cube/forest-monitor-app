@@ -1,0 +1,61 @@
+.temporal-box {
+  position: absolute;
+  z-index: 999;
+  top: 75px;
+  border-radius: 5px;
+  right: 175px;
+  width: 300px;
+  height: 150px;
+
+  background: #FFF;
+  border: 2px solid rgba(#000, 0.2);
+
+  .content {
+      .btn-close {
+          position: absolute;
+          top: -10px;
+          right: -5px;
+
+          .mat-icon {
+              background: #FFF;
+              border: 1px solid #CCC;
+              margin-top: -10px;
+          }
+      }
+
+      header {
+          padding: 0 15px;
+          margin: -10px 0 0 0;
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: 0.9em;
+          margin-top: 4px;
+      }
+
+      .content_layer {
+          padding: 2px;
+          border: 3px solid #CCC;
+          margin: 10px 5px;
+
+          p {
+              margin: -15px 0 0 0;
+              padding: 0;
+              background: #FFF;
+              font-size: 0.9em!important;
+          }
+
+          .mat-slider-horizontal {
+              min-width: 140px !important;
+              margin: 0 !important;
+              height: 36px !important;
+          }
+      }
+
+      button {
+          display: block;
+          margin: 10px auto;
+          font-weight: bold;
+          bottom: 30px;
+
+      }
+  }
+}

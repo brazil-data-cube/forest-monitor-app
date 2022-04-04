@@ -1,0 +1,47 @@
+<div *ngIf="showBox" cdkDrag class="temporal-box">
+  <div class="content">
+    <header cdkDragHandle>
+      <h1>Temporal Range</h1>
+    </header>
+
+    <button (click)="toggleBox()" class="btn-close" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+
+
+    <mat-form-field appearance="fill" style="width: 40%; margin-left: 4%;">
+      <mat-label>Start Date</mat-label>
+      <input (dateInput)="startDateEvent('input', $event)"
+             [matDatepicker]="start_date"
+             matInput>
+      <mat-datepicker-toggle [for]="start_date" matSuffix></mat-datepicker-toggle>
+      <mat-datepicker #start_date></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 40%; margin-left: 8%;">
+      <mat-label>Last Date</mat-label>
+      <input (dateInput)="lastDateEvent('input', $event)"
+             [matDatepicker]="last_date"
+             [max]="todayDate"
+             matInput>
+      <mat-datepicker-toggle [for]="last_date" matSuffix></mat-datepicker-toggle>
+      <mat-datepicker #last_date></mat-datepicker>
+    </mat-form-field>
+
+    <div style="display: flex;">
+      <button (click)="reset()" appearance="fill"
+              color="accent"
+              mat-stroked-button
+              style="width: 40%; margin-left: 4%;">Reset
+      </button>
+
+      <button (click)="updateOpacityLayers()" appearance="fill"
+              color="accent"
+              mat-stroked-button
+              style="width: 40%; margin-right: 8%;">Update
+      </button>
+    </div>
+  </div>
+</div>
+
+

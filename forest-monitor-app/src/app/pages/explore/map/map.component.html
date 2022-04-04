@@ -1,0 +1,22 @@
+<div [ngStyle]="{'width.px': width, 'height.px': height}"
+     leaflet
+     [leafletOptions]="options"
+     [leafletLayersControl]="layersControl"
+     (leafletMapReady)="onMapReady($event)">
+</div>
+
+<app-map-editable
+    [map]="map"
+    [drawnItems]="drawnItems"
+    [drawControl]="drawControl">
+</app-map-editable>
+
+<app-map-opacity></app-map-opacity>
+
+<app-temporal-range></app-temporal-range>
+
+<app-map-slider></app-map-slider>
+
+<app-style-box></app-style-box>
+
+<app-opacity-class></app-opacity-class>
