@@ -18,8 +18,8 @@ export const collectionKeyByCollection = {
  * return classes of DETER
  */
 export const DETERclasses = [
-  'CICATRIZ_DE_QUEIMADA', 'DESMATAMENTO_VEG', 'CS_DESORDENADO', 'DESMATAMENTO_CR',
-  'CS_GEOMETRICO', 'DEGRADACAO', 'MINERACAO'
+  'CICATRIZ_DE_QUEIMADA', 'CS_DESORDENADO','CS_GEOMETRICO','DEGRADACAO', 'DESMATAMENTO_CR',
+  'DESMATAMENTO_VEG', 'MINERACAO'
 ];
 
 export const DETERclassesSPLIT = [
