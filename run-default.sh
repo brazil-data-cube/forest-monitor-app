@@ -72,13 +72,6 @@ GEOSERVER_CLASS="[
   },
   {
     enabled: true,
-    name: 'CORTE_SELETIVO',
-    filter: true,
-    layer: 'deter',
-    style: 'class_deter'
-  },
-  {
-    enabled: true,
     name: 'CS_DESORDENADO',
     filter: true,
     layer: 'deter',
