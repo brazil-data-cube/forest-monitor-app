@@ -72,13 +72,6 @@ destinationLayer: true
        filter: true,
        layer: 'deter',
        style: 'class_deter'
-      },{
-
-        enabled: true,
-        name: 'CORTE_SELETIVO',
-        filter: true,
-        layer: 'deter',
-        style: 'class_deter'
       },
       {
 
