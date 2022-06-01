@@ -28,7 +28,7 @@
             <mat-checkbox
                 [(ngModel)]="feature.editable"
                 (change)="changeImgEdit($event, feature.id)"
-                *ngIf="feature.enabled && !isPlanet(feature)">
+                *ngIf="feature.enabled">
             </mat-checkbox>
 
             <button mat-icon-button aria-label="Gear"

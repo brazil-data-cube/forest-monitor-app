@@ -219,9 +219,9 @@ export class ResultsPeriodComponent {
         feature['editable'] = true;
 
         // Skip since planet does not provides geometry geojson
-        if (this.isPlanet(feature)) {
-          return;
-        }
+        //if (this.isPlanet(feature)) {
+        //  return;
+        //}
 
         const newLayer = new L.GeoJSON(feature as any, {
           attribution: 'polygon_scene_selected'
