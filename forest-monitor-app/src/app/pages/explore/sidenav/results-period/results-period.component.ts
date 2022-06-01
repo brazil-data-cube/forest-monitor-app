@@ -65,7 +65,7 @@ export class ResultsPeriodComponent {
     if (satellite === 'Planet') {
       return 'Planet (Mosaic)';
     } else if (satellite === 'PlanetDaily') {
-      return 'Planet (Daily)';
+      return `${satellite} (${this.getPathRow(feature)})`;
     } else {
       return `${satellite} - ${this.getSensor(feature)} - (${this.getPathRow(feature)})`;
     }

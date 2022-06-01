@@ -48,6 +48,8 @@ export function getPathRow(f) {
   } else if (collection && collection.indexOf('CBERS') >= 0) {
     const prop = f['properties'];
     return `${prop['cbers:path']}${prop['cbers:row']}`;
+  } else  {
+    return (f['id'].split('_')[1])
   }
 }
 
@@ -92,7 +94,7 @@ export function getSatellite(f) {
       return 'Planet';
     }
   } else {
-    return 'PlanetDaily';
+     return 'PlanetDaily';
   }
 }
 
