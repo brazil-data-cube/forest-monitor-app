@@ -139,15 +139,28 @@ export class BaseLayers  {
            } as any)
          },
          {
+            id: 'mosaico1',
+            enabled: false,
+            name: 'MOSAICO 2021',
+            layer: tileLayer.wms(`http://terrabrasilis.dpi.inpe.br/geoserver/wms`, {
+               layers: `prodes-legal-amz:temporal_mosaic_legal_amazon`,
+               format: 'image/png',
+               transparent: true,
+               className: `MOSAICO_landsat`,
+               time: '2021-01-01T00:00:00.000Z'
+           } as any)
+            
+         },
+         {
             id: 'planet',
             enabled: false,
             name: `PLANET ${strDataOld} até ${strData}`,
             layer: tileLayer(`https://tiles.planet.com/basemaps/v1/planet-tiles/planet_medres_normalized_analytic_${strDataOld}_mosaic/gmap/{z}/{x}/{y}.png?api_key=12b17c3548c047218485084e2f8c8048`)
          }
-
+        
       ];
 
-
+      console.log(BdcLayer)
    }
 
 
