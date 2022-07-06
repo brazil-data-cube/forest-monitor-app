@@ -50,7 +50,7 @@ export class SearchComponent implements OnInit {
     sentinel: true,
     landsat: true,
     cbers: true,
-    planet: true
+    planet: false
   };
 
   public formSearch: FormGroup;
