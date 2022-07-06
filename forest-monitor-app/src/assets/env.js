@@ -13,10 +13,10 @@
    window.__env.urlOauth = 'http://oauth.dpi.inpe.br/api/oauth';
    window.__env.sliderGroupDays = '1';
    window.__env.urlOauthApp = 'http://oauth.dpi.inpe.br';
-   window.__env.planetAPIKey = '08c4d049131640b4bd35ee793e226322';
+   window.__env.planetAPIKey = 'PLAKa13aa9ce478245fe8478335f8b1fdc52';
    window.__env.geoserverLayers = 
 [ {
-id: 'areas_interesse',
+id: 'areas_interesse_ibama',
         enabled: true,
         name: 'Area Teste',
         layer: null,
