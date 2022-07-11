@@ -33,6 +33,9 @@ yarn-error.log
 testem.log
 /typings
 
+# dependencies
+/node_modules
+
 # System Files
 .DS_Store
 Thumbs.db
