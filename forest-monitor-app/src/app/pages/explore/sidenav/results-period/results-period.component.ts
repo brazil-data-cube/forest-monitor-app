@@ -140,7 +140,7 @@ export class ResultsPeriodComponent {
           });
           this.store.dispatch(setLayers([layerTile]));
 
-        } else if (collection === 'landsat-8-l1-c1') {
+        } else if (collection === 'landsat-c2l2-sr') { //landsat-8-l1-c1
           const sceneId = f.id;
           const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
           const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaLANDSAT}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
@@ -184,7 +184,7 @@ export class ResultsPeriodComponent {
       const collection = f['properties']['collection'] || f['collection'];
       if (collection === 'sentinel-s2-l2a-cogs') {
         this.store.dispatch(removeLayers([`qls_sentinel_${f.id}`]));
-      } else if (collection === 'landsat-8-l1-c1') {
+      } else if (collection === 'landsat-c2l2-sr') {  //landsat-8-l1-c1
         this.store.dispatch(removeLayers([`qls_landsat_${f.id}`]));
       } else if (collection && collection.indexOf('CBERS') >= 0) {
         this.store.dispatch(removeLayers([`qls_cbers_${f.id}`]));

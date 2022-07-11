@@ -16,13 +16,13 @@
    window.__env.planetAPIKey = 'PLAKa13aa9ce478245fe8478335f8b1fdc52';
    window.__env.geoserverLayers = 
 [ {
-id: 'areas_interesse_ibama',
-        enabled: true,
-        name: 'Area Teste',
-        layer: null,
-        filter: false,
-        style: 'area_test',
-        destinationLayer: false
+id: 'areas_interesse',
+enabled: true,
+name: 'Area Teste',
+layer: null,
+filter: false,
+style: 'area_test',
+destinationLayer: false
 },
 {
 id: 'mascara_prodes',
@@ -34,6 +34,16 @@ style: 'mascara_desmatamento',
 destinationLayer: false
 },
 {
+id: 'areas_ibama_cell25km',
+enabled: true,
+name: 'Celulas',
+layer: null,
+filter: false,
+style: 'area_test',
+destinationLayer: false
+},
+
+{
 id: 'mascara_deter',
 enabled: true,
 name: 'MASCARA_DETER - 2020',
@@ -43,15 +53,6 @@ style: 'class_deter',
 destinationLayer: false
 },
 
-    {
-      id: 'limite_municipal_amz_2007_2500',
-      enabled: true,
-      name: 'LIMITE MUNICIPAL',
-      layer: null,
-      filter: false,
-      style: 'limite_municipios',
-      destinationLayer: false
-    },
 {
 id: 'deter',
 enabled: true,
@@ -72,6 +73,13 @@ destinationLayer: true
        filter: true,
        layer: 'deter',
        style: 'class_deter'
+      },{
+
+        enabled: true,
+        name: 'CORTE_SELETIVO',
+        filter: true,
+        layer: 'deter',
+        style: 'class_deter'
       },
       {
 

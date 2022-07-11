@@ -167,7 +167,7 @@ export class SliderComponent {
               });
               this.store.dispatch(setLayers([layerTile]));
 
-            } else if (collection === 'landsat-8-l1-c1') {
+            } else if (collection === 'landsat-c2l2-sr') {  //'landsat-8-l1-c1'
               const sceneId = f['properties']['landsat:product_id'];
               const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
               const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaLANDSAT}/${sceneId}/{z}/{x}/{y}.png?${params}`, {

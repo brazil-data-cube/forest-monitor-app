@@ -7,7 +7,7 @@ export const satsens = ['CBERS-4A:MUX', 'SENTINEL-2:MSI', 'LANDSAT-8:OLI'];
  * return collection key by collection
  */
 export const collectionKeyByCollection = {
-  landsat: 'landsat-8-l1-c1',
+  landsat: 'landsat-c2l2-sr', //landsat-8-l1-c1
   sentinel: 'sentinel-s2-l2a-cogs',
   // cbers: ['CBERS4A-MUX', 'CBERS4A-AWFI', 'CBERS4-MUX', 'CBERS4-AWFI'],
   cbers: ['CBERS4A-MUX', 'CBERS4-MUX'],
@@ -43,7 +43,7 @@ export function getPathRow(f) {
   const collection = f.collection ? f.collection : f.properties.collection || null;
   if (collection === 'sentinel-s2-l2a-cogs') {
     return f['id'].split('_')[1];
-  } else if (collection === 'landsat-8-l1-c1') {
+  } else if (collection === 'landsat-c2l2-sr') {  //landsat-8-l1-c1
     return f['id'].split('_')[1];
   } else if (collection && collection.indexOf('CBERS') >= 0) {
     const prop = f['properties'];
@@ -104,10 +104,15 @@ export const defaultRGBBands = {
     green: '8A',
     blue: '04'
   },
-  'landsat-8-l1-c1': {
-    red: '6',
-    green: '5',
-    blue: '4'
+  // 'landsat-8-l1-c1': {
+  //   red: '6',
+  //   green: '5',
+  //   blue: '4'
+  // },
+  'landsat-c2l2-sr': {
+    red: 'B6',
+    green: 'B5',
+    blue: 'B4'
   },
   'CBERS4A-MUX': {
     red: '6',
@@ -133,7 +138,9 @@ export const defaultRGBBands = {
 
 export const bandsBySensor = {
   'sentinel-s2-l2a-cogs': ['01', '02', '03', '04', '05', '06', '07', '08', '8A', '09', '10', '11', '12'],
-  'landsat-8-l1-c1': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', 'QA'],
+  //'landsat-8-l1-c1': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', 'QA'],
+  // 'landsat-c2l2-sr': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', 'QA'],
+  'landsat-c2l2-sr': ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'B10', 'B11'], //
   'CBERS4A-MUX': ['5', '6', '7', '8'],
   // 'CBERS4A-AWFI': ['13', '14', '15', '16'],
   'CBERS4-MUX': ['5', '6', '7', '8'],
