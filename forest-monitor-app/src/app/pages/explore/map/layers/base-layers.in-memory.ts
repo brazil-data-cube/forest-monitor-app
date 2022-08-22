@@ -43,7 +43,6 @@ export class BaseLayers  {
          strData = year + '-' +   '0' + strMonth;
          strDataOld = (year - 1) + '-' + 12 ;
       }
-      console.log('aquiiii..... ',BdcLayer)
       return  BdcLayer  = [
          {
             id: 'google_sattelite',
