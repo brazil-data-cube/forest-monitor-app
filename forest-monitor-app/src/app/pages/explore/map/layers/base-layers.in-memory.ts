@@ -6,16 +6,21 @@ import {tileLayer} from 'leaflet';
  */
 
 export class BaseLayers  {
+
    public  BdcLayer  = [];
    public static getBdcLayer(BdcLayer) {
-      const data = new Date();
-      const month = data.getMonth() + 1 ;
-      const year = data.getFullYear();
+   const data = new Date();
+   const month = data.getMonth() + 1 ;
+   const year = data.getFullYear();
 
-      let strMonth;
-      let strmonthOld;
-      let strData;
-      let strDataOld;
+   const planetAPIKey = window['__env'].planetAPIKey;
+   
+
+   let strMonth;
+   let strmonthOld;
+   let strData;
+   let strDataOld;
+   
 
       if (month > 1 && month !== 2) {
          strMonth = month - 1 ;
@@ -38,7 +43,7 @@ export class BaseLayers  {
          strData = year + '-' +   '0' + strMonth;
          strDataOld = (year - 1) + '-' + 12 ;
       }
-
+      console.log('aquiiii..... ',BdcLayer)
       return  BdcLayer  = [
          {
             id: 'google_sattelite',
@@ -155,14 +160,15 @@ export class BaseLayers  {
             id: 'planet',
             enabled: false,
             name: `PLANET ${strDataOld} até ${strData}`,
-            layer: tileLayer(`https://tiles.planet.com/basemaps/v1/planet-tiles/planet_medres_normalized_analytic_${strDataOld}_mosaic/gmap/{z}/{x}/{y}.png?api_key=12b17c3548c047218485084e2f8c8048`)
+            layer: tileLayer(`https://tiles.planet.com/basemaps/v1/planet-tiles/planet_medres_normalized_analytic_${strDataOld}_mosaic/gmap/{z}/{x}/{y}.png?api_key=${planetAPIKey}`)
+            
          }
-        
+         
       ];
-
-      console.log(BdcLayer)
+          
+      
    }
 
-
+   
 
 }
