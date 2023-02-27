@@ -156,6 +156,7 @@ export class SliderComponent {
 
             const collection = f['properties']['collection'] || f['collection'];
             const bands = style['bands'] || Object.values(defaultRGBBands[collection]).join(',');
+            
 
             if (collection === 'sentinel-s2-l2a-cogs') {
               const infosFeature = f.id.split('_');
@@ -169,11 +170,14 @@ export class SliderComponent {
 
             } else if (collection === 'landsat-c2l2-sr') {  //'landsat-8-l1-c1'
               const sceneId = f['properties']['landsat:product_id'];
+              
               const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
+              
               const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaLANDSAT}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
                 className: `qls_landsat_${f.id}`,
                 filter: []
               });
+              console.log(this.store.dispatch(setLayers([layerTile])))
               this.store.dispatch(setLayers([layerTile]));
 
             } else if (collection.indexOf('CBERS') >= 0) {

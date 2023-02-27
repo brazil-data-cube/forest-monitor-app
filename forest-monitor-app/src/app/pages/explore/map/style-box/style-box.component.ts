@@ -160,6 +160,7 @@ export class StyleBoxComponent implements OnInit {
   }
 
   getBandsByCollection(band, collection) {
+    console.log("imprimir", band)
     return defaultRGBBands[collection][band];
   }
 

@@ -121,7 +121,7 @@ export class SearchComponent implements OnInit {
         const collections = Object.keys(this.satellites)
           .filter(sat => this.satellites[sat] === true)
           .map(sat => collectionKeyByCollection[sat]);
-
+        console.log('search, cole', collections)
         if (collections.length <= 0) {
           this.snackBar.open('Select a satellite', '', {
             duration: 5000,
@@ -163,22 +163,29 @@ export class SearchComponent implements OnInit {
             let query = `bbox=${bboxStr}`;
             query += `&polygon=${coords}`;
             query += `&collections=${collections.join(',')}`;
-            // query += `&cloud_cover=${this.searchObj['cloudCover']}`;
+            //query += `&cloud_cover=${"lt":10'}`; //'eo:cloud_cover":{"lt":10}'
             query += `&time=${formatDateUSA(startDate)}`;
             query += `/${formatDateUSA(lastDate)}`;
             query += `&limit=${limit}`;
             const res = await this.ss.searchSTAC(query);
+            console.log('ver aquiiii',res)
 
             output = {...res};
           }
-
+          console.log(output.features);
           output.features = [...output.features, ...planetFeatures.mosaics, ...planetItemsFeatures['features']];
 
           if (output.features.length > 0) {
+            //console.log("quantidade", output.features.length)
             this.store.dispatch(setRangeTemporal([
               startDate,
               lastDate
             ]));
+           // console.log(this.store.dispatch(setRangeTemporal([
+           //   startDate,
+           //   lastDate
+           // ])))
+            //console.log('aqui passa?',this.store.dispatch(setFeatures(output.features.filter(f => f.type.toLowerCase() === 'feature'))))
 
             this.store.dispatch(setFeatures(output.features.filter(f => f.type.toLowerCase() === 'feature')));
 

@@ -60,6 +60,7 @@ export class ResultsPeriodComponent {
   }
 
   public getFeatureName(feature: any) {
+
     const satellite = this.getSatellite(feature);
 
     if (satellite === 'Planet') {
@@ -87,6 +88,7 @@ export class ResultsPeriodComponent {
     if (this.isPlanetDaily(feature)) {
       return `${feature._links.thumbnail}?api_key=${this.planetAPIKey}`;
     } else {
+      //console.log("aqui mostra a imagem ", feature.assets.thumbnail.href)
       return feature.assets.thumbnail.href;
     }
   }
@@ -112,6 +114,7 @@ export class ResultsPeriodComponent {
       } else {
         const style = {};
         if (f['style']) {
+          //console.log('entra aqui 00000 ?')
           const st = f['style'];
           style['bands'] = `${st['red']['band']},${st['green']['band']},${st['blue']['band']}`;
 
@@ -120,28 +123,42 @@ export class ResultsPeriodComponent {
 
           style['formula'] = `Gamma RGB ${st['gamma']} Saturation ${st['saturation']}`;
           if (st['sigmoidal']) {
+            //console.log('entra aquiiiiiii ?')
             style['formula'] += ` Sigmoidal RGB ${st['sigmoidal']}`;
           }
         } else {
+          //console.log('entra aqui ?')
           style['percents'] = '1,99,1,99,1,99';
           style['formula'] = 'Gamma RGB 1 Saturation 1';
         }
 
         const collection = f['properties']['collection'] || f['collection'];
-        const bands = style['bands'] || Object.values(defaultRGBBands[collection]).join(',');
+        if (typeof Object !== 'undefined' && Object !== null) {
+          const keys = Object.keys(Object);
+        } else {
+          // 👇️ this runs
+          console.log('⛔️ Object is falsy');
+        }
+        
+        const bands = style['bands'] || Object.values(defaultRGBBands[collection]).join(',') ;
+        console.log("bandas do land",bands)
 
         if (collection === 'sentinel-s2-l2a-cogs') {
+           console.log('aqui sceneID no result')
           const infosFeature = f.id.split('_');
           const sceneId = `${infosFeature[0]}_tile_${infosFeature[2]}_${infosFeature[1]}_${infosFeature[3]}`;
+          console.log('aqui sceneID no result',sceneId)
           const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
           const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaSentinel}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
             className: `qls_sentinel_${f.id}`,
             filter: []
           });
+          console.log(layerTile)
           this.store.dispatch(setLayers([layerTile]));
 
         } else if (collection === 'landsat-c2l2-sr') { //landsat-8-l1-c1
           const sceneId = f.id;
+          console.log('aqui sceneID no result')
           const params = `access_token=${this.lambdaToken}&bands=${bands}&color_formula=${style['formula']}&percents=${style['percents']}`;
           const layerTile = (L.tileLayer as any).colorFilter(`${this.urlLambdaLANDSAT}/${sceneId}/{z}/{x}/{y}.png?${params}`, {
             className: `qls_landsat_${f.id}`,
@@ -196,10 +213,12 @@ export class ResultsPeriodComponent {
   }
 
   public getSatellite(feature) {
+    
     return getSatellite(feature);
   }
 
   public getPathRow(feature) {
+    
     return getPathRow(feature);
   }
 

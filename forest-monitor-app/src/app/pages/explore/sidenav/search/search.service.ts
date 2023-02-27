@@ -19,6 +19,7 @@ export class SearchService {
      */
     public async searchSTAC(query: string): Promise<any> {
         const urlSuffix = `/stac-compose/search?${query}`;
+        console.log('aqui impimi?', urlSuffix)
         return await this.http.get(`${ this.urlForestAPI }${ urlSuffix }`).toPromise();
     }
 

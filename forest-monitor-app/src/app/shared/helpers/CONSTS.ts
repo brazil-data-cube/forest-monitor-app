@@ -2,7 +2,8 @@
  * return sattelite/sensor
  */
 // export const satsens = ['CBERS-4A:WFI', 'CBERS-4A:MUX', 'SENTINEL-2:MSI', 'LANDSAT-8:OLI'];
-export const satsens = ['CBERS-4A:MUX', 'SENTINEL-2:MSI', 'LANDSAT-8:OLI'];
+//export const satsens = ['CBERS-4A:MUX', 'SENTINEL-2:MSI', 'LANDSAT-8:OLI'];
+export const satsens = ['CBERS-4A:MUX', 'SENTINEL-2:MSI', 'LANDSAT-9:OLI', 'LANDSAT-9:TIRS'];
 /**
  * return collection key by collection
  */
@@ -17,10 +18,7 @@ export const collectionKeyByCollection = {
 /**
  * return classes of DETER
  */
-export const DETERclasses = [
-  'CICATRIZ_DE_QUEIMADA', 'CS_DESORDENADO','CS_GEOMETRICO','DEGRADACAO', 'DESMATAMENTO_CR',
-  'DESMATAMENTO_VEG', 'MINERACAO'
-];
+export const DETERclasses = [ 'DESMATAMENTO_VEG','DESMATAMENTO_CR','DEGRADACAO', 'MINERACAO','CICATRIZ_DE_QUEIMADA', 'CS_DESORDENADO','CS_GEOMETRICO'];
 
 export const DETERclassesSPLIT = [
   'DESMATAMENTO_VEG', 'DESMATAMENTO_CR', 'MINERACAO'
@@ -44,6 +42,7 @@ export function getPathRow(f) {
   if (collection === 'sentinel-s2-l2a-cogs') {
     return f['id'].split('_')[1];
   } else if (collection === 'landsat-c2l2-sr') {  //landsat-8-l1-c1
+    console.log('passa aqui',f['id'].split('_')[1])
     return f['id'].split('_')[1];
   } else if (collection && collection.indexOf('CBERS') >= 0) {
     const prop = f['properties'];
@@ -83,7 +82,7 @@ export function getSatellite(f) {
     if (collection.indexOf('sentinel') >= 0) {
       return 'Sentinel-2';
     } else if (collection.indexOf('landsat') >= 0) {
-      return 'Landsat-8';
+      return 'Landsat-9';
     } else if (collection.toLowerCase().indexOf('cbers4') >= 0) {
       if (collection.toLowerCase().indexOf('cbers4a') >= 0) {
         return 'Cbers-4A';
@@ -110,9 +109,9 @@ export const defaultRGBBands = {
   //   blue: '4'
   // },
   'landsat-c2l2-sr': {
-    red: 'B6',
-    green: 'B5',
-    blue: 'B4'
+    red: '7',
+    green: '5',
+    blue: '4'
   },
   'CBERS4A-MUX': {
     red: '6',
@@ -139,8 +138,7 @@ export const defaultRGBBands = {
 export const bandsBySensor = {
   'sentinel-s2-l2a-cogs': ['01', '02', '03', '04', '05', '06', '07', '08', '8A', '09', '10', '11', '12'],
   //'landsat-8-l1-c1': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', 'QA'],
-  // 'landsat-c2l2-sr': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', 'QA'],
-  'landsat-c2l2-sr': ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'B10', 'B11'], //
+  'landsat-c2l2-sr': ['1', '2', '3', '4', '5', '6', '7','8','9','10','11'], 
   'CBERS4A-MUX': ['5', '6', '7', '8'],
   // 'CBERS4A-AWFI': ['13', '14', '15', '16'],
   'CBERS4-MUX': ['5', '6', '7', '8'],

@@ -67,6 +67,7 @@ export class EditBoxFormComponent implements OnInit {
     this.store.pipe(select('explore')).subscribe(res => {
       if (res.featuresPeriod) {
         const features = Object.values(res.featuresPeriod).slice(0, (Object.values(res.featuresPeriod).length - 1)) as object[];
+        console.log(',features', features)
         this.scenes = features.filter(feat => feat['enabled']).map(feat => feat['id']);
         this.features = features.filter(feat => feat['enabled']);
 
@@ -82,12 +83,14 @@ export class EditBoxFormComponent implements OnInit {
               this.satsens.push('CBERS-4A:WFI');
             }
 
-          } else if (feat['id'].toLowerCase().indexOf('lc8') >= 0) {
-            if (this.satsens.indexOf('LANDSAT-8:OLI') < 0) {
-              this.satsens.push('LANDSAT-8:OLI');
+          } else if (feat['id'].toLowerCase().indexOf('lc9') >= 0) {
+            
+            if (this.satsens.indexOf('LANDSAT-9:OLI') < 0) {
+              this.satsens.push('LANDSAT-9:OLI');
             }
 
           } else if (feat['id'].toLowerCase().indexOf('s2') >= 0) {
+            
             if (this.satsens.indexOf('SENTINEL-2:MSI') < 0) {
               this.satsens.push('SENTINEL-2:MSI');
             }
